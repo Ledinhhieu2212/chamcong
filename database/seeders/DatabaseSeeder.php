@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class DatabaseSeeder extends Seeder
 {
@@ -23,8 +24,19 @@ class DatabaseSeeder extends Seeder
         ]);
         DB::table('users')->insert([
             'username' => 'ledinhhieu',
+            'fullname' => 'Lê Đình Hiếu',
             'email' => 'dinhhieu@gmail.com',
             'password' => Hash::make('password'),
+            'phone' =>'0374078020',
+            'address' => 'Xuân Canh, Đông Anh, Hà Nội',
+            'sex' => 1,
+            'birthday' => '2002-12-22',
+            'image' => 'https://i1-ngoisao.vnecdn.net/2019/04/20/dan-truonbg-1555726586-6999-1555727229.png?w=1020&h=0&q=100&dpr=1&fit=crop&s=GGofH-dNiOamWWnXenGN9g',
+            'qrcode' => Hash::make("ledinhhieu;dinhhieu203765@gmail.com;".Hash::make('password')),
+            'status' => true,
+        ]);
+        $this->call([
+            UserSeeder::class,
         ]);
     }
 }

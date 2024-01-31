@@ -11,16 +11,31 @@ class LoginController extends Controller
 {
     public function login()
     {
+
+        if (Auth::guard('admin')->check()) {
+            return redirect()->route('admin.home');
+        }
         return view('admin.auth.login');
     }
     public function loginPost(AuthRequest $request)
     {
-
-        $credentials = $request->only(['email', 'password']);
+        $credentials = [
+            'email' => $request->input('email'),
+            'password' => $request->input('password'),
+        ];
         if (Auth::guard('admin')->attempt($credentials)) {
             return redirect()->route('admin.home');
-        } else {
-            return redirect()->back()->withInput();
         }
+        return redirect()->route('admin.login')->with('error', 'Email/Username hoặc mật khẩu không chính xác');
+
+
+    }
+
+    public function logout(Request $request)
+    {
+       Auth::logout();
+       $request->session()->invalidate();
+       $request->session()->regenerateToken();
+       return redirect()->route('admin.login');
     }
 }

@@ -22,17 +22,21 @@
 
     <div class="loginColumns animated fadeInDown">
         <div class="card" style="width: 400px; margin: 0 auto;">
-                <h1 class="text-center mb-2">Đăng nhập admin</h1>
+            <h1 class="text-center mb-2">Đăng nhập admin</h1>
             <div class="ibox-content">
                 <form class="m-t" method="POST" role="form"action="{{ route('admin.login.post') }}">
                     @csrf
                     <div class="form-group">
-                        <input type="text" name="email" class="form-control" placeholder="Username or Email" required="">
-
+                        <input type="text" name="email" class="form-control" placeholder="Username or Email" value="{{ old('email')}}">
+                        @if ($errors->has('email'))
+                            <span class="error-message">* {{ $errors->first('email') }}</span>
+                        @endif
                     </div>
                     <div class="form-group">
-                        <input type="password" name="password" class="form-control" placeholder="Password" required="">
-
+                        <input type="password" name="password" class="form-control" placeholder="Password">
+                        @if ($errors->has('email'))
+                            <span class="error-message">* {{ $errors->first('email') }}</span>
+                        @endif
                     </div>
                     <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
 

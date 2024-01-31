@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>INSPINIA | Calendar</title>
+    <title>Trang chủ</title>
     @include('user.home.components.head')
 </head>
 <body>
@@ -360,7 +360,7 @@
 
 
             <li>
-                <a href="login.html">
+                <a href="{{route('logout')}}">
                     <i class="fa fa-sign-out"></i> Log out
                 </a>
             </li>
