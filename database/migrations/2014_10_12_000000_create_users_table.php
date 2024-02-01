@@ -19,6 +19,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password',200);
             $table->string('phone',10)->nullable();
+            $table->string('cccd',12)->nullable();
             $table->unsignedInteger('sex')->default(0);;
             $table->text('address')->nullable();
             $table->date('birthday')->nullable();

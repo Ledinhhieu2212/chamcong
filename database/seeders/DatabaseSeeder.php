@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'dinhhieu@gmail.com',
             'password' => Hash::make('password'),
             'phone' =>'0374078020',
+            'cccd' =>'037407802031',
             'address' => 'Xuân Canh, Đông Anh, Hà Nội',
             'sex' => 1,
             'birthday' => '2002-12-22',

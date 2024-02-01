@@ -52,7 +52,12 @@
             <div>
                 <label for="password" class="formbold-form-label"> Nhập lại mật khẩu <span
                         class="text-danger">*</span></label>
-                <input type="password" name="re_password" id="re_password" class="formbold-form-input" />
+                <input type="password" name="re_password" class="formbold-form-input" />
+            </div>
+            <div>
+                <label for="cccd" class="formbold-form-label"> Số điện thoại <span
+                        class="text-danger">*</span></label>
+                <input type="text" name="cccd" class="formbold-form-input" />
             </div>
             <div class="formbold-input-flex">
                 <div class="formbold-mb-3">

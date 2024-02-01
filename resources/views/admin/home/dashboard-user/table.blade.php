@@ -34,6 +34,7 @@
                         <div class="info-item email-item"><strong>Email: </strong> {{ $user->email }}</div>
                         <div class="info-item address-item"><strong>Địa chỉ:</strong> {{ $user->address }}</div>
                         <div class="info-item phone-item"><strong>Số điện thoại:</strong> {{ $user->phone }}</div>
+                        <div class="info-item cccd-item"><strong>Căn cước công dân:</strong> {{ $user->cccd }}</div>
                         <div class="info-item name-item"><strong>Ngày sinh:</strong> {{ $user->birthday }}</div>
                         <div class="info-item name-item"><strong>Giới tính:</strong>
                             @if ($user->sex == 0)

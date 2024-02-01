@@ -57,6 +57,12 @@
                 <input type="password" name="re_password" id="re_password" value="{{ $user->password }}"
                     class="formbold-form-input" />
             </div>
+
+            <div>
+                <label for="cccd" class="formbold-form-label"> Số điện thoại <span
+                        class="text-danger">*</span></label>
+                <input type="text" name="cccd" class="formbold-form-input" value="{{ $user->cccd }}" />
+            </div>
             <div class="formbold-input-flex">
 
                 <div class="formbold-mb-3">
@@ -80,7 +86,7 @@
                             <input type="radio" name="sex" value="1" {{ $user->sex == 1 ? 'checked' : '' }}
                                 class="radio-form-input" />
                             <label for="radio-female">Nam</label>
-                        </div>  
+                        </div>
                         <div class="col">
                             <input type="radio" name="sex" class="radio-form-input"
                                 {{ $user->sex == 2 ? 'checked' : '' }} value="2" />
