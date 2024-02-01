@@ -28,6 +28,7 @@ class UserFactory extends Factory
             'fullname' => fake()->name(),
             'address' => fake()->address(),
             'phone' => "03".random_int(11111111,99999999),
+            'cccd' => "0".random_int(11111111,99999999),
             'email' => fake()->unique()->safeEmail(),
             'password' => fake()->password(),
             'email_verified_at' => now(),
