@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Http\Requests\UserCreateRequest;
+use App\Http\Requests\UserEditRequest;
 use App\Models\User;
 use App\Repositories\Interfaces\UserRepositoryInterfaces;
 use Illuminate\Support\Facades\Hash;
@@ -25,7 +26,7 @@ class UserRepository implements UserRepositoryInterfaces
         return User::create($data);
     }
 
-    public function update(Request $request, int $id)
+    public function update(UserEditRequest $request, int $id)
     {
         return User::findOrFail($id)->update($request->all());
     }

@@ -1,0 +1,12 @@
+.cole-admin-user{
+    width: 360px;
+    padding: 6px 12px;
+    font-size: 17px;
+    cursor: pointer;
+    border: 1px solid #e5e6e7;
+}
+.cole-admin-user:focus{
+    outline: none;
+    border-color: #1ab394;
+}
+

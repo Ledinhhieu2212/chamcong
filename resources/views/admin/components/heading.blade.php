@@ -4,9 +4,14 @@
             <li>
                 <a href="{{ route('admin.home') }}">Home</a>
             </li>
-            <li class="active">
+            <li>
                 <a href="{{ route('admin.user') }}">
-                    <strong>Thông tin nhân viên</strong>
+                   Thông tin nhân viên
+                </a>
+            </li>
+            <li class="active" >
+                <a href="{{ route('admin.user.create') }}">
+                    <strong>Sửa nhân viên</strong>
                 </a>
             </li>
         </ol>

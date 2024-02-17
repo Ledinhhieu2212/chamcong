@@ -1,15 +1,15 @@
 @extends('layout')
 
 @section('css')
-
+    
 @endsection
 
 @section('nav')
-    @include('user.components.nav')
+    @include('admin.components.nav')
 @endsection
 
 @section('navbar')
-    @include('user.components.navbar')
+    @include('admin.components.navbar')
 @endsection
 
 

@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserCreateRequest;
+use App\Http\Requests\UserEditRequest;
 use App\Models\User;
 use App\Repositories\Interfaces\UserRepositoryInterfaces;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class ControlUserController extends Controller
+class CRUDUserController extends Controller
 {
     protected $UserRepository;
 
@@ -21,15 +23,14 @@ class ControlUserController extends Controller
     {
         $title = 'Thông tin nhân viên';
         $users =  $this->UserRepository->paginate((int) 10);
-        $template = 'admin.home.dashboard-user.index';
-        return view('admin.home.layout', compact('template', 'users', 'title'));
+        return view('admin.user.index', compact('users', 'title'));
     }
 
     public function create()
     {
         $title = 'Thêm nhân viên';
         $template = 'admin.home.dashboard-user.add.index';
-        return view('admin.home.layout', compact('template', 'title'));
+        return view('admin.user.add', compact('title'));
     }
     public function store(UserCreateRequest $request)
     {
@@ -40,10 +41,9 @@ class ControlUserController extends Controller
     {
         $title = 'Sửa nhân viên';
         $user = User::find($id);
-        $template = 'admin.home.dashboard-user.edit.index';
-        return view('admin.home.layout', compact('template', 'title', 'user'));
+        return view('admin.user.edit', compact('title', 'user'));
     }
-    public function update(Request $request, int $id)
+    public function update(UserEditRequest $request, int $id)
     {
         $this->UserRepository->update($request, $id);
         return redirect()->route('admin.user');

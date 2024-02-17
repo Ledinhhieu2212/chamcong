@@ -16,6 +16,9 @@ class LoginMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if(Auth::guard('admin')->check()) {
+            return redirect()->route('admin.home');
+        }
         if (Auth::check()) {
             return redirect()->route('home');
         }

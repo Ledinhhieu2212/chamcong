@@ -9,9 +9,9 @@
                    Thông tin nhân viên
                 </a>
             </li>
-            <li class="active">
+            <li class="active" >
                 <a href="{{ route('admin.user.create') }}">
-                    <strong>Thêm nhân viên</strong>
+                    <strong>Sửa nhân viên</strong>
                 </a>
             </li>
         </ol>

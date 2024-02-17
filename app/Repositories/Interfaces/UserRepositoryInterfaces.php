@@ -3,6 +3,7 @@
 namespace App\Repositories\Interfaces;
 
 use App\Http\Requests\UserCreateRequest;
+use App\Http\Requests\UserEditRequest;
 use Illuminate\Http\Request;
 
 /**
@@ -14,6 +15,6 @@ interface UserRepositoryInterfaces
 
     public function paginate(int $list);
     public function create(UserCreateRequest $request);
-    public function update(Request $request, int $id);
+    public function update(UserEditRequest $request, int $id);
     public function delete( int $id);
 }

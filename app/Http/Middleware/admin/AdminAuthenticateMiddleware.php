@@ -17,8 +17,10 @@ class AdminAuthenticateMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if(!Auth::guard('admin')->check()){
-            return redirect()->route('admin.login')->with('error', 'Bạn phải đăng nhập trước khi sử dụng');;
+            return redirect()->route('login')->with('error', 'Bạn phải đăng nhập trước khi sử dụng');;
+        }else{
+            view()->share('admin', Auth::guard('admin')->user());
+            return $next($request);
         }
-        return $next($request);
     }
 }

@@ -18,7 +18,9 @@ class AuthenticateMiddleware
     {
         if (!Auth::check()) {
             return redirect()->route('login')->with('error', 'Bạn phải đăng nhập trước khi sử dụng');
+        }else{
+            view()->share('user_accoutn', Auth::user());
+            return $next($request);
         }
-        return $next($request);
     }
 }
