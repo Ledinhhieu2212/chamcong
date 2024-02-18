@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Repositories\Interfaces\UserRepositoryInterfaces;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class CRUDUserController extends Controller
 {
@@ -22,7 +23,7 @@ class CRUDUserController extends Controller
     public function dashboard()
     {
         $title = 'Thông tin nhân viên';
-        $users =  $this->UserRepository->paginate((int) 10);
+        $users =  $this->UserRepository->paginate((int) User::count() / 2);
         return view('admin.user.index', compact('users', 'title'));
     }
 
@@ -34,6 +35,8 @@ class CRUDUserController extends Controller
     }
     public function store(UserCreateRequest $request)
     {
+
+
         $this->UserRepository->create($request);
         return redirect()->route('admin.user');
     }
