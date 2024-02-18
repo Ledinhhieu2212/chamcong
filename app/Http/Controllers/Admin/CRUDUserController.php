@@ -7,9 +7,6 @@ use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserEditRequest;
 use App\Models\User;
 use App\Repositories\Interfaces\UserRepositoryInterfaces;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class CRUDUserController extends Controller
 {
@@ -17,7 +14,6 @@ class CRUDUserController extends Controller
 
     public function __construct(UserRepositoryInterfaces $UserRepository)
     {
-        # code...
         $this->UserRepository = $UserRepository;
     }
     public function dashboard()
@@ -35,8 +31,6 @@ class CRUDUserController extends Controller
     }
     public function store(UserCreateRequest $request)
     {
-
-
         $this->UserRepository->create($request);
         return redirect()->route('admin.user');
     }

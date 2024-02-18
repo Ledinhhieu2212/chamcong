@@ -11,33 +11,22 @@ use Illuminate\Support\Str;
  */
 class UserFactory extends Factory
 {
-    /**
-     * The current password being used by the factory.
-     */
-    protected static ?string $password;
-
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         return [
-            'username'  => fake()->userName(),
+            'username'  => $username = fake()->userName(),
             'fullname' => fake()->name(),
-            'address' => fake()->address(),
+            'password' => $pass = Hash::make('password'),
+            'email' => $email = fake()->unique()->safeEmail(),
             'phone' => "03".random_int(11111111,99999999),
             'cccd' => "0".random_int(11111111111,99999999999),
-            'email' => fake()->unique()->safeEmail(),
-            'password' => fake()->password(),
             'email_verified_at' => now(),
             'sex' => random_int(0,2),
+            'address' => fake()->address(),
             'birthday' => fake()->date(),
             'image' => fake()->imageUrl(),
-            'qrcode' => fake()->imageUrl(),
+            'qrcode' => $username.";".$email.";".$pass,
             'status' => random_int(0,1),
-            'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
         ];
     }
