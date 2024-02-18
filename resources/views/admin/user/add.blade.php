@@ -22,7 +22,8 @@
 
                 </div>
                 <div class="ibox-content">
-                    <form action="{{ route('admin.user.store') }}"class="form-horizontal" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('admin.user.store') }}"class="form-horizontal" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
                         @if ($errors->any())
                             <div class="alert alert-danger">
@@ -77,10 +78,10 @@
                         <div class="form-group"><label class="col-sm-2 control-label">Giới tính</label>
 
                             <div class="col-sm-10">
-                                <div><label> <input type="radio" checked="" value="0" name="optionsRadios"> Nữ
+                                <div><label> <input type="radio" checked="" value="0" name="sex"> Nữ
                                     </label></div>
-                                <div><label> <input type="radio" value="1" name="optionsRadios"> Nam</label></div>
-                                <div><label> <input type="radio" value="2" name="optionsRadios"> Khác</label></div>
+                                <div><label> <input type="radio" value="1" name="sex"> Nam</label></div>
+                                <div><label> <input type="radio" value="2" name="sex"> Khác</label></div>
                             </div>
                         </div>
                         <div class="form-group"><label class="col-sm-2 control-label">Ảnh đại diện</label>

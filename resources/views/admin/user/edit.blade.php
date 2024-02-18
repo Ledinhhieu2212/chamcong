@@ -87,14 +87,14 @@
                         <div class="form-group"><label class="col-sm-2 control-label">Giới tính</label>
 
                             <div class="col-sm-10">
-                                <div><label> <input type="radio" checked="{{ $user->sex == 0 ? true : false }}"
-                                            value="0" name="optionsRadios"> Nữ</label></div>
-                                <div><label> <input type="radio" checked="{{ $user->sex == 1 ? true : false }}"
-                                            value="0" name="optionsRadios">
+                                <div><label> <input type="radio" @if($user->sex == 0) checked @endif
+                                            value="0" name="sex"> Nữ</label></div>
+                                <div><label> <input type="radio"  @if($user->sex == 1) checked @endif
+                                            value="1" name="sex">
                                         Nam
                                     </label></div>
-                                <div><label> <input type="radio" checked="{{ $user->sex == 2 ? true : false }}"
-                                            value="2" name="optionsRadios"> Khác</label>
+                                <div><label> <input type="radio"  @if($user->sex == 2) checked @endif
+                                            value="2" name="sex"> Khác</label>
                                 </div>
                             </div>
                         </div>
