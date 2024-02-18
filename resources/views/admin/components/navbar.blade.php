@@ -32,11 +32,11 @@
                         viên</span> </a>
 
             </li>
-            <li class="{{ Route::currentRouteName() }}">
-                <a href=""><i class="fa fa-calendar"></i> <span class="nav-label">QL Lịch làm</span> </a>
-            </li>
             <li class="{{ Route::currentRouteName() == 'admin.calendar' ? 'active' : '' }}">
-                <a href="{{ route('admin.calendar') }}"><i class="fa fa-calendar-times-o" aria-hidden="true"></i> <span class="nav-label">QL Chấm công</span> </a>
+                <a href="{{ route('admin.calendar') }}"><i class="fa fa-calendar"></i> <span class="nav-label">QL Lịch làm</span> </a>
+            </li>
+            <li class="{{ Route::currentRouteName() == 'admin.timekeep' ? 'active' : '' }}">
+                <a href="{{ route('admin.timekeep') }}"><i class="fa fa-calendar-times-o" aria-hidden="true"></i> <span class="nav-label">QL Chấm công</span> </a>
             </li>
         </ul>
 

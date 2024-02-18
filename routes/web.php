@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CalendarController;
 use App\Http\Controllers\Admin\CRUDUserController as CrudUser;
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
+use App\Http\Controllers\Admin\TimekeepController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\User\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -34,6 +35,7 @@ Route::prefix('admin')->middleware('admin-auth')->group(function () {
     });
 
     Route::get('calendar', [CalendarController::class,'index'])->name('admin.calendar');
+    Route::get('timekeep', [TimekeepController::class,'index'])->name('admin.timekeep');
 });
 Route::redirect('/', '/login');
 Route::redirect('/admin', '/login');

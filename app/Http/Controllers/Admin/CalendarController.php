@@ -9,7 +9,8 @@ class CalendarController extends Controller
 {
     public function index()
     {
-        $title = "Quản lý chấm công nhân viên";
+        $title = "Quản lý lịch làm nhân viên";
         return view('admin.calendar.index', compact('title'));
     }
+
 }
