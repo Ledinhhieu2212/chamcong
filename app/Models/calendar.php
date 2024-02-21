@@ -8,5 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class calendar extends Model
 {
     use HasFactory;
-    
+    protected $fillable = ['day', 'user_id'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function timeworks()
+    {
+        return $this->hasMany(Timework::class);
+    }
 }

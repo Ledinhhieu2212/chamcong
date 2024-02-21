@@ -11,103 +11,40 @@
 
 
 @section('content')
-    <div class="wrapper wrapper-content">
-        <div class="wrapper wrapper-content">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>Bảng thông tin nhân viên </h5>
-                    <div class="ibox-content">
-                        <div class="row">
-                            <div class="col-lg-10">
-                                {{ $users->links('pagination::bootstrap-4') }}
-                            </div>
-                            <div class="col-lg-2 align-items-end">
-                                <a href="{{ route('admin.user.create') }}" class="btn btn-danger block"><i
-                                        class="fa fa-plus"></i> Thêm mới</a>
-                            </div>
-                        </div>
-                        <div class="table-responsive">
-
-                            <table class="table table-striped table-bordered table-hover dataTables-example">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center">
-                                            <input type="checkbox" value="" id="checkAll" class="input-checkbox" />
-                                        </th>
-                                        <th class="text-center">STT</th>
-                                        <th class="text-center">Avatar</th>
-                                        <th class="text-center">Thông tin</th>
-                                        <th class="text-center">QR code</th>
-                                        <th class="text-center">Trạng thái</th>
-                                        <th class="text-center">Thao tác</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($users as $user)
-                                        <tr>
-                                            <td class="text-center">
-                                                <input type="checkbox" value="" class="input-checkbox checkBoxItem" />
-                                            </td>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td class="text-center">
-
-                                                <img
-                                                    @if (file_exists(public_path("assets/img/$user->image")))
-                                                        src="{{ asset("assets/img/$user->image") }}"
-                                                    @else
-                                                        src="{{ $user->image }}"
-                                                    @endif
-                                                     class="image-avatar" width="100" height="100"
-                                                    alt="Ảnh avatar tài khoản" />
-
-
-                                            </td>
-                                            <td>
-                                                <div class="info-item name-item"><strong>Họ và tên:</strong>
-                                                    {{ $user->fullname }}</div>
-                                                <div class="info-item email-item"><strong>Email: </strong>
-                                                    {{ $user->email }}
-                                                </div>
-                                                <div class="info-item address-item"><strong>Địa chỉ:</strong>
-                                                    {{ $user->address }}</div>
-                                                <div class="info-item phone-item"><strong>Số điện thoại:</strong>
-                                                    {{ $user->phone }}</div>
-                                                <div class="info-item cccd-item"><strong>Căn cước công dân:</strong>
-                                                    {{ $user->cccd }}</div>
-                                                <div class="info-item name-item"><strong>Ngày sinh:</strong>
-                                                    {{ $user->birthday }}</div>
-                                                <div class="info-item name-item"><strong>Giới tính:</strong>
-                                                    @if ($user->sex == 0)
-                                                        Nữ
-                                                    @elseif ($user->sex == 1)
-                                                        Nam
-                                                    @elseif ($user->sex == 2)
-                                                        Khác
-                                                    @endif
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                {!! QrCode::size(100)->generate('{{ $user->qrcode }}') !!}
-                                            </td>
-                                            <td class="text-center">
-                                                <input type="checkbox" class="js-switch" disabled
-                                                    @if ($user->status) checked @endif />
-                                            </td>
-                                            <td class="text-center">
-                                                <a href="{{ route('admin.user.edit', $user->id) }}"
-                                                    class="btn btn-success"><i class="fa fa-edit"></i></a>
-                                                <a href="{{ route('admin.user.delete', $user->id) }}"
-                                                    class="btn btn-danger"><i class="fa fa-trash"></i></a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2 mx-3">
+                    <div class="col-sm-6">
+                        <h1>Quản lý nhân viên</h1>
                     </div>
-
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Trang chủ</a></li>
+                            <li class="breadcrumb-item active">Nhân viên</li>
+                        </ol>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
+        <section class="content">
+            @yield('crud')
+            @include('admin.user.table')
+        </section>
     </div>
+@endsection
+
+
+@section('script')
+
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<script>
+    $(function(e){
+        $("#select_all_ids").click(function(){
+            $('.checkbox_ids').prop('checked', $(this).prop('checked'));
+        });
+    });
+</script>
 @endsection

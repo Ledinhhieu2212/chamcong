@@ -20,6 +20,7 @@ class AuthenticateMiddleware
             return redirect()->route('login')->with('error', 'Bạn phải đăng nhập trước khi sử dụng');
         }else{
             view()->share('user_accoutn', Auth::user());
+            view()->share('title', "Tài khoản ".Auth::user()->fullname);
             return $next($request);
         }
     }

@@ -10,10 +10,8 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
+            PositionSeeder::class,
             UserSeeder::class,
-            TimekeepSeeder::class,
-            CalendarSeeder::class,
-            TimeWorkSeeder::class,
         ]);
     }
 }

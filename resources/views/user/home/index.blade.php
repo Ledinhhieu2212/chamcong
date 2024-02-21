@@ -4,6 +4,9 @@
 
 @endsection
 
+@section('script')
+@endsection
+
 @section('nav')
     @include('user.components.nav')
 @endsection
@@ -14,7 +17,10 @@
 
 
 @section('content')
-    <div class="wrapper wrapper-content">
-        <h1>Trang chủ</h1>
-    </div>
+
+        
+
+
+        <aside class="control-sidebar control-sidebar-dark">
+        </aside>
 @endsection

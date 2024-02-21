@@ -8,52 +8,80 @@
 
     <title>Đăng nhập</title>
 
-    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
-
-    <link href="{{ asset('assets/css/animate.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/customize.css') }}" rel="stylesheet">
-    <link href="{{ asset('auth/css/style.css') }}" rel="stylesheet">
-
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/dist/css/adminlte.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 </head>
 
 
-<body class="gray-bg">
+<body class="hold-transition login-page">
 
-    <div class="loginColumns animated fadeInDown">
-        <div class="card" style="width: 400px; margin: 0 auto;">
-            <h1 class="text-center mb-2">Đăng nhập</h1>
-            <div class="ibox-content">
+    <div class="login-box">
+        <div class="login-logo">
+            <b>Đăng nhập</b>
+        </div>
+        <!-- /.login-logo -->
+        <div class="card">
+            <div class="card-body login-card-body">
+
                 <form class="m-t" method="POST" role="form"action="{{ route('login.post') }}">
                     @csrf
+
                     <div class="form-group">
                         <select name="decentralization" class="cole-admin-user">
-                            <option value="user" selected >Nhân viên</option>
+                            <option value="user" selected>Nhân viên</option>
                             <option value="admin">Quản lý</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <input type="text" name="email" class="form-control" placeholder="Username or Email"
-                            value="{{ old('email') }}">
-                        @if ($errors->has('email'))
-                            <span class="error-message">* {{ $errors->first('email') }}</span>
-                        @endif
+                    <div class="input-group">
+                        <input type="text" name="email" class="form-control" placeholder="Email">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
+                    @if ($errors->has('email'))
+                        <span class="error-message">* {{ $errors->first('email') }}</span>
+                    @endif
+                    <div class="input-group my-2">
                         <input type="password" name="password" class="form-control" placeholder="Password">
-                        @if ($errors->has('password'))
-                            <span class="error-message">* {{ $errors->first('password') }}</span>
-                        @endif
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
+                    @if ($errors->has('password'))
+                        <span class="error-message">* {{ $errors->first('password') }}</span>
+                    @endif
+                    <button type="submit" class="btn btn-primary btn-block">Đăng nhập</button>
+                    <div class="row py-2">
+                        <div class="col-md-6">
+                            <a href="" class="w-100 btn btn-danger">
+                                <img src="{{ asset("assets/img/van-tay.png") }}" width="30" height="30" alt="" srcset="">
+                                Vân tay</a>
+                        </div>
+
+                        <div class="col-md-6">
+                            <a href="" class="w-100 btn btn-success">
+                                <img src="{{ asset("assets/img/qrcode.svg") }}" width="30" height="30" alt="" srcset="">
+                                Qr code</a>
+                        </div>
+                    </div>
+
                 </form>
+
             </div>
+            <!-- /.login-card-body -->
         </div>
     </div>
-    </div>
-
+    <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/dist/js/adminlte.min.js') }}"></script>
 </body>
-
 
 </html>

@@ -12,9 +12,10 @@ use Illuminate\Http\Request;
  */
 interface UserRepositoryInterfaces
 {
-
+    public function UserAll();
     public function paginate(int $list);
     public function create(UserCreateRequest $request);
     public function update(UserEditRequest $request, int $id);
     public function delete( int $id);
+    public function deleteAll( Request $request );
 }

@@ -1,7 +1,10 @@
 @extends('layout')
 
 @section('css')
-    
+
+@endsection
+
+@section('script')
 @endsection
 
 @section('nav')
@@ -14,7 +17,10 @@
 
 
 @section('content')
-    <div class="wrapper wrapper-content">
-        <h1>Trang chủ</h1>
-    </div>
+
+
+
+
+        <aside class="control-sidebar control-sidebar-dark">
+        </aside>
 @endsection

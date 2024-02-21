@@ -2,18 +2,17 @@
 <html>
 
 <head>
+
     @include('components.head')
     @yield('css')
 </head>
 
-<body>
+<body class="sidebar-mini layout-fixed" style="height: auto;">
     <div id="wrapper">
 
         @yield('navbar')
-        <div id="page-wrapper" class="gray-bg">
-            @yield('nav')
-            @yield('content')
-        </div>
+        @yield('nav')
+        @yield('content')
     </div>
     @include('components.script')
     @yield('script')

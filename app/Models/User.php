@@ -23,17 +23,32 @@ class User extends Authenticatable
         'password',
         'birthday',
         'image',
-        'qrcode',
-        'status',
+        'position_id',
+        'qrcode_id',
     ];
-
 
     protected $hidden = [
         'password',
         'remember_token',
     ];
+
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function calendars()
+    {
+        return $this->hasMany(calendar::class);
+    }
+
+    public function qrcode()
+    {
+        return $this->belongsTo(Qrcode::class);
+    }
+
+    public function position()
+    {
+        return $this->belongsTo(Position::class);
+    }
 }
