@@ -24,7 +24,6 @@ class User extends Authenticatable
         'birthday',
         'image',
         'position_id',
-        'qrcode_id',
     ];
 
     protected $hidden = [
@@ -42,9 +41,9 @@ class User extends Authenticatable
         return $this->hasMany(calendar::class);
     }
 
-    public function qrcode()
+    public function detail_qrcodes()
     {
-        return $this->belongsTo(Qrcode::class);
+        return $this->hasMany(Detail_QrCode::class);
     }
 
     public function position()

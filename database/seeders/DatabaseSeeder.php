@@ -12,6 +12,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             PositionSeeder::class,
             UserSeeder::class,
+            QrCodeSeeder::class,
         ]);
     }
 }

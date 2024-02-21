@@ -17,22 +17,13 @@
                         @foreach ($qrcodes as $qrcode)
                             <tr>
                                 <td><input type="checkbox" name="" id=""></td>
-                                <td>
-
-                                </td>
-                                <td> {{ $user->fullname }}</td>
-                                <td>{{ $user->email }}</td>
-                                <td>
-                                    @if ($user->position)
-                                        {{ $user->position->job }}
-                                    @else
-                                        N/A or any default value
-                                    @endif
-                                </td>
+                                <td>{{ $qrcode->name }}</td>
+                                <td> {{ $qrcode->address_address }}</td>
+                                <td>{{ $qrcode->mode }}</td>
                                 <td class="text-center">
-                                    <a href="{{ route('admin.user.edit', $user->id) }}" class="btn btn-success"><i
+                                    <a href="{{ route('admin.qrcode.edit', $qrcode->id) }}" class="btn btn-success"><i
                                             class="fa fa-edit"></i></a>
-                                    <a href="{{ route('admin.user.delete', $user->id) }}" class="btn btn-danger"><i
+                                    <a href="{{ route('admin.qrcode.delete', $qrcode->id) }}" class="btn btn-danger"><i
                                             class="fa fa-trash"></i></a>
                                 </td>
                             </tr>

@@ -32,7 +32,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('admin.qrcode') }}" class="nav-link">
+                    <a href="{{ route('admin.qrcode.create') }}" class="nav-link">
                         <div class="f-flex justify-content-center">
                             <i class="fa fa-qrcode" aria-hidden="true"></i>
                         <p>

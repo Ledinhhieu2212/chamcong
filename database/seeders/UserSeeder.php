@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
             'email' => 'dinhhieu@gmail.com',
             'password' => Hash::make('password'),
             'position_id' => 1,
-            'image' => 'dan-truong-hai-mai.jpg',
+            'image' => 'https://danviet.mediacdn.vn/thumb_w/550/upload/2-2019/images/2019-04-02/dan-truong-1-1554201405-width600height796.jpg',
             'remember_token' => Str::random(10),
         ]);
 

@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Qrcode extends Model
 {
     use HasFactory;
+    protected $table = "qrcodes";
+
     protected $fillable = [
         'name',
         'mode',
@@ -15,8 +17,8 @@ class Qrcode extends Model
         'address_latitude',
         'address_longitude',
     ];
-    public function users()
+    public function detail_qrcodes()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(Detail_QrCode::class);
     }
 }

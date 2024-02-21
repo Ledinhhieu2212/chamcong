@@ -3,7 +3,7 @@
 use App\Http\Controllers\Admin\CalendarController as AdminCalendar;
 use App\Http\Controllers\Admin\CRUDUserController as CrudUser;
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
-use App\Http\Controllers\Admin\QrcodeController;
+use App\Http\Controllers\Admin\QrcodeController as CrudQrcode;
 use App\Http\Controllers\Admin\TimekeepController;
 use App\Http\Controllers\User\TimekeepController as UserTimekeep;
 use App\Http\Controllers\Auth\LoginController;
@@ -39,7 +39,7 @@ Route::prefix('admin')->middleware('admin-auth')->group(function () {
 
     // Control use
     Route::prefix('user')->group(function () {
-        Route::get('/create', [CrudUser::class, 'create'])->name('admin.user.create');
+        Route::get('/', [CrudUser::class, 'create'])->name('admin.user.create');
         Route::post('/create', [CrudUser::class, 'store'])->name('admin.user.store');
         Route::get("/update/{id}", [CrudUser::class, 'edit'])->name('admin.user.edit');
         Route::put('/update/{id}', [CrudUser::class, 'update'])->name('admin.user.update');
@@ -47,7 +47,13 @@ Route::prefix('admin')->middleware('admin-auth')->group(function () {
         Route::get("/delete-all", [CrudUser::class, 'deleteAll'])->name('admin.user.delete.all');
     });
 
-    Route::get('qrcode', [QrcodeController::class, 'index'])->name('admin.qrcode');
+    Route::prefix('qrcode')->group(function () {
+        Route::get('', [CrudQrcode::class, 'index'])->name('admin.qrcode.create');
+        Route::post('/create', [CrudQrcode::class, 'store'])->name('admin.qrcode.store');
+        Route::get("/update/{id}", [CrudQrcode::class, 'edit'])->name('admin.qrcode.edit');
+        Route::put('/update/{id}', [CrudQrcode::class, 'update'])->name('admin.qrcode.update');
+        Route::get("/delete/{id}", [CrudQrcode::class, 'delete'])->name('admin.qrcode.delete');
+    });
     Route::get('calendar', [AdminCalendar::class, 'index'])->name('admin.calendar');
     Route::get('timekeep', [TimekeepController::class, 'index'])->name('admin.timekeep');
 });

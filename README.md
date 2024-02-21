@@ -14,3 +14,6 @@ Mở laragon và ấn nút chạy và mở terminal
 <img title="a title" alt="Alt text" src="document/2.png">
 
 
+# 4. Reset seeder
+    
+    php artisan migrate:refresh --seed

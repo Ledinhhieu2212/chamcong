@@ -24,11 +24,9 @@ return new class extends Migration
             $table->text('address')->nullable();
             $table->date('birthday')->nullable();
             $table->text('image')->nullable();
-            $table->unsignedBigInteger('qrcode_id')->nullable();
             $table->unsignedBigInteger('position_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
-            $table->foreign('qrcode_id')->references('id')->on('qrcodes');
             $table->foreign('position_id')->references('id')->on('positions');
         });
     }

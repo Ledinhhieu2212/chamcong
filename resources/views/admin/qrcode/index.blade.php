@@ -30,8 +30,20 @@
             </div>
         </section>
         <section class="content m-4">
-            @include('admin.qrcode.add')
+            @yield('crud')
             @include('admin.qrcode.table')
         </section>
     </div>
+@endsection
+
+@section('script')
+
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<script>
+    $(function(e){
+        $("#select_all_ids").click(function(){
+            $('.checkbox_ids').prop('checked', $(this).prop('checked'));
+        });
+    });
+</script>
 @endsection
