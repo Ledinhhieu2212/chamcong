@@ -5,18 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class calendar extends Model
+class Calendar extends Model
 {
     use HasFactory;
-    protected $fillable = ['day', 'user_id'];
+    protected $table = 'calendars';
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 
-    public function timeworks()
+    protected $fillable = [
+        'date_now',
+        'start_date',
+        'end_date',
+        'is_calendar_enabled',
+    ];
+    public function detail_calendars()
     {
-        return $this->hasMany(Timework::class);
+        return $this->hasMany(Detail_Calendar::class);
     }
 }

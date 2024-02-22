@@ -1,7 +1,6 @@
 @extends('layout')
 
 @section('css')
-
 @endsection
 
 @section('nav')
@@ -16,8 +15,17 @@
 @section('content')
     <div class="wrapper wrapper-content">
         <section class="content">
-            @include('user.calendar.add')
-            @include('user.calendar.table')
+            <div class="content-wrapper">
+                <section class="content">
+                    <div class="container-fluid ">
+                        @include('user.calendar.add')
+                        @include('user.calendar.table')
+
+                    </div>
+                </section>
+
+            </div>
+
         </section>
     </div>
 @endsection

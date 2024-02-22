@@ -48,10 +48,10 @@ class UserRepository implements UserRepositoryInterfaces
             $path = 'assets/img';
             $image = $request->file('image');
             $imageName = time() . '-avatar-img.' . $image->getClientOriginalExtension();
-            $image->move(public_path($path), $imageName);
             if (File::exists(public_path($path . "/" . $image))) {
                 File::delete(public_path($path . "/" . $image));
             }
+            $image->move(public_path($path), $imageName);
             $data['image'] = $imageName;
         }
         $data["updated_at"] = Carbon::now();
@@ -71,8 +71,16 @@ class UserRepository implements UserRepositoryInterfaces
 
     public function deleteAll(Request $request)
     {
-        if( $request->ids !== null ) {
-            dd($request->ids);
+        $ids = $request->ids;
+        foreach ($ids as $id) {
+            $user = User::find($id);
+            $path = 'assets/img';
+            $image = $user->image;
+            if (File::exists(public_path($path . "/" . $image))) {
+                File::delete(public_path($path . "/" . $image));
+            }
+            $user->delete();
         }
+        return redirect()->back();
     }
 }

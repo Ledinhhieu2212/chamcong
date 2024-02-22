@@ -2,8 +2,9 @@
 
 
 @section('crud')
-    <form method="POST" action="{{ route('admin.calendar.store') }}">
+    <form method="POST" action="{{ route('admin.calendar.update', $calendar_edit->id) }}">
         @csrf
+        @method('PUT')
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
@@ -19,26 +20,30 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Ngày lập lịch làm</label>
-                            <input type="date" name="date_now" value="{{ now()->format('Y-m-d') }}"
-                                class="form-control" />
+                            <input type="date" name="date_now"
+                                value="{{ \Carbon\Carbon::parse($calendar_edit->date_now)->format('Y-m-d') }}"
+                                class="form-control" readonly/>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Tháng bắt đầu</label>
-                            <input type="date" name="start_date" class="form-control" />
+                            <input type="date" name="start_date" class="form-control"
+                                value="{{ \Carbon\Carbon::parse($calendar_edit->start_date)->format('Y-m-d') }}" />
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Cuối tháng</label>
-                            <input type="date" name="end_date" class="form-control" />
+                            <input type="date" name="end_date" class="form-control"
+                                value="{{ \Carbon\Carbon::parse($calendar_edit->end_date)->format('Y-m-d') }}" />
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Cho phép đăng ký ca làm</label>
-                            <input type="checkbox" name="is_calendar_enabled" value="1" class="form-control " />
+                            <input type="checkbox" name="is_calendar_enabled"
+                                @if ($calendar_edit->is_calendar_enabled == 1) checked @endif value="1" class="form-control " />
                         </div>
                     </div>
                 </div>
@@ -57,7 +62,8 @@
                         <tbody class="bg-gray">
                             @foreach ($users_array as $user)
                                 <tr>
-                                    <td><input type="checkbox" name="ids[{{ $user->id }}]" class="checkbox_ids"
+                                    <td><input type="checkbox" @if ($user->detail_calendars->where('calendar_id', $calendar_edit->id)->isNotEmpty()) checked @endif
+                                            name="ids[{{ $user->id }}]" class="checkbox_ids"
                                             value="{{ $user->id }}"></td>
 
                                     <td>{{ $user->fullname }}</td>

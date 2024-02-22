@@ -3,7 +3,11 @@
     <!-- Brand Logo -->
     <a href="{{ route('home') }}" class="brand-link">
         <div class="text-center brand-text block">
-            <img src="{{ asset("assets/img/$user_accoutn->image") }}" class=" rounded-circle" width="100" height="100" alt="">
+
+            <img @if (file_exists(public_path("assets/img/$user_accoutn->image"))) src="{{ asset("assets/img/$user_accoutn->image") }}"
+                        @else
+                            src="{{ $user_accoutn->image }}" @endif
+                            class=" rounded-circle avatar" width="100" height="100" alt=""/>
         </div>
         <div class="brand-text font-weight-light text-center">{{ $user_accoutn->username }}</div>
     </a>

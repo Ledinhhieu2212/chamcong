@@ -45,6 +45,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Detail_QrCode::class);
     }
+    public function detail_calendars()
+    {
+        return $this->hasMany(Detail_Calendar::class);
+    }
 
     public function position()
     {

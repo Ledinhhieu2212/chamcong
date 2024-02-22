@@ -1,22 +1,32 @@
-<div class="content-wrapper">
-    <!-- Main content -->
-    <section class="content">
-        <div class="container-fluid ">
-            <div class="row p-3">
-                <div class="col-sm-6">
-                    <label class="ml-2">Tháng đầu </label>
-                    <input type="month" name="start_date" id="">
-                </div>
 
-                <div class="col-sm-6">
-                    <label for="">Cuối tháng</label>
-                    <input type="month" name="end_date" id="">
+            <form action="" method="post">
+                <div class="row pt-3">
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="ml-2">Tháng làm</label>
+                                    <select name="start_date" class="form-control py-2 px-3">
+                                        @foreach ($calendars as $calendar)
+                                            <option value="{{ $calendar->id }}">
+                                                {{ \Carbon\Carbon::parse($calendar->start_date)->format('d/m/Y') }} -
+                                                {{ \Carbon\Carbon::parse($calendar->end_date)->format('d/m/Y') }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                    </div>
                 </div>
-            </div>
+                <button type="submit" class="my-2 btn btn-success">Tìm kiếm</button>
+            </form>
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card">
-                        <div class="card-body table-responsive p-0" style="height: 300px;">
+                        <div class="card-body table-responsive p-0" >
                             <table class="table table-head-fixed text-nowrap">
                                 <thead>
                                     <tr>
@@ -92,8 +102,3 @@
                     <!-- /.card -->
                 </div>
             </div>
-
-        </div>
-    </section>
-
-</div>

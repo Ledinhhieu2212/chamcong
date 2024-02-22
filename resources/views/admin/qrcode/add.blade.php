@@ -1,6 +1,5 @@
 @extends('admin.qrcode.index')
 
-
 @section('crud')
     <form method="POST" action="{{ route('admin.qrcode.store') }}" >
         @csrf

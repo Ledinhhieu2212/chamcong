@@ -40,6 +40,7 @@ Route::prefix('admin')->middleware('admin-auth')->group(function () {
     // Control use
     Route::prefix('user')->group(function () {
         Route::get('/', [CrudUser::class, 'create'])->name('admin.user.create');
+        Route::get('/search', [CrudUser::class, 'search'])->name('admin.user.search');
         Route::post('/create', [CrudUser::class, 'store'])->name('admin.user.store');
         Route::get("/update/{id}", [CrudUser::class, 'edit'])->name('admin.user.edit');
         Route::put('/update/{id}', [CrudUser::class, 'update'])->name('admin.user.update');
@@ -54,7 +55,15 @@ Route::prefix('admin')->middleware('admin-auth')->group(function () {
         Route::put('/update/{id}', [CrudQrcode::class, 'update'])->name('admin.qrcode.update');
         Route::get("/delete/{id}", [CrudQrcode::class, 'delete'])->name('admin.qrcode.delete');
     });
-    Route::get('calendar', [AdminCalendar::class, 'index'])->name('admin.calendar');
+
+    Route::prefix('calendar')->group(function () {
+        Route::get('', [AdminCalendar::class, 'index'])->name('admin.calendar');
+        Route::post('/create', [AdminCalendar::class, 'store'])->name('admin.calendar.store');
+        Route::get("/update/{id}", [AdminCalendar::class, 'edit'])->name('admin.calendar.edit');
+        Route::put('/update/{id}', [AdminCalendar::class, 'update'])->name('admin.calendar.update');
+        Route::get("/delete/{id}", [AdminCalendar::class, 'delete'])->name('admin.calendar.delete');
+    });
+
     Route::get('timekeep', [TimekeepController::class, 'index'])->name('admin.timekeep');
 });
 Route::redirect('/', '/login');

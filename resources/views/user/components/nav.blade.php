@@ -1,5 +1,5 @@
 <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__shake rounded-circle" src="{{ asset("assets/img/$user_accoutn->image") }}" alt="AdminLTELogo"
+    <img class="animation__shake rounded-circle" src="{{ asset("assets/img/gif-load.gif") }}" alt="AdminLTELogo"
         height="60" width="60">
 </div>
 

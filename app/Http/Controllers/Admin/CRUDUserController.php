@@ -21,7 +21,6 @@ class CRUDUserController extends Controller
     public function create()
     {
         $positons = Position::all();
-        $template = 'admin.home.dashboard-user.add.index';
         return view('admin.user.add', compact('positons'));
     }
     public function store(UserCreateRequest $request)
@@ -45,7 +44,6 @@ class CRUDUserController extends Controller
     public function delete(int $id)
     {
         $this->UserRepository->delete($id);
-
         return redirect()->route('admin.user.create')->with('success', 'Xóa thành công nhân viên');
     }
 
@@ -53,8 +51,7 @@ class CRUDUserController extends Controller
     {
         if ($request->ids !== null) {
             $this->UserRepository->deleteALl($request);
-
-            return redirect()->route('admin.user.create')->with('success', '');
+            return redirect()->route('admin.user.create')->with('success', 'Xóa thành công');
         } else {
             return redirect()->route('admin.user.create');
         }

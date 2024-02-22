@@ -5,17 +5,7 @@
             <button class="btn btn-danger" type="submit">Xóa tất cả nhân viên đã chọn</button>
         </div>
         <div class="col-md-6">
-            <div class="row justify-content-end">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <input type="text" class="form-control ">
-                    </div>
-                </div>
 
-                <div class="col-md-3">
-                    <a href="" class="btn btn-secondary">Tìm kiếm</a>
-                </div>
-            </div>
         </div>
     </div>
     <div class="row">

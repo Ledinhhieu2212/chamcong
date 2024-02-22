@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -13,16 +14,13 @@ return new class extends Migration
     {
         Schema::create('calendars', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('day')->default(0);
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->boolean('morning')->default(false);
-            $table->boolean('afternoon')->default(false);
-            $table->boolean('night')->default(false);
+            $table->dateTime('date_now')->nullable();
+            $table->dateTime('start_date')->nullable();
+            $table->dateTime('end_date')->nullable();
+            $table->unsignedInteger('is_calendar_enabled')->default(false);
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users');
         });
     }
-
     public function down(): void
     {
         Schema::dropIfExists('calendars');

@@ -16,53 +16,25 @@ class CalendarSeeder extends Seeder
     public function run(): void
     {
         DB::table('calendars')->insert([
-            "day" => 1,
-            "user_id"=> 1,
-            'morning' => false,
-            'afternoon' => true,
-            'night' => false,
+            "day" => 'Thứ 2',
         ]);
         DB::table('calendars')->insert([
-            "day" => 2,
-            "user_id"=> 1,
-            'morning' => true,
-            'afternoon' => false,
-            'night' => true,
+            "day" => "Thứ 3",
         ]);
         DB::table('calendars')->insert([
-            "day" => 3,
-            "user_id"=> 1,
-            'morning' => true,
-            'afternoon' => false,
-            'night' => true,
+            "day" => "Thứ 4",
         ]);
         DB::table('calendars')->insert([
-            "day" => 4,
-            "user_id"=> 1,
-            'morning' => false,
-            'afternoon' => true,
-            'night' => true,
+            "day" => "Thứ 5",
         ]);
         DB::table('calendars')->insert([
-            "day" => 5,
-            "user_id"=> 1,
-            'morning' => true,
-            'afternoon' => false,
-            'night' => true,
+            "day" => "Thứ 6",
         ]);
         DB::table('calendars')->insert([
-            "day" => 6,
-            "user_id"=> 1,
-            'morning' => true,
-            'afternoon' => false,
-            'night' => false,
+            "day" => "Thứ 7",
         ]);
         DB::table('calendars')->insert([
-            "day" => 7,
-            "user_id"=> 1,
-            'morning' => false,
-            'afternoon' => false,
-            'night' => true,
+            "day" => "Chủ nhật",
         ]);
 
     }

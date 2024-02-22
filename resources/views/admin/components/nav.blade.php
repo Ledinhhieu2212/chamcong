@@ -1,6 +1,6 @@
 <div class="preloader flex-column justify-content-center align-items-center">
     <img class="animation__shake rounded-circle" src="{{ asset("assets/img/avatar-admin.png") }}" alt="AdminLTELogo"
-        height="60" width="60">
+        height="100" width="100">
 </div>
 
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
