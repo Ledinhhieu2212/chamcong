@@ -7,7 +7,7 @@
             <img @if (file_exists(public_path("assets/img/$user_accoutn->image"))) src="{{ asset("assets/img/$user_accoutn->image") }}"
                         @else
                             src="{{ $user_accoutn->image }}" @endif
-                            class=" rounded-circle avatar" width="100" height="100" alt=""/>
+                class=" rounded-circle avatar" width="100" height="100" alt="" />
         </div>
         <div class="brand-text font-weight-light text-center">{{ $user_accoutn->username }}</div>
     </a>
@@ -16,11 +16,11 @@
     <div class="sidebar">
         <!-- Sidebar Menu -->
         <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                data-accordion="false">
 
                 <li class="nav-item {{ Route::currentRouteName() == 'home' ? 'active' : '' }}">
                     <a href="{{ route('home') }}" class="nav-link">
-                        <i class="fa fa-home  mr-3"></i>
                         <p>
                             Trang chủ
                         </p>
@@ -29,23 +29,46 @@
                 <li class="nav-item ">
                     <a href="{{ route('profile') }}" class="nav-link">
                         <div class="f-flex justify-content-center">
-                            <i class="fa fa-user  mr-3"></i>
-                            <p > Thông tin
+                            <p> Thông tin
                             </p>
                         </div>
                     </a>
                 </li>
-                <li class="nav-item ">
-                    <a href="{{ route('calendar') }}" class="nav-link">
-                        <i class="fa fa-calendar mr-3"></i>
+                <li class="nav-item  ">
+                    <a href="" class="nav-link">
                         <p>
-                            Lịch làm
+                            QL làm việc <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
+                    <ul class="nav nav-treeview" style="display: none;">
+                        <li class="nav-item">
+                            <a href="{{ route('calendar') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Lịch làm</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('register.calendar') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Đăng ký lịch làm</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/charts/inline.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Inline</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/charts/uplot.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>uPlot</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('timekeep') }}" class="nav-link">
-                        <i class="fa-solid fa-calendar-xmark mr-3"></i>
                         <p>
                             Chấm công
                         </p>
@@ -53,7 +76,6 @@
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('timekeep') }}" class="nav-link">
-                        <i class="fas fa-chart-pie  mr-3"></i>
                         <p>
                             Thống kê
                         </p>
@@ -61,7 +83,6 @@
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('logout') }}" class="nav-link">
-                        <i class="fa fa-sign-out mr-3"></i>
                         <p>
                             Đăng xuất
                         </p>

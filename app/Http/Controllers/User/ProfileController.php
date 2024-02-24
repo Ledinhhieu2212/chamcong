@@ -33,7 +33,7 @@ class ProfileController extends Controller
             $data['image'] = $imageName;
         }
         $data["updated_at"] = Carbon::now();
-        $user->update();
+        $user->update($data);
         return redirect()->route("profile")->with("success", "");
     }
 }

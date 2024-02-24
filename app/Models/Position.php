@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Position extends Model
 {
     use HasFactory;
+    protected $table = 'positions';
+
+
+    protected $fillable = [
+        'job',
+        'wage',
+    ];
     public function users()
     {
         return $this->hasMany(User::class);

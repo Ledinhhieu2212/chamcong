@@ -49,6 +49,8 @@ class CalendarController extends Controller
     public function update(Request $request, int $id)
     {
         $data = $request->all();
+        $is_calendar_enabled = $request->has('is_calendar_enabled');
+
         $ids = $request->ids;
         $calendar = Calendar::find($id);
         $calendar->detail_calendars()->delete();
@@ -64,6 +66,11 @@ class CalendarController extends Controller
                 "user_id" => null,
                 'calendar_id' => $calendar->id,
             ]);
+        }
+        if ($is_calendar_enabled == "1") {
+            $data['is_calendar_enabled'] = 1;
+        }else{
+            $data['is_calendar_enabled'] = 0;
         }
         $calendar->update($data);
         return redirect()->route('admin.calendar');

@@ -21,4 +21,5 @@ class Calendar extends Model
     {
         return $this->hasMany(Detail_Calendar::class);
     }
+    
 }

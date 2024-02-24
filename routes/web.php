@@ -26,6 +26,9 @@ Route::middleware('user-auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::put('/profile', [ProfileController::class, 'post'])->name('profile.post');
     Route::get('/calendar', [UserCalendar::class, 'index'])->name('calendar');
+    Route::post('/calendar', [UserCalendar::class, 'search'])->name('calendar.search');
+    Route::get('/register-calendar', [UserCalendar::class, 'register'])->name('register.calendar');
+    Route::post('/register-calendar', [UserCalendar::class, 'registerStore'])->name('register.calendar.store');
     Route::get('/timekeep', [UserTimekeep::class, 'index'])->name('timekeep');
 });
 

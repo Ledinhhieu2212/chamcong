@@ -22,7 +22,7 @@
                             <label for="">Ngày lập lịch làm</label>
                             <input type="date" name="date_now"
                                 value="{{ \Carbon\Carbon::parse($calendar_edit->date_now)->format('Y-m-d') }}"
-                                class="form-control" readonly/>
+                                class="form-control" readonly />
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -43,7 +43,8 @@
                         <div class="form-group">
                             <label for="">Cho phép đăng ký ca làm</label>
                             <input type="checkbox" name="is_calendar_enabled"
-                                @if ($calendar_edit->is_calendar_enabled == 1) checked @endif value="1" class="form-control " />
+                                @if ($calendar_edit->is_calendar_enabled == 1) checked @endif value="1"
+                                class="form-control " />
                         </div>
                     </div>
                 </div>
@@ -81,6 +82,7 @@
                 </div>
             </div>
             <div class="col-md-12">
+                <a href="{{ route('admin.calendar') }}" class="btn btn-danger">Thoát</a>
                 <button type="submit" class="btn btn-success">Lưu lại</button>
             </div>
         </div>

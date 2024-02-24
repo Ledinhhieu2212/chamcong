@@ -32,7 +32,7 @@ class QrCodeSeeder extends Seeder
             'name' => 'nhóm 4',
             'address_address' =>'123213'
         ]);
-        
+
         DB::table("detail_qrcodes")->insert([
             'user_id' => 1,
             'qrcode_id' => 2
@@ -40,17 +40,6 @@ class QrCodeSeeder extends Seeder
 
         DB::table("detail_qrcodes")->insert([
             'user_id' => 1,
-            'qrcode_id' => 1
-        ]);
-
-
-        DB::table("detail_qrcodes")->insert([
-            'user_id' => 2,
-            'qrcode_id' => 1
-        ]);
-
-        DB::table("detail_qrcodes")->insert([
-            'user_id' => 3,
             'qrcode_id' => 1
         ]);
     }

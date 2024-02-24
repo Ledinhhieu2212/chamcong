@@ -12,8 +12,8 @@
     </ul>
     <ul class="navbar-nav ml-auto">
         <li class="nav-item d-flex align-items-center">
-            <span >
-                Thời gian: <span id="current-time" class="py-4 px-2 text-primary font-weight-bold"></span>
+            <span  class="py-4 px-2 text-primary font-weight-bold">
+                {{ $today['dayOfWeek']  }} - {{ $today['mothOfYear'] }} - <span id="current-time"> </span>
             </span>
         </li>
         <li class="nav-item">

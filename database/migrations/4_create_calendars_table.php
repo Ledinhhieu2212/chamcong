@@ -17,7 +17,7 @@ return new class extends Migration
             $table->dateTime('date_now')->nullable();
             $table->dateTime('start_date')->nullable();
             $table->dateTime('end_date')->nullable();
-            $table->unsignedInteger('is_calendar_enabled')->default(false);
+            $table->unsignedInteger('is_calendar_enabled')->default(0);
             $table->timestamps();
         });
     }

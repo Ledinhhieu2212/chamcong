@@ -22,3 +22,27 @@
 .avatar{
     object-fit: cover;
 }
+
+.calendar-table {
+    width: 100%;
+    padding: 20px;
+    overflow: hidden;
+}
+.calendar-column{
+    padding: 0;
+    overflow: hidden;
+}
+.calendar-column li{
+    padding: 5px 0;
+    border: 1px solid #6f7173;
+    height: 42px;
+}
+.calendar-column li:nth-child(1){
+    font-weight: bold;
+
+}
+.calendar-column li input{
+    height: 20px;
+    cursor: pointer;
+}
+

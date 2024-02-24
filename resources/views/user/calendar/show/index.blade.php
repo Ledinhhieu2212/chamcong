@@ -18,14 +18,10 @@
             <div class="content-wrapper">
                 <section class="content">
                     <div class="container-fluid ">
-                        @include('user.calendar.add')
-                        @include('user.calendar.table')
-
+                        @include('user.calendar.show.table')
                     </div>
                 </section>
-
             </div>
-
         </section>
     </div>
 @endsection

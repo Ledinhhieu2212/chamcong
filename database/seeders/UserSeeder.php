@@ -22,6 +22,7 @@ class UserSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
+            'id' =>1,
             'username' => 'ledinhhieu',
             'fullname' => 'Lê Đình Hiếu',
             'email' => 'dinhhieu@gmail.com',
@@ -32,8 +33,5 @@ class UserSeeder extends Seeder
         ]);
 
 
-        User::factory()
-            ->count(15)
-            ->create();
     }
 }

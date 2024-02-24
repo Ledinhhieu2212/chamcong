@@ -26,13 +26,14 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Tháng bắt đầu</label>
-                            <input type="date" name="start_date" class="form-control" />
+                            <input type="date" name="start_date" class="form-control"  value="{{ \Carbon\Carbon::now()->firstOfMonth()->addDays(9)->toDateString() }}" />
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Cuối tháng</label>
-                            <input type="date" name="end_date" class="form-control" />
+                            <input type="date" name="end_date" class="form-control"
+                            value="{{ \Carbon\Carbon::now()->endOfMonth()->addDays(10)->toDateString() }}" />
                         </div>
                     </div>
                     <div class="col-md-6">
