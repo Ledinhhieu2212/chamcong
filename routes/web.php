@@ -26,7 +26,7 @@ Route::middleware('user-auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/calendar', [SearchCalendar::class, 'index'])->name('calendar');
-    Route::post('/calendar', [SearchCalendar::class, 'search'])->name('calendar.search');
+    Route::post('/calendar', [SearchCalendar::class, 'index'])->name('calendar.search');
     Route::get('/register-calendar', [RegisterCalendar::class, 'create'])->name('register.calendar');
     Route::post('/register-calendar', [RegisterCalendar::class, 'store'])->name('register.calendar.store');
 });

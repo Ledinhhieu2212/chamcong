@@ -20,7 +20,7 @@
                 data-accordion="false">
 
                 <li class="nav-item {{ Route::currentRouteName() == 'home' ? 'active' : '' }}">
-                    <a href="{{ route('home') }}" class="nav-link text-center">
+                    <a href="{{ route('home') }}" class="nav-link">
                         <i class="fa fa-home "></i>
                         <p>
                             Trang chủ
@@ -55,18 +55,6 @@
                             <a href="{{ route('register.calendar') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Đăng ký lịch làm</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="pages/charts/inline.html" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Inline</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="pages/charts/uplot.html" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>uPlot</p>
                             </a>
                         </li>
                     </ul>

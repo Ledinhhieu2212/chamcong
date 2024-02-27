@@ -81,6 +81,7 @@ class QrcodeController extends Controller
     {
         $data = QrCodeModal::find($id);
         $text = Hash::make("?id=$data->id?name=$data->name?mode=?$data->mode?");
-        return view('admin.qrcode.generate', compact('text'));
+        $qrCode = base64_encode(QrCode::format('png')->size(500)->generate($text));
+        return view('admin.qrcode.generate', compact('qrCode'));
     }
 }

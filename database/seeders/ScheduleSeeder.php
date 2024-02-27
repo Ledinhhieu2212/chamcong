@@ -13,33 +13,33 @@ class ScheduleSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table("schedules")->insert([
-            'detail_calendar_id' => 1,
-            'day'=> 1,
-            'shift_1'=> 1,
-            'shift_2'=> 1,
-            'shift_3'=> 0,
-        ]);
-        DB::table("schedules")->insert([
-            'detail_calendar_id' => 1,
-            'day'=> 2,
-            'shift_1'=> 0,
-            'shift_2'=> 1,
-            'shift_3'=> 1,
-        ]);
-        DB::table("schedules")->insert([
-            'detail_calendar_id' => 1,
-            'day'=> 4,
-            'shift_1'=> 1,
-            'shift_2'=> 0,
-            'shift_3'=> 1,
-        ]);
-        DB::table("schedules")->insert([
-            'detail_calendar_id' => 1,
-            'day'=> 6,
-            'shift_1'=> 0,
-            'shift_2'=> 1,
-            'shift_3'=> 1,
-        ]);
+        // DB::table("schedules")->insert([
+        //     'detail_calendar_id' => 1,
+        //     'day'=> 1,
+        //     'shift_1'=> 1,
+        //     'shift_2'=> 1,
+        //     'shift_3'=> 0,
+        // ]);
+        // DB::table("schedules")->insert([
+        //     'detail_calendar_id' => 1,
+        //     'day'=> 2,
+        //     'shift_1'=> 0,
+        //     'shift_2'=> 1,
+        //     'shift_3'=> 1,
+        // ]);
+        // DB::table("schedules")->insert([
+        //     'detail_calendar_id' => 1,
+        //     'day'=> 4,
+        //     'shift_1'=> 1,
+        //     'shift_2'=> 0,
+        //     'shift_3'=> 1,
+        // ]);
+        // DB::table("schedules")->insert([
+        //     'detail_calendar_id' => 1,
+        //     'day'=> 6,
+        //     'shift_1'=> 0,
+        //     'shift_2'=> 1,
+        //     'shift_3'=> 1,
+        // ]);
     }
 }

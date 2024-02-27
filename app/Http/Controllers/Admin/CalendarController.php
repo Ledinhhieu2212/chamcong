@@ -53,7 +53,17 @@ class CalendarController extends Controller
 
         $ids = $request->ids;
         $calendar = Calendar::find($id);
+
+        if ($is_calendar_enabled == "1") {
+            $data['is_calendar_enabled'] = 1;
+        }else{
+            $data['is_calendar_enabled'] = 0;
+        }
+
+        $calendar->update($data);
+
         $calendar->detail_calendars()->delete();
+
         if ($ids !== null) {
             foreach ($ids as $id) {
                 Detail_Calendar::create([
@@ -67,12 +77,7 @@ class CalendarController extends Controller
                 'calendar_id' => $calendar->id,
             ]);
         }
-        if ($is_calendar_enabled == "1") {
-            $data['is_calendar_enabled'] = 1;
-        }else{
-            $data['is_calendar_enabled'] = 0;
-        }
-        $calendar->update($data);
+
         return redirect()->route('admin.calendar');
     }
 

@@ -3,6 +3,10 @@
 @section('css')
 @endsection
 
+@section('script')
+    @yield('script.search')
+@endsection
+
 @section('nav')
     @include('components.nav')
 @endsection
@@ -16,11 +20,7 @@
     <div class="wrapper wrapper-content">
         <section class="content">
             <div class="content-wrapper">
-                <section class="content">
-                    <div class="container-fluid ">
-                        @include('user.calendar.show.table')
-                    </div>
-                </section>
+                @yield('search')
             </div>
         </section>
     </div>

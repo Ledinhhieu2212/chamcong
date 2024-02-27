@@ -13,6 +13,7 @@ class Detail_Calendar extends Model
     protected $fillable = [
         'user_id',
         'calendar_id',
+        'is_registered'
     ];
 
     public function user()

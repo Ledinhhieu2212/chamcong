@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->unsigned()->nullable();
             $table->unsignedBigInteger('calendar_id')->unsigned()->nullable();
+            $table->unsignedInteger('is_registered')->default(0);
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('calendar_id')->references('id')->on('calendars')->onDelete('cascade');

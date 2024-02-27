@@ -20,17 +20,17 @@ class QrCodeSeeder extends Seeder
 
         DB::table("qrcodes")->insert([
             'name' => 'nhóm 2',
-            'address_address' =>'1321311dfsffewf'
+            'address_address' =>'Hải Phòng'
         ]);
 
         DB::table("qrcodes")->insert([
             'name' => 'nhóm 3',
-            'address_address' =>'13213123131'
+            'address_address' =>'Bắc Giang'
         ]);
 
         DB::table("qrcodes")->insert([
             'name' => 'nhóm 4',
-            'address_address' =>'123213'
+            'address_address' =>'Hồ Chí Minh'
         ]);
 
         DB::table("detail_qrcodes")->insert([

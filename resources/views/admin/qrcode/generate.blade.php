@@ -6,7 +6,7 @@
         <div class="col-md-12 text-center" >
             <div class="" id="printableArea">
                 <div class="">
-                    {{  QrCode::size(200)->generate($text) }}
+                    <img src="data:image/png;base64,{{ $qrCode }}" alt="" class="" >
                 </div>
             </div>
         </div>

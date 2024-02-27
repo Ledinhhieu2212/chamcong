@@ -109,10 +109,19 @@
             </div>
 
         </div>
+        <div class="col-md-6">
+            <div class="form-group text-center">
+                <div class="" id="printableArea">
+                    <img src="data:image/png;base64,{{ $base64QrCode }}" alt="" class="image-profile-qrcode" >
+                </div>
+            </div>
+
+        </div>
         <div class="col-md-12">
             <div class="form-group">
                 <a href="{{ route('home') }}" class="btn btn-danger">Thoát</a>
                 <button type="submit" class="btn btn-success">Lưu lại</button>
+                <button onclick="printElement('printableArea')" class="btn btn-info">In mã Qr</button>
             </div>
         </div>
     </div>

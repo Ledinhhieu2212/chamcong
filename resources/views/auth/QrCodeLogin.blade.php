@@ -60,15 +60,16 @@
                     @endif
                     <button type="submit" class="btn btn-primary btn-block">Đăng nhập</button>
                     <div class="row py-2">
-                        <div class="col-md-12 pb-2">
+                        <div class="col-md-6">
                             <a href="" class="w-100 btn btn-danger">
-                                <img src="{{ asset("assets/img/qrcode.svg") }}" width="30" height="30" alt="" srcset="">
-                                Chấm công Qr code</a>
+                                <img src="{{ asset("assets/img/van-tay.png") }}" width="30" height="30" alt="" srcset="">
+                                Vân tay</a>
                         </div>
-                        <div class="col-md-12">
+
+                        <div class="col-md-6">
                             <a href="" class="w-100 btn btn-success">
                                 <img src="{{ asset("assets/img/qrcode.svg") }}" width="30" height="30" alt="" srcset="">
-                                Đăng nhập Qr code</a>
+                                Qr code</a>
                         </div>
                     </div>
 

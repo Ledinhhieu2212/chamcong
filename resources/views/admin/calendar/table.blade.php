@@ -7,6 +7,7 @@
                     <table class="table table-head-fixed text-nowrap">
                         <thead>
                             <tr>
+                                <th>STT</th>
                                 <th>Ngày tạo</th>
                                 <th>Ngày bắt đầu</th>
                                 <th>Ngày kết thúc</th>
@@ -16,6 +17,7 @@
                         <tbody>
                             @foreach ($calendars as $calendar)
                                 <tr>
+                                    <td>{{ $calendar->id }}</td>
                                     <td>
                                         {{ \Carbon\Carbon::parse($calendar->date_now)->format('d-m-Y') }}
 
