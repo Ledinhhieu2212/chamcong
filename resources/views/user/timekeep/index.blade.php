@@ -5,11 +5,11 @@
 @endsection
 
 @section('nav')
-    @include('user.components.nav')
+    @include('components.nav')
 @endsection
 
 @section('navbar')
-    @include('user.components.navbar')
+    @include('components.navbar')
 @endsection
 
 

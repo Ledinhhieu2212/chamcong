@@ -2,7 +2,7 @@
 
 
 @section('crud')
-    <form method="POST" action="{{ route('admin.user.create') }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('admin.user.store') }}" enctype="multipart/form-data">
         @csrf
         @if ($errors->any())
             <div class="alert alert-danger">

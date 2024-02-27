@@ -81,6 +81,7 @@
             </div>
             <div class="col-md-12">
                 <div class="form-group">
+                    <a href="{{ route('admin.user.create') }}" class="btn btn-danger">Thoát</a>
                     <button type="submit" class="btn btn-success">Lưu lại</button>
                 </div>
             </div>

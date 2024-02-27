@@ -1,4 +1,4 @@
-<form action="{{ route('profile.post') }}" class="form-horizontal" method="POST" enctype="multipart/form-data">
+<form action="{{ route('profile.update') }}" class="form-horizontal" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
     @if ($errors->any())
@@ -111,6 +111,7 @@
         </div>
         <div class="col-md-12">
             <div class="form-group">
+                <a href="{{ route('home') }}" class="btn btn-danger">Thoát</a>
                 <button type="submit" class="btn btn-success">Lưu lại</button>
             </div>
         </div>

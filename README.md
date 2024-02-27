@@ -17,3 +17,18 @@ Mở laragon và ấn nút chạy và mở terminal
 # 4. Reset seeder
     
     php artisan migrate:refresh --seed
+
+
+# 5. Clone github đúng cách
+
+## 1. Clone all
+    git clone https://github.com/Ledinhhieu2212/chamcong.git
+
+    cd <tên_thư_mục_repository>
+    git fetch --all
+
+## 2. clone môt nhánh bất kì
+
+    git clone -b <tên_nhánh> https://github.com/Ledinhhieu2212/chamcong.git
+
+ 

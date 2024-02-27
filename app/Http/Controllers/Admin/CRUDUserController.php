@@ -26,7 +26,7 @@ class CRUDUserController extends Controller
     public function store(UserCreateRequest $request)
     {
         $this->UserRepository->create($request);
-        return redirect()->route('admin.user.create');
+        return redirect()->route('admin.user.create')->with('success','Đăng ký thành công 1 nhân viên');
     }
     public function edit(int $id)
     {

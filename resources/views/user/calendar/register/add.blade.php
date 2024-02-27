@@ -25,19 +25,40 @@
                                     <li class=" calendar-item">Ca đêm</li>
                                 </ul>
                             </div>
-                            @foreach ($day_works as $item)
+                            @php
+                                $shift1Values = $shift1 ?? [];
+                                $shift2Values = $shift1 ?? [];
+                                $shift3Values = $shift1 ?? [];
+                            @endphp
+                            @for ($i = 1; $i <= 6; $i++)
                                 <div class=" calendar-column col">
                                     <ul class=" list-unstyled text-center">
-                                        <li class=" calendar-item">{{ $item->date_day }}</li>
-                                        @for ($i = 1; $i <= 3; $i++)
-                                            <li class=" calendar-item"><input type="checkbox" class="form-control"
-                                                    name="shifts[{{ $item['id'] }}][{{ $i }}]"
-                                                    value="1" id="">
-                                            </li>
-                                        @endfor
+                                        <li class=" calendar-item">{{ $day[$i] }}</li>
+                                        
+
+                                        <li class="calendar-item">
+                                            <input type="checkbox" class="form-control"
+                                                name="shift1[{{ $i }}]" value="1"
+                                                {{ in_array($i, $shift1Values) ? 'checked' : '' }}>
+                                            <input type="hidden" name="shift1[{{ $i }}]" value="0">
+                                        </li>
+                                        <li class="calendar-item">
+                                            <input type="checkbox" class="form-control"
+                                                name="shift2[{{ $i }}]" value="1"
+                                                {{ in_array($i, $shift2Values) ? 'checked' : '' }}>
+                                            <input type="hidden" name="shift2[{{ $i }}]" value="0">
+                                        </li>
+
+                                        {{-- Checkbox cho Shift 3 --}}
+                                        <li class="calendar-item">
+                                            <input type="checkbox" class="form-control"
+                                                name="shift3[{{ $i }}]" value="1"
+                                                {{ in_array($i, $shift3Values) ? 'checked' : '' }}>
+                                            <input type="hidden" name="shift3[{{ $i }}]" value="0">
+                                        </li>
                                     </ul>
                                 </div>
-                            @endforeach
+                            @endfor
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">

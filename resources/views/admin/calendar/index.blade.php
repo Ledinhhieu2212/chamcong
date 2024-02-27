@@ -2,11 +2,11 @@
 
 
 @section('nav')
-    @include('admin.components.nav')
+    @include('components.navAdmin')
 @endsection
 
 @section('navbar')
-    @include('admin.components.navbar')
+    @include('components.navbarAdmin')
 @endsection
 
 

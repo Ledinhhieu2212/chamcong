@@ -47,8 +47,13 @@
                                     <td class="text-center">
                                         <a href="{{ route('admin.user.edit', $user->id) }}" class="btn btn-success"><i
                                                 class="fa fa-edit"></i></a>
-                                        <a href="{{ route('admin.user.delete', $user->id) }}" class="btn btn-danger"><i
-                                                class="fa fa-trash"></i></a>
+
+                                        @if (Route::currentRouteName() == 'admin.user.edit')
+                                            <a class="btn btn-danger opacity-75"><i class="fa fa-trash"></i></a>
+                                        @else
+                                            <a href="{{ route('admin.user.delete', $user->id) }}"
+                                                class="btn btn-danger "><i class="fa fa-trash"></i></a>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

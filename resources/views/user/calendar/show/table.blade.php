@@ -36,20 +36,57 @@
                                 <li class=" calendar-item">Ca đêm</li>
                             </ul>
                         </div>
-                        @foreach ($day_works as $item)
+                        @for ($i = 1; $i <= 6; $i++)
+                            @php
+                                $found = false;
+                                $shift1 = 0;
+                                $shift2 = 0;
+                                $shift3 = 0;
+                                // Lặp qua danh sách lịch làm việc
+                                foreach ($schedules as $schedule) {
+                                    if ($schedule->day == $i) {
+                                        $found = true;
+                                        $shift1 = $schedule->shift_1;
+                                        $shift2 = $schedule->shift_2;
+                                        $shift3 = $schedule->shift_3;
+                                        // Có thể thêm xử lý cho các ca làm việc khác nếu cần
+                                        break;
+                                    }
+                                }
+                            @endphp
                             <div class=" calendar-column col">
                                 <ul class=" list-unstyled text-center">
-                                    <li class=" calendar-item">{{ $item->date_day }}</li>
-
-                                    @for ($i = 1; $i <= 3; $i++)
-                                        <li class=" calendar-item "><input type="checkbox" class="form-control p-3"
-                                                name="shifts[{{ $item['id'] }}][{{ $i }}]" value="1"
-                                                id="" disabled>
+                                    <li class=" calendar-item">{{ $day[$i] }}</li>
+                                    @if ($found)
+                                        <li class=" calendar-item "><input type="checkbox"
+                                                class="checkbox-calendar form-control p-3" value="1"
+                                                {{ $shift1 == 1 ? 'checked' : '' }} id="" disabled />
                                         </li>
-                                    @endfor
+                                        <li class=" calendar-item "><input type="checkbox"
+                                                class="checkbox-calendar form-control p-3" value="1"
+                                                {{ $shift2 == 1 ? 'checked' : '' }} id="" disabled />
+                                        </li>
+                                        <li class=" calendar-item "><input type="checkbox"
+                                                class="checkbox-calendar form-control p-3" value="1"
+                                                {{ $shift3 == 1 ? 'checked' : '' }} id="" disabled />
+                                        </li>
+                                    @else
+                                        <li class=" calendar-item "><input type="checkbox"
+                                                class="checkbox-calendar form-control p-3" value="1" id=""
+                                                disabled />
+                                        </li>
+                                        <li class=" calendar-item "><input type="checkbox"
+                                                class="checkbox-calendar form-control p-3" value="1" id=""
+                                                disabled />
+                                        </li>
+                                        <li class=" calendar-item "><input type="checkbox"
+                                                class="checkbox-calendar form-control p-3" value="1" id=""
+                                                disabled />
+                                        </li>
+                                    @endif
                                 </ul>
                             </div>
-                        @endforeach
+                        @endfor
                     </div>
                 @else
                     <h1>Hiện tại chưa có lịch đăng ký</h1>

@@ -25,9 +25,9 @@ class Detail_Calendar extends Model
         return $this->belongsTo(Calendar::class);
     }
 
-    public function day_works()
+    public function scheludes()
     {
-        return $this->hasMany(Day_Works::class);
+        return $this->hasMany(Schedule::class);
     }
-    
+
 }

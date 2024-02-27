@@ -16,8 +16,7 @@ class DatabaseSeeder extends Seeder
             QrCodeSeeder::class,
             CalendarSeeder::class,
             Detail_CalendarSeeder::class,
-            Day_WorkSeeder::class,
-            ShiftSeeder::class,
+            ScheduleSeeder::class,
         ]);
     }
 }

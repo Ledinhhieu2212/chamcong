@@ -11,10 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('day_works', function (Blueprint $table) {
+        Schema::create('schedules', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('detail_calendar_id')->unsigned()->nullable();
-            $table->string('date_day')->nullable();
+            $table->unsignedBigInteger('detail_calendar_id');
+            $table->date('date')->nullable();
+            $table->unsignedInteger('day')->nullable();
+            $table->unsignedInteger('shift_1')->default(0);
+            $table->unsignedInteger('shift_2')->default(0);
+            $table->unsignedInteger('shift_3')->default(0);
+            $table->timestamps();
+
             $table->foreign('detail_calendar_id')->references('id')->on('detail_calendars')->onDelete('cascade');
         });
     }
@@ -24,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('day_works');
+        Schema::dropIfExists('schedules');
     }
 };

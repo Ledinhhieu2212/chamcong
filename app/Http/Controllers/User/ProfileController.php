@@ -6,22 +6,20 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserEditRequest;
 use App\Models\Position;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
 class ProfileController extends Controller
 {
-    public function index()
-    {
+    public function edit(){
         $positions = Position::all();
-        return view("user.profile.index", compact("positions"));
+        return view("user.profile.index" , compact("positions"));
     }
 
-    public function post(UserEditRequest $request)
+    public function update(UserEditRequest $request)
     {
         $data = $request->all();
-        $user = Auth::user();
+        $user = Auth::user()->id;
         if ($request->hasFile('image')) {
             $path = 'assets/img';
             $image = $request->file('image');
@@ -34,6 +32,6 @@ class ProfileController extends Controller
         }
         $data["updated_at"] = Carbon::now();
         $user->update($data);
-        return redirect()->route("profile")->with("success", "");
+        return redirect()->route("profile")->with("success", "Sửa thông tin thành công");
     }
 }
