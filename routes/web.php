@@ -7,20 +7,35 @@ use App\Http\Controllers\Admin\QrcodeController as CrudQrcode;
 use App\Http\Controllers\Admin\TimekeepController;
 use App\Http\Controllers\User\TimekeepController as UserTimekeep;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\LoginQrCodeController;
+use App\Http\Controllers\Auth\LoginTimeKeepQrCodeController;
 use App\Http\Controllers\User\Calendars\SearchController as SearchCalendar;
 use App\Http\Controllers\User\Calendars\RegisterController as RegisterCalendar;
 use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-//User routes
-//Login user
+// User routes
+// Login user
 Route::get('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/login-post', [LoginController::class, 'loginPost'])->name('login.post')->middleware('login');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
-//User home
+// Timekeep
+Route::get('/login-timekeep', [LoginTimeKeepQrCodeController::class, 'index'])->name('login.timekeep');
+Route::post(
+    '/login-timekeep-post',
+    [LoginTimeKeepQrCodeController::class, 'login']
+)->name('login.timekeep.post')->middleware('login');
 
+// Login QrCode
+Route::get('/login-qrcode', [LoginQrCodeController::class, 'index'])->name('login.qrcode');
+Route::post(
+    '/login-qrcode-post',
+    [LoginQrCodeController::class, 'login']
+)->name('login.qrcode.post')->middleware('login');
+
+//User home
 Route::middleware('user-auth')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');

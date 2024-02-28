@@ -21,13 +21,13 @@
 
     <div class="login-box">
         <div class="login-logo">
-            <b>Đăng nhập</b>
+            <b>Đăng nhập - QrCode</b>
         </div>
         <!-- /.login-logo -->
         <div class="card">
             <div class="card-body login-card-body">
 
-                <form class="m-t" method="POST" role="form"action="{{ route('login.post') }}">
+                <form class="m-t" method="POST" role="form"action="{{ route('login.qrcode.post') }}">
                     @csrf
 
                     <div class="form-group">
@@ -60,23 +60,19 @@
                     @endif
                     <button type="submit" class="btn btn-primary btn-block">Đăng nhập</button>
                     <div class="row py-2">
-                        <div class="col-md-6">
-                            <a href="" class="w-100 btn btn-danger">
-                                <img src="{{ asset("assets/img/van-tay.png") }}" width="30" height="30" alt="" srcset="">
-                                Vân tay</a>
+                        <div class="col-md-12 pb-2">
+                            <a href="{{ route('login.timekeep') }}" class="w-100 btn btn-success">
+                                <img src="{{ asset('assets/img/qrcode.svg') }}" width="30" height="30"
+                                    alt="" srcset="">
+                                Chấm công Qr code</a>
                         </div>
-
-                        <div class="col-md-6">
-                            <a href="" class="w-100 btn btn-success">
-                                <img src="{{ asset("assets/img/qrcode.svg") }}" width="30" height="30" alt="" srcset="">
-                                Qr code</a>
+                        <div class="col-md-12 pb-2">
+                            <a href="{{ route('login') }}" class="w-100 btn btn-danger">
+                                Đăng nhập thường</a>
                         </div>
                     </div>
-
                 </form>
-
             </div>
-            <!-- /.login-card-body -->
         </div>
     </div>
     <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
