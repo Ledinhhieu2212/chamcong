@@ -5,7 +5,7 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <title>Đăng nhập</title>
 
     <link rel="stylesheet"
@@ -29,13 +29,6 @@
 
                 <form class="m-t" method="POST" role="form"action="{{ route('login.post') }}">
                     @csrf
-
-                    <div class="form-group">
-                        <select name="decentralization" class="cole-admin-user">
-                            <option value="user" selected>Nhân viên</option>
-                            <option value="admin">Quản lý</option>
-                        </select>
-                    </div>
                     <div class="input-group">
                         <input type="text" name="email" class="form-control" placeholder="Email">
                         <div class="input-group-append">
@@ -61,14 +54,10 @@
                     <button type="submit" class="btn btn-primary btn-block">Đăng nhập</button>
                     <div class="row py-2">
                         <div class="col-md-12 pb-2">
-                            <a href="" class="w-100 btn btn-danger">
-                                <img src="{{ asset("assets/img/qrcode.svg") }}" width="30" height="30" alt="" srcset="">
+                            <a href="{{ route('scanner') }}" class="w-100 btn btn-danger">
+                                <img src="{{ asset('assets/img/qrcode.svg') }}" width="30" height="30"
+                                    alt="" srcset="">
                                 Chấm công Qr code</a>
-                        </div>
-                        <div class="col-md-12">
-                            <a href="" class="w-100 btn btn-success">
-                                <img src="{{ asset("assets/img/qrcode.svg") }}" width="30" height="30" alt="" srcset="">
-                                Đăng nhập Qr code</a>
                         </div>
                     </div>
 

@@ -3,10 +3,10 @@
 
 @section('crud')
     <div class="row p-3 justify-content-center">
-        <div class="col-md-12 text-center" >
+        <div class="col-md-12 text-center">
             <div class="" id="printableArea">
                 <div class="">
-                    <img src="data:image/png;base64,{{ $qrCode }}" alt="" class="" >
+                    <img src="data:image/png;base64,{{ $qrCode }}" alt="" class="">
                 </div>
             </div>
         </div>

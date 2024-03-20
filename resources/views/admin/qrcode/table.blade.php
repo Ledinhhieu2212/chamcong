@@ -16,20 +16,20 @@
                     <tbody>
                         @foreach ($qrcodes as $qrcode)
                             @php
-                                $mode = " ";
-                                if ($qrcode->mode  == 0) {
-                                    $mode = "Mật khẩu";
+                                $mode = ' ';
+                                if ($qrcode->mode == 0) {
+                                    $mode = 'Mật khẩu';
                                 }
-                                if( $qrcode->mode  == 1){
-                                    $mode = "Mật khẩu, chụp ảnh";
-                                }
-
-                                if ($qrcode->mode  == 2) {
-                                    $mode = "Mật khẩu, vân tay";
+                                if ($qrcode->mode == 1) {
+                                    $mode = 'Mật khẩu, chụp ảnh';
                                 }
 
-                                if ($qrcode->mode  == 3) {
-                                    $mode = "Mật khẩu, vân tay, chụp ảnh";
+                                if ($qrcode->mode == 2) {
+                                    $mode = 'Mật khẩu, vân tay';
+                                }
+
+                                if ($qrcode->mode == 3) {
+                                    $mode = 'Mật khẩu, vân tay, chụp ảnh';
                                 }
                             @endphp
                             <tr>
@@ -38,7 +38,8 @@
                                 <td> {{ $qrcode->address_address }}</td>
                                 <td>{{ $mode }} </td>
                                 <td class="text-center">
-                                    <a  href="{{ route('admin.qrcode.generate', $qrcode->id) }}"  class="btn btn-primary" > <i class="fa fa-qrcode"></i></a>
+                                    <a href="{{ route('admin.qrcode.generate', $qrcode->id) }}" class="btn btn-primary">
+                                        <i class="fa fa-qrcode"></i></a>
                                     <a href="{{ route('admin.qrcode.edit', $qrcode->id) }}" class="btn btn-success"><i
                                             class="fa fa-edit"></i></a>
                                     <a href="{{ route('admin.qrcode.delete', $qrcode->id) }}" class="btn btn-danger"><i

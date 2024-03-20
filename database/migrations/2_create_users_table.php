@@ -24,6 +24,7 @@ return new class extends Migration
             $table->text('address')->nullable();
             $table->date('birthday')->nullable();
             $table->text('image')->nullable();
+            $table->text('qr_code')->nullable();
             $table->unsignedBigInteger('position_id')->nullable();
             $table->rememberToken();
             $table->timestamps();

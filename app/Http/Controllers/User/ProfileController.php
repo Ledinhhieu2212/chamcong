@@ -6,40 +6,34 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserEditRequest;
 use App\Models\Position;
 use App\Models\User;
+use App\Repositories\User\UserRepositoryInterfaces;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ProfileController extends Controller
 {
+    protected $userRepository;
+
+    public function __construct(UserRepositoryInterfaces $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
     public function edit()
     {
-        $positions = Position::all();
-        $user = User::find(Auth::user()->id);
-        $text = hash::make("?id=$user->id?fullname=$user->fullname?user=?$user->username?email=?$user->email?password=?$user->password?");
-        $qrCode = QrCode::format('png')->size(500)->generate($text);
+        $user_account = Auth::user();
+        $position = Position::find($user_account->position_id);
+        $qrCode = QrCode::format('png')->size(500)->generate($user_account->qr_code);
         $base64QrCode = base64_encode($qrCode);
-        return view("user.profile.index", compact("positions", "base64QrCode"));
+        return view("user.profile.index", compact("position","base64QrCode", 'user_account'));
     }
 
     public function update(UserEditRequest $request)
     {
-        $userId = Auth::user()->id;
-        $data = $request->all();
-        if ($request->hasFile('image')) {
-            $path = 'assets/img';
-            $image = $request->file('image');
-            $imageName = time() . '-avatar-img.' . $image->getClientOriginalExtension();
-            $image->move(public_path($path), $imageName);
-            if (File::exists(public_path($path . "/" . $image))) {
-                File::delete(public_path($path . "/" . $image));
-            }
-            $data['image'] = $imageName;
-        }
-        $data["updated_at"] = Carbon::now();
-        $userId->update($data);
+        $this->userRepository->profile($request);
         return redirect()->route("profile")->with("success", "Sửa thông tin thành công");
     }
 }

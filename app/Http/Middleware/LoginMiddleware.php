@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware\user;
+namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
@@ -16,11 +16,12 @@ class LoginMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::guard('admin')->check()) {
-            return redirect()->route('admin.home');
-        }
         if (Auth::check()) {
-            return redirect()->route('home');
+            if (Auth::user()->position_id == 999) {
+                return redirect()->route('admin.home');
+            } else {
+                return redirect()->route('home');
+            }
         }
         return $next($request);
     }

@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\User\Calendars;
+namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Day_Works;
-use App\Models\Schedule;
+use App\Repositories\User\UserRepositoryInterfaces;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class SearchController extends Controller
+class CalendarController extends Controller
 {
     public function index(Request $request)
     {
@@ -18,6 +17,7 @@ class SearchController extends Controller
             'Thứ 2', "Thứ 3", "Thứ 4",
             'Thứ 5', "Thứ 6", "Thứ 7", "Chủ nhật"
         ];
+        $status = false;
         $calendars = DB::table('calendars')
             ->join('detail_calendars', 'calendars.id', '=', 'detail_calendars.calendar_id')
             ->select('calendars.*', 'detail_calendars.id as detail_calendar_id')
@@ -44,6 +44,43 @@ class SearchController extends Controller
             ->where('detail_calendars.user_id', '=', Auth::user()->id)
             ->where('detail_calendars.id', '=', $calendarId)
             ->get()->toArray();
-        return view('user.calendar.show.table', compact('calendars', 'calendar_end', 'day', 'schedules', 'calendarId', 'calendar_search'));
+
+        if ($calendar_search->calendar_enabled == 1 && $calendar_search->detail_id == $calendarId) {
+            $status = true;
+        }
+
+        $user_account = Auth::user();
+        return view('user.calendar.show.table', compact('calendars', 'status', 'calendar_end', 'day', 'schedules', 'calendarId', 'calendar_search', 'user_account'));
+    }
+
+    protected $userRepository;
+    public function __construct(UserRepositoryInterfaces $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+    public function create()
+    {
+        $day = [
+            'Thứ 2', "Thứ 3", "Thứ 4",
+            'Thứ 5', "Thứ 6", "Thứ 7", "Chủ nhật"
+        ];
+        $status = false;
+        $calendar = DB::table('calendars')
+            ->join('detail_calendars', 'calendars.id', '=', 'detail_calendars.calendar_id')
+            ->select('calendars.*', 'detail_calendars.is_registered as is_registered')
+            ->where('detail_calendars.user_id', '=', Auth::user()->id)
+            ->orderBy('id', 'desc')
+            ->first();
+        if ($calendar->is_calendar_enabled == 1 && $calendar->is_registered == 0) {
+            $status = true;
+        }
+        $user_account = Auth::user();
+        return view('user.calendar.register.index', compact('calendar', 'status', 'day', 'user_account'));
+    }
+
+    public function store(Request $request)
+    {
+        $this->userRepository->registerCalendar($request);
+        return redirect()->route("register.calendar")->with("success", "");
     }
 }

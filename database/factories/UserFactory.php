@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Position;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -14,13 +15,14 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'username'  => fake()->userName(),
+            $user = 'username'  => fake()->userName(),
             'fullname' => fake()->name(),
-            'password' => Hash::make('password'),
-            'email' => fake()->unique()->safeEmail(),
+            $pass = 'password' => Hash::make('1234567'),
+            $mail =  'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'position_id' => random_int(1,4),
+            'position_id' => 1,
             'image' => fake()->imageUrl(),
+            'qr_code' => Hash::make("username=?$user?email=?$mail?password=?$pass?"),
             'remember_token' => Str::random(10),
         ];
     }

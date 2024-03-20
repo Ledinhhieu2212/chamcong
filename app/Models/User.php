@@ -54,4 +54,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Position::class);
     }
+
+    public function timekeeps()
+    {
+        return $this->hasMany(Timekeep::class, 'user_id');
+    }
 }

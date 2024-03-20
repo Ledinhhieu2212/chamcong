@@ -7,13 +7,6 @@
 @section('script')
 @endsection
 
-@section('nav')
-    @include('components.navAdmin')
-@endsection
-
-@section('navbar')
-    @include('components.navbarAdmin')
-@endsection
 
 
 @section('content')

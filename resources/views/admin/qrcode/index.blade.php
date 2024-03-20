@@ -1,14 +1,6 @@
 @extends('layout')
 
 
-@section('nav')
-    @include('components.navAdmin')
-@endsection
-
-@section('navbar')
-    @include('components.navbarAdmin')
-@endsection
-
 
 @section('content')
     <!-- Content Wrapper. Contains page content -->

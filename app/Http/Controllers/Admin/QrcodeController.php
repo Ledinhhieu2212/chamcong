@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Detail_QrCode;
 use App\Models\Qrcode as QrCodeModal;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\View;
 use Intervention\Image\Facades\Image;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -16,6 +18,7 @@ class QrcodeController extends Controller
     public function __construct()
     {
         View::share('qrcodes', QrCodeModal::all());
+        View::share('users_array', User::where('position_id', '!=', 999)->orderBy('id','asc')->get());
     }
 
     public function index()
@@ -27,7 +30,11 @@ class QrcodeController extends Controller
     {
         $data = $request->all();
         $ids = $request->ids;
-        $qrcode =  QrCodeModal::create($data);
+        $qrcode = QrCodeModal::create([
+            "name" => $data["name"],
+            'mode' => $data['mode'],
+            ''
+        ]);
         foreach ($ids as $id) {
             Detail_QrCode::create([
                 "user_id" => $id,
@@ -80,8 +87,8 @@ class QrcodeController extends Controller
     public function generateQrCode($id)
     {
         $data = QrCodeModal::find($id);
-        $text = Hash::make("?id=$data->id?name=$data->name?mode=?$data->mode?");
-        $qrCode = base64_encode(QrCode::format('png')->size(500)->generate($text));
-        return view('admin.qrcode.generate', compact('qrCode'));
+        $qrCode = base64_encode(QrCode::format('png')->size(500)->generate($data->qr_code));
+        $qrCodeAddImage = Storage::disk('public')->put($data->name, $qrCode);
+        return view('admin.qrcode.generate', compact('qrCode','qrCodeAddImage'));
     }
 }

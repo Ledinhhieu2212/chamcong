@@ -7,8 +7,10 @@ use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserEditRequest;
 use App\Models\Position;
 use App\Models\User;
-use App\Repositories\Interfaces\UserRepositoryInterfaces;
+use App\Repositories\User\UserRepositoryInterfaces;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
 
 class CRUDUserController extends Controller
 {
@@ -16,24 +18,28 @@ class CRUDUserController extends Controller
 
     public function __construct(UserRepositoryInterfaces $UserRepository)
     {
+        View::share('positons', Position::where('id', '!=', 999)->orderBy('id', 'ASC')->get());
         $this->UserRepository = $UserRepository;
     }
+
     public function create()
     {
-        $positons = Position::all();
-        return view('admin.user.add', compact('positons'));
+        $users_array = User::where('position_id', '!=', 999)->orderBy('id', 'asc')->get();
+        $admin = Auth::user();
+        return view('admin.user.add', compact('users_array', 'admin'));
     }
     public function store(UserCreateRequest $request)
     {
         $this->UserRepository->create($request);
-        return redirect()->route('admin.user.create')->with('success','Đăng ký thành công 1 nhân viên');
+        return redirect()->route('admin.user.create')->with('success', 'Đăng ký thành công 1 nhân viên');
     }
+
     public function edit(int $id)
     {
-        $positons = Position::all();
         $title = 'Sửa nhân viên';
+        $users_array = User::where('position_id', '!=', 999)->get();
         $user = User::find($id);
-        return view('admin.user.edit', compact('title', 'user', 'positons'));
+        return view('admin.user.edit', compact('title', 'user', 'users_array'));
     }
     public function update(UserEditRequest $request, int $id)
     {
@@ -41,7 +47,7 @@ class CRUDUserController extends Controller
         return redirect()->route('admin.user.create');
     }
 
-    public function delete(int $id)
+    public function destroy(int $id)
     {
         $this->UserRepository->delete($id);
         return redirect()->route('admin.user.create')->with('success', 'Xóa thành công nhân viên');

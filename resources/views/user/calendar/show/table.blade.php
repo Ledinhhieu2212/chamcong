@@ -34,7 +34,7 @@
                     <div class="col-sm-12">
                         <div class="card">
                             <div class="card-body table-responsive p-0">
-                                @if ($calendar_search->calendar_enabled == 1 && $calendar_search->detail_id == $calendarId)
+                                @if ($status)
                                     <div class=" calendar-table row">
                                         <div class=" calendar-column col">
                                             <ul class=" list-unstyled text-center">

@@ -5,7 +5,7 @@
                 <form action="{{ route('register.calendar.store') }}" method="post">
                     @csrf
 
-                    @if ($calendar->is_calendar_enabled == 1 && $calendar->is_registered == 0)
+                    @if ($status)
                         <div class="row p-3">
                             <div class="col-md-6">
                                 <div class="form-group">

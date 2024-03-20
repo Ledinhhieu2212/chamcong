@@ -43,9 +43,11 @@
                     <label for="">Công việc</label>
                     <select class="form-control" name="position_id">
                         @foreach ($positons as $positon)
-                            <option value="{{ $positon->id }}">
-                                {{ $positon->job }}
-                            </option>
+                            @if ($positon->id !== 999)
+                                <option value="{{ $positon->id }}">
+                                    {{ $positon->job }}
+                                </option>
+                            @endif
                         @endforeach
                     </select>
                 </div>

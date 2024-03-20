@@ -22,6 +22,9 @@
 .avatar {
     object-fit: cover;
 }
+.image-avatar  {
+    object-fit: contain;
+}
 
 .calendar-table {
     width: 100%;
@@ -63,3 +66,31 @@
     height: 500px;
 }
 
+.webcam{
+    max-width: 800px;
+    overflow: hidden;
+}
+
+.status-scanner{
+    position: relative;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+.status-scanner h3{
+    background-color: green;
+    position: absolute;
+    top: -80px;
+    left: 0px;
+    display: none;
+    padding: 20px;
+    width: 100%;
+}
+
+input[name="color"]{
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    border: 2px solid #6f7173;
+    border-radius: 5px;
+}

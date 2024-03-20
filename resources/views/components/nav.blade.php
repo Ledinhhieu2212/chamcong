@@ -11,11 +11,6 @@
         </li>
     </ul>
     <ul class="navbar-nav ml-auto">
-        <li class="nav-item d-flex align-items-center">
-            <span  class="py-4 px-2 text-primary font-weight-bold">
-                {{ $today['dayOfWeek']  }} - {{ $today['mothOfYear'] }} - <span id="current-time"> </span>
-            </span>
-        </li>
         <li class="nav-item">
             <a class="nav-link" data-widget="fullscreen" href="#" role="button">
                 <i class="fas fa-expand-arrows-alt"></i>

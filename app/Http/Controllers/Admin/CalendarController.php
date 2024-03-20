@@ -14,6 +14,7 @@ class CalendarController extends Controller
     public function __construct()
     {
         View::share('calendars', Calendar::all());
+        View::share('users_array', User::where('position_id', '!=', 999)->get());
     }
     public function index()
     {
@@ -56,7 +57,7 @@ class CalendarController extends Controller
 
         if ($is_calendar_enabled == "1") {
             $data['is_calendar_enabled'] = 1;
-        }else{
+        } else {
             $data['is_calendar_enabled'] = 0;
         }
 

@@ -31,6 +31,7 @@ class PositionSeeder extends Seeder
 
 
         DB::table('positions')->insert([
+            "id" => 999,
             "job" => "Quản lý",
             "wage" => "150000",
         ]);

@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Middleware\admin;
+namespace App\Http\Middleware;
 
-use App\Models\User;
+use Carbon\Carbon;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminAuthenticateMiddleware
+class AuthenticateMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,11 +17,10 @@ class AdminAuthenticateMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(!Auth::guard('admin')->check()){
-            return redirect()->route('login')->with('error', 'Bạn phải đăng nhập trước khi sử dụng');;
-        }else{
-            view()->share('admin', Auth::guard('admin')->user());
-            view()->share('users_array', User::all());
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Bạn phải đăng nhập trước khi sử dụng');
+        } else {
+            view()->share("user_account", Auth::user());
             return $next($request);
         }
     }
