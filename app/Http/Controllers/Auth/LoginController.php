@@ -88,7 +88,7 @@ class LoginController extends Controller
                             DB::table('timekeeps')->where('user_id', $user->id)->where('day_timekeep',  Carbon::now()->startOfDay())->update(['time_out' => Carbon::now()->toTimeString()]);
                         }
 
-                        if()
+                        // if()
 
                         return redirect()->route('scanner')->with('cussecc', "Chấm công thành công");
                     } else {
