@@ -14,6 +14,7 @@ use App\Http\Controllers\User\Calendars\RegisterController as RegisterCalendar;
 use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\TimekeepController as UserTimekeepController;
+use App\Http\Controllers\User\StatisticController as UserStatisticController;
 use Illuminate\Support\Facades\Route;
 
 //User routes
@@ -36,6 +37,7 @@ Route::middleware('auth-login')->group(function () {
     Route::post('/register-calendar', [CalendarController::class, 'store'])->name('register.calendar.store');
 
     Route::get('timekeep', [UserTimekeepController::class, 'index'])->name('timekeep');
+    Route::get('statistic', [UserStatisticController::class, 'index'])->name('statistic');
 
 
     // Admin routes

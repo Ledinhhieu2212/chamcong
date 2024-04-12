@@ -157,7 +157,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="" class="nav-link">
+                        <a href="{{ route('statistic') }}" class="nav-link">
                             <div class="f-flex justify-content-center">
                                 <i class="fas fa-chart-pie"></i>
                                 <p>
