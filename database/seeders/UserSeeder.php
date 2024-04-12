@@ -24,7 +24,7 @@ class UserSeeder extends Seeder
             'position_id' => 1,
             'image' => 'https://toigingiuvedep.vn/wp-content/uploads/2021/07/mau-anh-the-dep-lam-the-can-cuoc.jpg',
             'remember_token' => Str::random(10),
-            'qr_code' => hash::make("username=?$name?email=?$mail?password=?$pass?")
+            'qr_code' => Hash::make("username=?$name?email=?$mail?password=?$pass?")
         ]);
 
 
@@ -36,7 +36,7 @@ class UserSeeder extends Seeder
             'position_id' => 2,
             'image' => 'https://th.bing.com/th/id/OIP.zDpkbSxWJKF9vp9HB0zkSgHaLH?pid=ImgDet&w=474&h=711&rs=1',
             'remember_token' => Str::random(10),
-            'qr_code' => hash::make("username=?$name?email=?$mail?password=?$pass?")
+            'qr_code' => Hash::make("username=?$name?email=?$mail?password=?$pass?")
         ]);
 
 
@@ -48,7 +48,7 @@ class UserSeeder extends Seeder
             'position_id' => 1,
             'image' => 'https://th.bing.com/th/id/OIP.IVCWB8veo7m_lwMfVXmVAQHaLH?pid=ImgDet&w=474&h=711&rs=1',
             'remember_token' => Str::random(10),
-            'qr_code' => hash::make("username=?$name?email=?$mail?password=?$pass?")
+            'qr_code' => Hash::make("username=?$name?email=?$mail?password=?$pass?")
         ]);
 
 
@@ -60,7 +60,7 @@ class UserSeeder extends Seeder
             'position_id' => 3,
             'image' => 'https://vnn-imgs-a1.vgcloud.vn/icdn.dantri.com.vn/2021/05/26/ngo-ngang-voi-ve-dep-cua-hot-girl-anh-the-chua-tron-18-docx-1622043349706.jpeg',
             'remember_token' => Str::random(10),
-            'qr_code' => hash::make("username=?$name?email=?$mail?password=?$pass?")
+            'qr_code' => Hash::make("username=?$name?email=?$mail?password=?$pass?")
         ]);
 
 
