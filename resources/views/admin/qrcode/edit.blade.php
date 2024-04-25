@@ -31,10 +31,6 @@
                                 </option>
                                 <option @if ($qrcode_edit->mode == 1) selected @endif value="1">Mật khẩu, chụp ảnh
                                 </option>
-                                <option @if ($qrcode_edit->mode == 2) selected @endif value="2">Mật khẩu, vân tay
-                                </option>
-                                <option @if ($qrcode_edit->mode == 3) selected @endif value="3">Mật khẩu, vân tay,
-                                    chụp ảnh</option>
                             </select>
                         </div>
                     </div>

@@ -26,9 +26,11 @@ return new class extends Migration
             $table->text('image')->nullable();
             $table->text('qr_code')->nullable();
             $table->unsignedBigInteger('position_id')->nullable();
+            $table->uuid('permission_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->foreign('position_id')->references('id')->on('positions');
+            $table->foreign('permission_id')->references('id')->on('permissions');
         });
     }
 

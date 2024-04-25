@@ -23,14 +23,6 @@
                                 if ($qrcode->mode == 1) {
                                     $mode = 'Mật khẩu, chụp ảnh';
                                 }
-
-                                if ($qrcode->mode == 2) {
-                                    $mode = 'Mật khẩu, vân tay';
-                                }
-
-                                if ($qrcode->mode == 3) {
-                                    $mode = 'Mật khẩu, vân tay, chụp ảnh';
-                                }
                             @endphp
                             <tr>
                                 <td><input type="checkbox" name="" id=""></td>

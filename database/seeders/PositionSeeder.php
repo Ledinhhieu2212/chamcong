@@ -14,26 +14,21 @@ class PositionSeeder extends Seeder
     public function run(): void
     {
         DB::table('positions')->insert([
-            "job" => "NV bưng nước",
-            "wage" => "10000",
+            "job" => "Pha chế",
         ]);
 
         DB::table('positions')->insert([
-            "job" => "NV pha chế",
-            "wage" => "20000",
+            "job" => "Tính hóa đơn",
         ]);
 
-
         DB::table('positions')->insert([
-            "job" => "NV tính bill",
-            "wage" => "20000",
+            "job" => "Phục vụ",
         ]);
 
-
         DB::table('positions')->insert([
-            "id" => 999,
+            'id' => 999,
             "job" => "Quản lý",
-            "wage" => "150000",
         ]);
+
     }
 }

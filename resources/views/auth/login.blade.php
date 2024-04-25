@@ -29,6 +29,9 @@
 
                 <form class="m-t" method="POST" role="form"action="{{ route('login.post') }}">
                     @csrf
+                    <div class="">
+
+                    </div>
                     <div class="input-group">
                         <input type="text" name="email" class="form-control" placeholder="Email">
                         <div class="input-group-append">

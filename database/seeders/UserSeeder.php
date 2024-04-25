@@ -95,7 +95,6 @@ class UserSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'password' => Hash::make('123456'),
             'position_id' => 999,
-
             'image' => 'https://wowjohn.com/wp-content/uploads/2022/05/admin-avatar-png-4.png',
             'remember_token' => Str::random(10),
         ]);

@@ -1,7 +1,7 @@
 @extends('admin.qrcode.index')
 
 @section('crud')
-    <form method="POST" action="{{ route('admin.qrcode.store') }}" >
+    <form method="POST" action="{{ route('admin.qrcode.store') }}">
         @csrf
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -27,14 +27,12 @@
                             <select class="form-control" name="mode">
                                 <option value="0" selected>Mật khẩu</option>
                                 <option value="1">Mật khẩu, chụp ảnh</option>
-                                <option value="2">Mật khẩu, vân tay</option>
-                                <option value="3">Mật khẩu, vân tay, chụp ảnh</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label for="" class="" >Địa chỉ </label>
+                            <label for="" class="">Địa chỉ </label>
                             <div class=" block">
                                 <a href="" class="btn btn-primary"> Lấy địa chỉ nơi tạo mã qr</a>
                             </div>
