@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('schedules', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('detail_calendar_id');
+            $table->uuid('id')->primary();
+            $table->uuid('detail_calendar_id');
             $table->date('date')->nullable();
             $table->unsignedInteger('day')->nullable();
             $table->unsignedInteger('shift_1')->default(0);

@@ -19,48 +19,48 @@ class ShiftsSeeder extends Seeder
         // $table->time('start_time')->nullable();
         // $table->time('end_time')->nullable();
         // $table->text('description')->nullable();
-        DB::table('shifts')->insert([
-            "start_time" =>  Carbon::parse('08:00:00'),
-            "end_time" => Carbon::parse('12:00:00'),
-            "description" => 'Ca sáng',
-        ]);
+        // DB::table('shifts')->insert([
+        //     "start_time" =>  Carbon::parse('08:00:00'),
+        //     "end_time" => Carbon::parse('12:00:00'),
+        //     "description" => 'Ca sáng',
+        // ]);
 
-        DB::table('shifts')->insert([
-            "start_time" =>  Carbon::parse('13:00:00'),
-            "end_time" => Carbon::parse('17:30:00'),
-            "description" => 'Ca chiều',
-        ]);
+        // DB::table('shifts')->insert([
+        //     "start_time" =>  Carbon::parse('13:00:00'),
+        //     "end_time" => Carbon::parse('17:30:00'),
+        //     "description" => 'Ca chiều',
+        // ]);
 
-        DB::table('shifts')->insert([
-            "start_time" =>  Carbon::parse('18:00:00'),
-            "end_time" => Carbon::parse('22:00:00'),
-            "description" => 'Ca tối',
-        ]);
+        // DB::table('shifts')->insert([
+        //     "start_time" =>  Carbon::parse('18:00:00'),
+        //     "end_time" => Carbon::parse('22:00:00'),
+        //     "description" => 'Ca tối',
+        // ]);
 
-        DB::table('detail_shifts')->insert([
-            "timekeep_id" =>  1,
-            "shift_id" => 1,
-        ]);
+        // DB::table('detail_shifts')->insert([
+        //     "timekeep_id" =>  1,
+        //     "shift_id" => 1,
+        // ]);
 
 
-        DB::table('detail_shifts')->insert([
-            "timekeep_id" =>  1,
-            "shift_id" => 2,
-        ]);
+        // DB::table('detail_shifts')->insert([
+        //     "timekeep_id" =>  1,
+        //     "shift_id" => 2,
+        // ]);
 
-        DB::table('detail_shifts')->insert([
-            "timekeep_id" =>  2,
-            "shift_id" => 1,
-        ]);
+        // DB::table('detail_shifts')->insert([
+        //     "timekeep_id" =>  2,
+        //     "shift_id" => 1,
+        // ]);
 
-        DB::table('detail_shifts')->insert([
-            "timekeep_id" =>  2,
-            "shift_id" => 2,
-        ]);
+        // DB::table('detail_shifts')->insert([
+        //     "timekeep_id" =>  2,
+        //     "shift_id" => 2,
+        // ]);
 
-        DB::table('detail_shifts')->insert([
-            "timekeep_id" =>  2,
-            "shift_id" => 3,
-        ]);
+        // DB::table('detail_shifts')->insert([
+        //     "timekeep_id" =>  2,
+        //     "shift_id" => 3,
+        // ]);
     }
 }

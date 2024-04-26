@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('detail_calendars', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id')->unsigned()->nullable();
-            $table->unsignedBigInteger('calendar_id')->unsigned()->nullable();
+            $table->uuid('id')->primary();
+            $table->uuid('user_id')->nullable();
+            $table->uuid('calendar_id')->nullable();
             $table->unsignedInteger('is_registered')->default(0);
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

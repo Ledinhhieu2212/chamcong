@@ -10,9 +10,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('detail_qrcodes', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id')->unsigned()->nullable();
-            $table->unsignedBigInteger('qrcode_id')->unsigned()->nullable();
+            $table->uuid('id')->primary();
+            $table->uuid('user_id')->nullable();
+            $table->uuid('qrcode_id')->nullable();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('qrcode_id')->references('id')->on('qrcodes')->onDelete('cascade');

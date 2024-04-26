@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('calendars', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();;
             $table->dateTime('date_now')->nullable();
             $table->dateTime('start_date')->nullable();
             $table->dateTime('end_date')->nullable();

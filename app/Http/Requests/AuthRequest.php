@@ -22,15 +22,15 @@ class AuthRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required',
-            'password' => 'required',
+            'password' => 'required|min:6',
+            'username' => 'required',
         ];
     }
     public function messages(): array
     {
         return [
-            'email.required' => 'Bạn chưa nhập email hoặc tài khoản',
-            'password.required' =>  'Bạn chưa nhập mật khẩu',
+            'username.required' => 'Bạn chưa nhập email hay tài khoản ',
+            'password.min' => 'Mật khẩu phải có hơn 6 kí tự',
         ];
     }
 }

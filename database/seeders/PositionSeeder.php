@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Ramsey\Uuid\Uuid;
 
 class PositionSeeder extends Seeder
 {
@@ -14,21 +15,18 @@ class PositionSeeder extends Seeder
     public function run(): void
     {
         DB::table('positions')->insert([
+            'id' => Uuid::uuid4()->toString(),
             "job" => "Pha chế",
         ]);
 
         DB::table('positions')->insert([
+            'id' => Uuid::uuid4()->toString(),
             "job" => "Tính hóa đơn",
         ]);
 
         DB::table('positions')->insert([
+            'id' => Uuid::uuid4()->toString(),
             "job" => "Phục vụ",
         ]);
-
-        DB::table('positions')->insert([
-            'id' => 999,
-            "job" => "Quản lý",
-        ]);
-
     }
 }

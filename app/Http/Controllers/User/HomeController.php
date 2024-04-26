@@ -7,9 +7,12 @@ use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
+    public function __construct()
+    {
+        // view()->share("user_account", Auth::user());
+    }
     public function index()
     {
-        $user_account = Auth::user();
-        return view('user.home.index' , compact('user_account'));
+        return view('user.home.index');
     }
 }

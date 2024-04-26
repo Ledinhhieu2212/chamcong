@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('timekeeps', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id')->nullable();
+            $table->uuid('id')->primary();;
+            $table->uuid('user_id')->nullable();
             $table->dateTime('date')->nullable();
             $table->time('time_in')->nullable();
             $table->time('time_out')->nullable();

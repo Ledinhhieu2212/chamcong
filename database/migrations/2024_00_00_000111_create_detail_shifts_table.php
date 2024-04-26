@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('detail_shifts', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('timekeep_id')->nullable();
-            $table->unsignedBigInteger('shift_id')->nullable();
+            $table->uuid('id')->primary();
+            $table->uuid('timekeep_id')->nullable();
+            $table->uuid('shift_id')->nullable();
             $table->timestamps();
         });
     }
