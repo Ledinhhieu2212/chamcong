@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware\user;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,10 +17,10 @@ class Login
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::guard('users')->check()) {
+        if (!Auth::guard('web')->check()) {
             return redirect()->route('user.login')->with('error', 'Bạn phải đăng nhập trước khi sử dụng');
         } else {
-            view()->share("user_account", Auth::user());
+            view()->share("auth", Auth::guard('web')->user());
             return $next($request);
         }
     }

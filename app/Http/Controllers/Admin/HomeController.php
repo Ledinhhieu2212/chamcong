@@ -10,7 +10,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $title = "Trang chủ home admin";
+        $title = "Dashboard";
         return view('admin.home.index', compact('title'));
     }
 }

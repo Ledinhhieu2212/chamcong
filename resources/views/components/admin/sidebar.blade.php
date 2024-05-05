@@ -5,18 +5,14 @@
     <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <div class="image">
-                <img src="{{ asset('assets/dist/img/avatar5.png') }}" class="img-circle elevation-2" alt="User Image">
-            </div>
             <div class="info">
-                <a href="{{ route('admin.account') }}" class="d-block">{{ $user_account->username }}</a>
+                <span class="text-white"> Tài khoản: <b>{{ $auth->username }}</b></span>
             </div>
         </div>
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                data-accordion="false">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
                     <a href="{{ route('admin.home') }}" class="nav-link">
                         <i class="nav-icon fas fa-home"></i>
@@ -25,8 +21,18 @@
                         </p>
                     </a>
                 </li>
+
                 <li class="nav-item">
-                    <a href="" class="nav-link">
+                    <a href="{{ route('admin.position.index') }}" class="nav-link">
+                        <i class="nav-icon fa-solid fa-podcast"></i>
+                        <p>
+                            Quản lý chức vụ
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('admin.user.index') }}" class="nav-link">
                         <i class="nav-icon fa-solid fa-users-gear"></i>
                         <p>
                             Quản lý nhân viên
@@ -34,42 +40,42 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-table"></i>
+                    <a href="{{ route('admin.qrcode.index') }}" class="nav-link">
+                        <i class="nav-icon fa-solid fa-qrcode"></i>
                         <p>
-                            Quản lý
-                            <i class="fas fa-angle-left right"></i>
+                            Quản lý QRcode
                         </p>
                     </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="pages/tables/simple.html" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <i class="far fa-user nav-icon"></i>
-
-                                <p>Nhân viên</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="pages/tables/data.html" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>DataTables</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="pages/tables/jsgrid.html" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>jsGrid</p>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
-
                 <li class="nav-item">
-                    <a href="{{ route('admin.logout') }}" class="nav-link">
-                        <i class="nav-icon fa-solid fa-right-from-bracket"></i>
+                    <a href="{{ route('admin.calendar.index') }}" class="nav-link">
+                        <i class="nav-icon fa-solid fa-calendar-days"></i>
                         <p>
-                            Đăng xuất
+                            Quản lý ngày làm
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.timekeep.index') }}" class="nav-link">
+                        <i class="nav-icon  fa-regular fa-calendar-xmark"></i>
+                        <p>
+                            Quản lý chấm công
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.qrcode.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-chart-pie"></i>
+                        <p>
+                            Quản lý báo cáo
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.qrcode.index') }}" class="nav-link">
+                        <i class="nav-icon fa-solid fa-money-bill"></i>
+                        <p>
+                            Quản lý lương
                         </p>
                     </a>
                 </li>

@@ -1,20 +1,20 @@
-function showNotification() {
-    var notification = document.getElementById("form-user-delete");
-    var bg_dark = document.querySelector('.body-delete');
-    bg_dark.style.display = "block";
-    notification.style.display = "block";
-  }
+var loadFile = function (event) {
+    var output = document.getElementById('myimage');
+    output.src = URL.createObjectURL(event.target.files[0]);
+    output.onload = function () {
+        URL.revokeObjectURL(output.src) // free memory
+    }
+};
 
-  function onFileSelected(event) {
-    var selectedFile = event.target.files[0];
-    var reader = new FileReader();
+function openModal(employeeId) {
+    var modal = document.getElementById("deleteModal-" + employeeId);
+    modal.style.display = "block";
+    document.body.style.overflow = "hidden"; // Disable scrolling on the body
+}
 
-    var imgtag = document.getElementById("myimage");
-    imgtag.title = selectedFile.name;
-
-    reader.onload = function(event) {
-      imgtag.src = event.target.result;
-    };
-
-    reader.readAsDataURL(selectedFile);
-  }
+// Function to close the modal and change CSS
+function closeModal(employeeId) {
+    var modal = document.getElementById("deleteModal-" + employeeId);
+    modal.style.display = "none";
+    document.body.style.overflow = "auto"; // Enable scrolling on the body
+}

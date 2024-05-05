@@ -20,6 +20,8 @@ class AdminSeeder extends Seeder
                 'username' => 'admin',
                 'email' => 'admin@gmail.com',
                 'password' => Hash::make('123456'),
+                'phone' => '0374078020',
+                'image' => 'avatar-admin-1.jpg',
                 'remember_token' => Uuid::uuid4()->toString(),
             ]
         ]);

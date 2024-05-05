@@ -13,6 +13,9 @@ class HomeController extends Controller
     }
     public function index()
     {
-        return view('user.home.index');
+        $user = Auth::guard('web')->user();
+        $title = "Trang chủ";
+        
+        return view('user.home.index' ,compact('title'));
     }
 }

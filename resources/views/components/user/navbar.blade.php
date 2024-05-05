@@ -100,11 +100,13 @@
                 <i class="fas fa-expand-arrows-alt"></i>
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#"
-                role="button">
-                <i class="fas fa-th-large"></i>
-            </a>
+        <li class="nav-item dropdown">
+            <img id="dropbtn" class="img-dropbtn" src="{{ asset("assets/img/avatar/$auth->image") }}" alt="">
+            <ul id="myDropdown" class="dropdown-content-link">
+                <a href="{{ route('user.account') }}"><i class="nav-icon fa-solid fa-user"></i> Tài khoản</a>
+                <a href="{{ route('user.logout') }}"><i class="nav-icon fa-solid fa-right-from-bracket"></i> Đăng
+                    xuất</a>
+            </ul>
         </li>
     </ul>
 </nav>

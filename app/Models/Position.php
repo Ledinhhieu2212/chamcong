@@ -14,10 +14,14 @@ class Position extends Model
 
     protected $fillable = [
         'job',
-        'wage',
     ];
     public function users()
     {
         return $this->hasMany(User::class);
+    }
+
+    public function NamePosition($id)
+    {
+        return $this->where('id', $id)->value('job');
     }
 }

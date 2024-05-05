@@ -2,6 +2,7 @@
 
 @section('css')
     @include('components.user.head')
+    <title>{{$title}}</title>
 @endsection
 
 @section('script')

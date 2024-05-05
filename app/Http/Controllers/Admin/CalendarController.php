@@ -4,91 +4,72 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Calendar;
-use App\Models\Detail_Calendar;
+use App\Models\Qrcode;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\View;
 
 class CalendarController extends Controller
 {
-    public function __construct()
+
+    protected $model;
+
+    public function __construct(Calendar $model)
     {
-        View::share('calendars', Calendar::all());
-        View::share('users_array', User::where('position_id', '!=', 999)->get());
+        $this->model = $model;
     }
+
     public function index()
     {
-        return view('admin.calendar.add');
+        $title = "Quản lý ngày làm";
+        $calendars = Calendar::orderBy("created_at", "desc")->get();
+        $start = Carbon::now()->startOfWeek()->format('Y-m-d H:i');
+        $end = Carbon::now()->endOfWeek()->format('Y-m-d H:i');
+        return view('admin.calendar.index', compact('title', 'calendars'));
+    }
+
+    public function create()
+    {
+        $title = "Tạo mới";
+        $users = User::all();
+        $qrcodes = Qrcode::all();
+        return view('admin.calendar.add', compact('title', 'users', 'qrcodes'));
     }
 
     public function store(Request $request)
     {
-
-        $data = $request->all();
-        $ids = $request->ids;
-        $calendar =  Calendar::create($data);
-        if ($ids !== null) {
-            foreach ($ids as $id) {
-                Detail_Calendar::create([
-                    "user_id" => $id,
-                    "calendar_id" => $calendar->id,
-                ]);
-            }
-        } else {
-            Detail_Calendar::create([
-                "user_id" => null,
-                'calendar_id' => $calendar->id,
-            ]);
-        }
-        return redirect()->route('admin.calendar');
-    }
-    public function edit(int $id)
-    {
-        $calendar_edit = Calendar::find($id);
-        return view('admin.calendar.edit', compact('calendar_edit'));
-    }
-    public function update(Request $request, int $id)
-    {
-        $data = $request->all();
-        $is_calendar_enabled = $request->has('is_calendar_enabled');
-
-        $ids = $request->ids;
-        $calendar = Calendar::find($id);
-
-        if ($is_calendar_enabled == "1") {
-            $data['is_calendar_enabled'] = 1;
-        } else {
-            $data['is_calendar_enabled'] = 0;
-        }
-
-        $calendar->update($data);
-
-        $calendar->detail_calendars()->delete();
-
-        if ($ids !== null) {
-            foreach ($ids as $id) {
-                Detail_Calendar::create([
-                    "user_id" => $id,
-                    "calendar_id" => $calendar->id,
-                ]);
-            }
-        } else {
-            Detail_Calendar::create([
-                "user_id" => null,
-                'calendar_id' => $calendar->id,
-            ]);
-        }
-
-        return redirect()->route('admin.calendar');
+        $datas = $request->all();
+        $this->model->create($datas);
+        $id = $this->model->id;
+        foreach ($request->input('users') as $userid) {
+            $user = User::find($userid);
+            $user->calendars()->attach($id);
+        };
+        return redirect()->route("admin.calendar.index")->with("success", "Đăng ký thành công");;
     }
 
-    public function delete(int $id)
+    public function show($id)
     {
-        $calendar = Calendar::find($id);
-        $calendar->detail_calendars->each(function ($detailCalendar) {
-            $detailCalendar->delete();
-        });
+        $title = "Sửa nhóm";
+
+        $calendars = Qrcode::all();
+        return view('admin.calendar.edit', compact('title'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $qrcode = $this->model::find($id);
+        $qrcode->update([
+            'job' => $request->input('name'),
+        ]);
+        return  redirect()->route('admin.calendar.index')->with('success', 'Sửa thành công');
+    }
+
+    public function destroy(string $id)
+    {
+        $calendar = $this->model::find( $id );
+        $calendar->users()->detach($id);
         $calendar->delete();
-        return redirect()->route('admin.calendar')->with('success', 'Xóa thành công nhân viên');
+        return  redirect()->route('admin.calendar.index')->with('success', 'Xóa thành công');
     }
 }

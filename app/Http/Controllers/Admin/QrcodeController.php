@@ -3,92 +3,103 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Qrcode\Create;
 use App\Models\Detail_QrCode;
-use App\Models\Qrcode as QrCodeModal;
+use App\Models\Qrcode;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\View;
-use Intervention\Image\Facades\Image;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Ramsey\Uuid\Uuid;
+use SimpleSoftwareIO\QrCode\Facades\QrCode as FacadesQrCode;
 
 class QrcodeController extends Controller
 {
-    public function __construct()
-    {
-        View::share('qrcodes', QrCodeModal::all());
-        View::share('users_array', User::where('position_id', '!=', 999)->orderBy('id','asc')->get());
-    }
+    /**
+     * Display a listing of the resource.
+     */
+    protected $model;
 
+    public function __construct(Qrcode $model)
+    {
+        $this->model = $model;
+    }
     public function index()
     {
-        return view("admin.qrcode.add");
+        $title = "Quản lý qrcode";
+        $qrcodes = $this->model::orderBy("created_at", "desc")->paginate(5);
+        return view('admin.qrcode.index ', compact('title', 'qrcodes'));
+    }
+    public function create()
+    {
+        $title  = "Tạo mã QR chấm công mới";
+        $users = User::doesntHave('qrcodes')->orderBy('created_at')->get();
+        return view('admin.qrcode.add', compact('title', 'users'));
     }
 
-    public function store(Request $request)
+    public function store(Create $request)
     {
-        $data = $request->all();
-        $ids = $request->ids;
-        $qrcode = QrCodeModal::create([
-            "name" => $data["name"],
-            'mode' => $data['mode'],
-            ''
+        $messages = [
+            'name.required' => "Không có tên nhóm",
+            'address.required' => "Không có địa chỉ",
+        ];
+        $this->validate($request, [
+            'name' => 'required',
+            'address' => 'required',
+        ], $messages);
+        $this->model->name = $request->name;
+        $this->model->mode = $request->mode;
+        $this->model->address = $request->address;
+        $this->model->save();
+        $id = $this->model->id;
+        $this->model->qr_code = Hash::make($id);
+        $path = 'assets/img/qrcode/';
+        $file_path = time() . '.png';
+        $this->model->image = $file_path;
+        foreach ($request->input('users') as $userid) {
+            $user = User::find($userid);
+            $user->qrcodes()->attach($id);
+        };
+        $image = FacadesQrCode::format('png')
+            ->size(200)->errorCorrection('H')
+            ->generate($this->model->qr_code, $path . $file_path);
+        $this->model->update();
+        return  redirect()->route('admin.qrcode.index')->with('success', 'Tạo mới thành công');
+    }
+    
+    public function show($id)
+    {
+        $title = "Sửa nhóm";
+        $qrcode = $this->model->find($id);
+        $users =  User::whereHas('qrcodes', function ($q) use ($id) {
+            $q->where('qrcode_id', '=', $id);
+        })->get();
+        return view('admin.qrcode.edit', compact('qrcode', 'title', 'users'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $qrcode = $this->model::find($id);
+        $qrcode->update([
+            'name' => $request->input('name'),
+            'mode' => $request->input('mode'),
+            'address' => $request->input('address'),
         ]);
-        foreach ($ids as $id) {
-            Detail_QrCode::create([
-                "user_id" => $id,
-                "qrcode_id" => $qrcode->id,
-            ]);
+        $qrcode->users()->detach();
+        $qrcode->users()->attach($request->input('users'));
+        return  redirect()->route('admin.qrcode.index')->with('success', 'Sửa thành công');
+    }
+
+    public function destroy(string $id)
+    {
+        $qrcode = $this->model::findOrFail($id);
+        $path = 'assets/img/qrcode/';
+        $qrcode->users()->detach($id);
+        $image = $qrcode->image;
+        if (File::exists($path . $image)) {
+            File::delete($path . $image);
         }
-
-        return redirect()->route('admin.qrcode.create');
-    }
-    public function edit(int $id)
-    {
-        $qrcode_edit = QrCodeModal::find($id);
-        return view('admin.qrcode.edit', compact('qrcode_edit'));
-    }
-    public function update(Request $request, int $id)
-    {
-
-        $data = $request->all();
-        $ids = $request->ids;
-        $qrcode_edit = QrCodeModal::find($id);
-        $qrcode = QrCodeModal::find($id);
-        $qrcode->detail_qrcodes()->delete();
-        if ($ids !== null) {
-            foreach ($ids as $id) {
-                Detail_QrCode::create([
-                    "user_id" => $id,
-                    "qrcode_id" => $qrcode->id,
-                ]);
-            }
-        } else {
-            Detail_QrCode::create([
-                "user_id" => null,
-                "qrcode_id" => $qrcode->id,
-            ]);
-        }
-        $qrcode_edit->update($data);
-        return redirect()->route('admin.qrcode.create');
-    }
-
-    public function delete(int $id)
-    {
-        $qrcode = QrCodeModal::find($id);
-        $qrcode->detail_qrcodes->each(function ($detailQrcode) {
-            $detailQrcode->delete();
-        });
         $qrcode->delete();
-        return redirect()->route('admin.qrcode.create')->with('success', 'Xóa thành công nhân viên');
-    }
-
-    public function generateQrCode($id)
-    {
-        $data = QrCodeModal::find($id);
-        $qrCode = base64_encode(QrCode::format('png')->size(500)->generate($data->qr_code));
-        $qrCodeAddImage = Storage::disk('public')->put($data->name, $qrCode);
-        return view('admin.qrcode.generate', compact('qrCode','qrCodeAddImage'));
+        return  redirect()->route('admin.qrcode.index')->with('success', 'Xóa thành công');
     }
 }

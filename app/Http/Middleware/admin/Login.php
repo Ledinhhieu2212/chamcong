@@ -16,10 +16,11 @@ class Login
      */
     public function handle(Request $request, Closure $next): Response
     {
+
         if (!Auth::guard('admins')->check()) {
             return redirect()->route('admin.login')->with('error', 'Bạn phải đăng nhập trước khi sử dụng');
         } else {
-            view()->share("user_account", Auth::guard('admins')->user());
+            view()->share("auth", Auth::guard('admins')->user());
             return $next($request);
         }
     }

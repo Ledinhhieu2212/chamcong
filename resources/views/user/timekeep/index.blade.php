@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('css')
-    {{ $title = $data['title'] }}
+    {{ $title }}
 @endsection
 
 @section('content')

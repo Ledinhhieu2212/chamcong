@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('qrcodes', function (Blueprint $table) {
-            $table->uuid('id')->primary();;
-            $table->string('name')->nullable;
+            $table->uuid('id')->primary();
+            $table->string('name')->nullable();
             $table->unsignedInteger('mode')->default(1);
             $table->text('qr_code')->nullable();
-            $table->string('address_address')->nullable();
-            $table->double('address_latitude')->nullable();
-            $table->double('address_longitude')->nullable();
+            $table->string('address')->nullable();
+            $table->string('ip')->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Calendar;
+use App\Models\Qrcode;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Repositories\User\UserRepositoryInterfaces;
 use Illuminate\Support\Facades\Auth;
@@ -12,75 +15,28 @@ class CalendarController extends Controller
 {
     public function index(Request $request)
     {
-        $calendarId = $request->input('select_option');
-        $day = [
-            'Thứ 2', "Thứ 3", "Thứ 4",
-            'Thứ 5', "Thứ 6", "Thứ 7", "Chủ nhật"
-        ];
-        $status = false;
-        $calendars = DB::table('calendars')
-            ->join('detail_calendars', 'calendars.id', '=', 'detail_calendars.calendar_id')
-            ->select('calendars.*', 'detail_calendars.id as detail_calendar_id')
-            ->where('detail_calendars.user_id', Auth::user()->id)
-            ->orderByDesc('calendars.id')
-            ->get();
-        $calendar_end = DB::table('calendars')
-            ->join('detail_calendars', 'calendars.id', '=', 'detail_calendars.calendar_id')
-            ->select('calendars.*', 'detail_calendars.id as detail_calendar_id')
-            ->where('detail_calendars.user_id', '=', Auth::user()->id)
-            ->first();
-        if ($request->input('select_option') == null) {
-            $calendarId = $calendar_end->detail_calendar_id;
-        }
-        $calendar_search = DB::table('calendars')
-            ->join('detail_calendars', 'calendars.id', '=', 'detail_calendars.calendar_id')
-            ->select('calendars.is_calendar_enabled as calendar_enabled', 'detail_calendars.id as detail_id')
-            ->where('detail_calendars.user_id', Auth::user()->id)
-            ->where('detail_calendars.id', $calendarId)->first();
-        // dd( $calendar_search);
-        $schedules = DB::table('detail_calendars')
-            ->join('schedules', 'detail_calendars.id', '=', 'schedules.detail_calendar_id')
-            ->select('detail_calendars.*', 'schedules.*')
-            ->where('detail_calendars.user_id', '=', Auth::user()->id)
-            ->where('detail_calendars.id', '=', $calendarId)
-            ->get()->toArray();
-
-        if ($calendar_search->calendar_enabled == 1 && $calendar_search->detail_id == $calendarId) {
-            $status = true;
-        }
-
-        $user_account = Auth::user();
-        return view('user.calendar.show.table', compact('calendars', 'status', 'calendar_end', 'day', 'schedules', 'calendarId', 'calendar_search', 'user_account'));
-    }
-
-    protected $userRepository;
-    public function __construct(UserRepositoryInterfaces $userRepository)
-    {
-        $this->userRepository = $userRepository;
+        $title = "Hiển thị lịch làm";
+        return view('user.calendar.show', compact('title'));
     }
     public function create()
     {
-        $day = [
-            'Thứ 2', "Thứ 3", "Thứ 4",
-            'Thứ 5', "Thứ 6", "Thứ 7", "Chủ nhật"
-        ];
-        $status = false;
-        $calendar = DB::table('calendars')
-            ->join('detail_calendars', 'calendars.id', '=', 'detail_calendars.calendar_id')
-            ->select('calendars.*', 'detail_calendars.is_registered as is_registered')
-            ->where('detail_calendars.user_id', '=', Auth::user()->id)
-            ->orderBy('id', 'desc')
-            ->first();
-        if ($calendar->is_calendar_enabled == 1 && $calendar->is_registered == 0) {
-            $status = true;
-        }
-        $user_account = Auth::user();
-        return view('user.calendar.register.index', compact('calendar', 'status', 'day', 'user_account'));
+        $title = "Đăng ký lịch làm";
+        $qrcodes = Qrcode::orderBy('created_at')->get();
+        $calendar = Calendar::orderBy('created_at', "desc")->get();
+        return view('user.calendar.register', compact('title', 'qrcodes', 'calendar'));
     }
 
     public function store(Request $request)
     {
-        $this->userRepository->registerCalendar($request);
-        return redirect()->route("register.calendar")->with("success", "");
+        $datas = $request->all();
+
+        $user = User::find(Auth::guard('web')->id());
+        $qrcode = Qrcode::find($datas["qrcode_id"]);
+        if ($qrcode->users()->count() >= 0 && $qrcode->users()->count() <= 5) {
+            $user->qrcodes()->attach($datas["qrcode_id"]);
+            return redirect()->route("user.calendar.register")->with("success", "Đăng ký thành công");
+        } else {
+            return redirect()->route("user.calendar.register")->with("error", "Nhóm địa chỉ đã đủ nhân viên");
+        }
     }
 }

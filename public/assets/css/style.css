@@ -1,0 +1,50 @@
+.img-dropbtn {
+    background-color: #fff;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin-right: 20px;
+    border: none;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 1px 1px #ccc;
+}
+
+/* Style the dropdown content (hidden by default) */
+.dropdown-content-link {
+    display: none;
+    position: absolute;
+    top: 48px;
+    right: 20%;
+    padding: 0;
+    object-fit: cover;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Style links inside the dropdown */
+.dropdown-content-link a {
+    color: black;
+    padding: 5px 0px;
+    padding-left: 10px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content-link a:hover {
+    background-color: #f1f1f1;
+}
+
+/* Show the dropdown menu when the button is clicked */
+.show {
+    display: block;
+}
+.error-message {
+    font-size: 14px;
+    color: red;
+    display: block;
+    margin-left: 10px;
+}

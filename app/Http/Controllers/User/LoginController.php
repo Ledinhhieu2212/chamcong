@@ -7,6 +7,7 @@ use App\Http\Requests\AuthRequest;
 use App\Models\Detail_QrCode;
 use App\Models\Qrcode;
 use App\Models\timekeep;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,10 +17,10 @@ class LoginController extends Controller
 {
     public function index(Request $request)
     {
-        if (Auth::guard('users')->check()) {
+        if (Auth::guard('web')->check()) {
             return redirect()->route('user.home');
         }
-            return view('user.auth.login');
+        return view('user.auth.login');
     }
     public function login(AuthRequest $request)
     {
@@ -27,17 +28,15 @@ class LoginController extends Controller
             'username' => $request->input('username'),
             'password' => $request->input('password'),
         ];
-        if (Auth::attempt($credentials)) {
+        if (Auth::guard('web')->attempt($credentials)) {
             return redirect()->route('user.home');
         }
         return redirect()->route('user.index')->with('error', 'Email/Username hoặc mật khẩu không chính xác');
     }
 
-    public function logout(Request $request)
+    public function logout()
     {
-        Auth::guard('users')->logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        Auth::guard('web')->logout();
         return redirect()->route('user.index');
     }
 }

@@ -1,83 +1,153 @@
-@extends('admin.calendar.index')
+@extends('layout')
 
+@section('css')
+    @include('components.admin.head')
+    <title>{{ $title }}</title>
+    <style>
+        .img-user {
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    </style>
+@endsection
 
-@section('crud')
-    <form method="POST" action="{{ route('admin.calendar.store') }}">
-        @csrf
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-        <div class="row p-3">
-            <div class="col-md-5">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="">Ngày lập lịch làm</label>
-                            <input type="date" name="date_now" value="{{ now()->format('Y-m-d') }}"
-                                class="form-control" />
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="">Tháng bắt đầu</label>
-                            <input type="date" name="start_date" class="form-control"  value="{{ \Carbon\Carbon::now()->firstOfMonth()->addDays(9)->toDateString() }}" />
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="">Cuối tháng</label>
-                            <input type="date" name="end_date" class="form-control"
-                            value="{{ \Carbon\Carbon::now()->endOfMonth()->addDays(10)->toDateString() }}" />
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="">Cho phép đăng ký ca làm</label>
-                            <input type="checkbox" name="is_calendar_enabled" value="1" class="form-control " />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-7 border rounded">
-                <div class="card-body  table-responsive p-0" style="height: 300px;">
-                    <table class="table table-head-fixed text-nowrap">
-                        <thead>
-                            <tr>
-                                <th><input type="checkbox" name="" id="select_all_ids"></th>
-                                <th>Tên</th>
-                                <th>Tài khoản</th>
-                                <th>Ảnh</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-gray">
-                            @foreach ($users_array as $user)
-                                <tr>
-                                    <td><input type="checkbox" name="ids[{{ $user->id }}]" class="checkbox_ids"
-                                            value="{{ $user->id }}"></td>
+@section('script')
+    @include('components.admin.script')
+    <script>
+        $('#select-all').click(function(event) {
+            var count = 0;
+            if (this.checked) {
+                // Iterate each checkbox
+                $('.checkbox:checkbox').each(function() {
+                    this.checked = true;
+                    count++;
+                });
+            } else {
+                $('.checkbox:checkbox').each(function() {
+                    this.checked = false;
+                });
+            }
+            $('#ketQua').val(count);
+        });
 
-                                    <td>{{ $user->fullname }}</td>
-                                    <td>{{ $user->username }}</td>
-                                    <td><img @if (file_exists(public_path("assets/img/$user->image"))) src="{{ asset("assets/img/$user->image") }}"
-                                    @else
-                                        src="{{ $user->image }}" @endif
-                                            class="image-avatar rounded-circle" width="30" height="30"
-                                            alt="Ảnh avatar tài khoản" />
-                                    <td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <button type="submit" class="btn btn-success">Lưu lại</button>
-            </div>
+        $('.checkbox').change(function() {
+            let count = $('.checkbox:checked').length;
+            $('#ketQua').val(count);
+        });
+    </script>
+@endsection
+
+@section('navbar')
+    @include('components.admin.navbar')
+@endsection
+
+@section('sidebar')
+    @include('components.admin.sidebar')
+@endsection
+
+@section('content')
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">{{ $title }}</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.calendar.index') }}">Lịch làm</a></li>
+                            <li class="breadcrumb-item">Tạo mới</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
         </div>
-    </form>
+        <section class="content">
+            <div class="container-fluid">
+                <form action="{{ route('admin.calendar.store') }}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row justify-content-around">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="startdate">Từ ngày:</label>
+                                        <input type="date" name="start_date" id="startdate"
+                                            value="{{ now()->startOfWeek()->format('Y-m-d') }}" class="form-control">
+
+                                        @if ($errors->has('startdate'))
+                                            <span class="error-message">* {{ $errors->first('startdate') }}</span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="startdate">Đến ngày:</label>
+                                        <input type="date" name="end_date" id="startdate"
+                                            value="{{ now()->endOfWeek()->format('Y-m-d') }}" class="form-control">
+
+                                        @if ($errors->has('startdate'))
+                                            <span class="error-message">* {{ $errors->first('startdate') }}</span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="number">Sô lượng nhân viên làm:</label>
+                                    <input type="text" name="number" readonly id="ketQua" value="0"
+                                        class="form-control">
+                                    @if ($errors->has('number'))
+                                        <span class="error-message">* {{ $errors->first('number') }}</span>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card" style="height: 300px;">
+                                <div class="card-body table-responsive">
+                                    <table id="example2" class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th><input type="checkbox" name="allcb" id="select-all"></th>
+                                                <th>Ảnh</th>
+                                                <th>Họ và tên</th>
+                                                <th>Tài khoản</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($users as $user)
+                                                <tr>
+                                                    <td>
+                                                        <input type="checkbox" name="users[]" value="{{ $user->id }}"
+                                                            class="checkbox">
+                                                    </td>
+                                                    <td>
+                                                        <img src="{{ asset("assets/img/avatar/$user->image") }}"
+                                                            class="img-user" width="50" height="50" alt="">
+                                                    </td>
+                                                    <td>{{ $user->fullname }}</td>
+                                                    <td>{{ $user->username }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-5">
+
+                            <a href="{{ route('admin.calendar.index') }}" class="btn btn-dark">Quay lại</a>
+                            <button type="submit" class="btn btn-success">Xác nhận</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
 @endsection

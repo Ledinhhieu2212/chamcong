@@ -5,18 +5,14 @@
     <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <div class="image">
-                <img src="{{ asset('assets/dist/img/avatar5.png') }}" class="img-circle elevation-2" alt="User Image">
-            </div>
             <div class="info">
-                <a href="#" class="d-block">{{ $user_account->fullname }}</a>
+                <span class="text-white"> Tài khoản: <b>{{ $auth->username }}</b></span>
             </div>
         </div>
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                data-accordion="false">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
                     <a href="{{ route('user.home') }}" class="nav-link">
                         <i class="nav-icon fas fa-home"></i>
@@ -25,12 +21,42 @@
                         </p>
                     </a>
                 </li>
-
+                <li class="nav-item">
+                    <a href="{{ route('user.group') }}" class="nav-link">
+                        <i class="nav-icon fa-solid fa-user-group"></i>
+                        <p>
+                            Nhóm
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link">
+                        <i class="nav-icon fa-solid fa-calendar-days"></i>
+                        <p>
+                            Lịch
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('user.calendar.show') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Danh sách lịch làm</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('user.calendar.register') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Đăng ký lịch làm</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-table"></i>
+                        <i class="nav-icon fa-solid fa-stopwatch"></i>
                         <p>
-                            Quản lý
+                            Chấm công
                             <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
@@ -38,31 +64,31 @@
                         <li class="nav-item">
                             <a href="pages/tables/simple.html" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <i class="far fa-user nav-icon"></i>
-
-                                <p>Nhân viên</p>
+                                <p>Chấm công mã QR</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="pages/tables/data.html" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>DataTables</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="pages/tables/jsgrid.html" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>jsGrid</p>
+                                <p>Thông tin chấm công</p>
                             </a>
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item">
+                    <a href=" " class="nav-link">
+                        <i class="nav-icon fa-solid fa-money-bill"></i>
+                        <p>
+                            Lương
+                        </p>
+                    </a>
+                </li>
 
                 <li class="nav-item">
-                    <a href="{{ route('user.logout') }}" class="nav-link">
-                        <i class="nav-icon fas fa-home"></i>
+                    <a href=" " class="nav-link">
+                        <i class="nav-icon fa-solid fa-circle-info"></i>
                         <p>
-                            Đăng xuất
+                            Trợ giúp
                         </p>
                     </a>
                 </li>

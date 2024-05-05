@@ -1,92 +1,117 @@
-@extends('admin.user.index')
+@extends('layout')
 
+@section('css')
+    @include('components.admin.head')
+    <link rel="stylesheet" href="{{ asset('assets/admin/user/style.css') }}">
+    <title>{{ $title }}</title>
+@endsection
 
-@section('crud')
-    <form action="{{ route('admin.user.update', $user->id) }}" class="form-horizontal" method="POST"
-        enctype="multipart/form-data">
-        @csrf
-        @method('PUT')
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-        <div class="row">
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label for="">Họ và tên</label>
-                    <input type="text" name="fullname" class="form-control" value="{{ $user->fullname }}" />
-                </div>
-            </div>
-            <div class="col-md-3">
+@section('script')
+    @include('components.admin.script')
+    <script src="{{ asset('assets/admin/user/script.js') }}"></script>
+@endsection
 
-                <div class="form-group">
-                    <label for="">Tài khoản</label>
-                    <input type="text" name="username" class="form-control" value="{{ $user->username }}" />
-                </div>
-            </div>
+@section('navbar')
+    @include('components.admin.navbar')
+@endsection
 
-            <div class="col-md-3">
+@section('sidebar')
+    @include('components.admin.sidebar')
+@endsection
 
-                <div class="form-group">
-                    <label for="">Email</label>
-                    <input type="text" name="email" class="form-control" value="{{ $user->email }}" />
-                </div>
-            </div>
-            <div class="col-md-3">
-
-                <div class="form-group">
-                    <label for="">Công việc</label>
-                    <select class="form-control" name="position_id">
-                        @foreach ($positons as $positon)
-                            @if ($positon->id !== 999)
-                                <option value="{{ $positon->id }}">
-                                    {{ $positon->job }}
-                                </option>
-                            @endif
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label for="">Mật khẩu</label>
-                    <input type="password" name="password" class="form-control"value="{{ $user->password }}" />
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label for="">Nhập lại mật khẩu</label>
-                    <input type="password" name="re_password" class="form-control" value="{{ $user->password }}" />
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
+@section('content')
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">{{ $title }}</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.user.index') }}">Nhân viên</a></li>
+                            <li class="breadcrumb-item">Tạo mới</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <section class="content">
+            <div class="container-fluid">
+                <form action="{{ route('admin.user.update', $user->id) }}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
                     <div class="row">
-                        <div class="col-md-6">
-                            <label for="">Ảnh đại diện</label>
-                            <input type="file" name="image" class="form-control" value="{{ $user->image }}" />
+                        <!-- left column -->
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="fullname">Họ và tên</label>
+                                <input type="text" name="fullname" class="form-control" value="{{ $user->fullname }}">
+                                @if ($errors->has('fullname'))
+                                    <span class="error-message">* {{ $errors->first('fullname') }}</span>
+                                @endif
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <img @if (file_exists(public_path("assets/img/$user->image"))) src="{{ asset("assets/img/$user->image") }}"
-                            @else
-                                src="{{ $user->image }}" @endif
-                                class="image-avatar" width="130" height="130" alt="Ảnh avatar tài khoản" />
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="username">Tên tài khoản</label>
+                                <input type="text" name="username" class="form-control" value="{{ $user->username }}">
+                                @if ($errors->has('username'))
+                                    <span class="error-message">* {{ $errors->first('username') }}</span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="text" name="email" class="form-control" value="{{ $user->email }}">
+                                @if ($errors->has('email'))
+                                    <span class="error-message">* {{ $errors->first('email') }}</span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="job">Công việc:</label>
+                                <select name="job" id="" class="form-control">
+                                    <option value="">-- Lựa chọn --</option>
+                                    @foreach ($positions as $position)
+                                        <option value="{{ $position->id }}"
+                                            @if ($user->position_id == $position->id) @selected(true) @endif>
+                                            {{ $position->job }}</option>
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('job'))
+                                    <span class="error-message">* {{ $errors->first('job') }}</span>
+                                @endif
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-5">
+                            <a href="{{ route('admin.user.index') }}" class="btn btn-dark">Quay lại</a>
+                            <button type="submit" class="btn btn-success">Xác nhận</button>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="image">Gửi ảnh:</label>
+                                <input type="file" name="image" value="{{ $user->image }}" class="form-control"
+                                    accept="image/*" onchange="loadFile(event)">
+                                @if ($errors->has('image'))
+                                    <span class="error-message">* {{ $errors->first('image') }}</span>
+                                @endif
+                                <img alt="" src="{{ asset("assets/img/avatar/$user->image") }}" id="myimage"
+                                    width="150" height="150">
+                            </div>
                         </div>
                     </div>
-                </div>
-
+                </form>
             </div>
-            <div class="col-md-12">
-                <div class="form-group">
-                    <a href="{{ route('admin.user.create') }}" class="btn btn-danger">Thoát</a>
-                    <button type="submit" class="btn btn-success">Lưu lại</button>
-                </div>
-            </div>
-        </div>
-    </form>
+        </section>
+    </div>
 @endsection

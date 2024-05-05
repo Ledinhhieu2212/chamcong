@@ -20,6 +20,7 @@ class LoginController extends Controller
         if (Auth::guard('admins')->check()) {
             return redirect()->route('admin.home');
         }
+        
         return view('admin.auth.login');
     }
     public function login(AuthRequest $request)
@@ -34,11 +35,9 @@ class LoginController extends Controller
         return redirect()->route('admin.login')->with('error', 'Email/Username hoặc mật khẩu không chính xác');
     }
 
-    public function logout(Request $request)
+    public function logout()
     {
         Auth::guard('admins')->logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
         return redirect()->route('admin.login');
     }
 }

@@ -14,10 +14,8 @@ return new class extends Migration
     {
         Schema::create('calendars', function (Blueprint $table) {
             $table->uuid('id')->primary();;
-            $table->dateTime('date_now')->nullable();
             $table->dateTime('start_date')->nullable();
             $table->dateTime('end_date')->nullable();
-            $table->unsignedInteger('is_calendar_enabled')->default(0);
             $table->timestamps();
         });
     }

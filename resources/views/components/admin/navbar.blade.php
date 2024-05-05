@@ -35,7 +35,7 @@
                 <a href="#" class="dropdown-item">
                     <!-- Message Start -->
                     <div class="media">
-                        <img src="dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                        <img src="" alt="User Avatar" class="img-size-50 img-circle mr-3">
                         <div class="media-body">
                             <h3 class="dropdown-item-title">
                                 John Pierce
@@ -51,7 +51,7 @@
                 <a href="#" class="dropdown-item">
                     <!-- Message Start -->
                     <div class="media">
-                        <img src="dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                        <img src="" alt="User Avatar" class="img-size-50 img-circle mr-3">
                         <div class="media-body">
                             <h3 class="dropdown-item-title">
                                 Nora Silvester
@@ -100,11 +100,14 @@
                 <i class="fas fa-expand-arrows-alt"></i>
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#"
-                role="button">
-                <i class="fas fa-th-large"></i>
-            </a>
+        <li class="nav-item dropdown">
+            <img id="dropbtn" class="img-dropbtn" src="{{ asset("assets/img/admin/$auth->image") }}" alt="">
+            <ul id="myDropdown" class="dropdown-content-link">
+                <a href="{{ route('admin.account') }}"><i class="nav-icon fa-solid fa-user"></i> Tài khoản</a>
+                <a href="{{ route('admin.logout') }}"><i class="nav-icon fa-solid fa-right-from-bracket"></i> Đăng
+                    xuất</a>
+                {{-- <a href=""></a> --}}
+            </ul>
         </li>
     </ul>
 </nav>
