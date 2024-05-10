@@ -53,6 +53,16 @@
                                 @endif
                             </div>
                         </div>
+
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="price">Lương:</label>
+                                <input type="number" name="price" class="form-control" value="{{ old('price') }}">
+                                @if ($errors->has('price'))
+                                    <span class="error-message">* {{ $errors->first('price') }}</span>
+                                @endif
+                            </div>
+                        </div>
                         <div class="col-md-5">
                             <a href="{{ route('admin.position.index') }}" class="btn btn-dark">Quay lại</a>
                             <button type="submit" class="btn btn-success">Xác nhận</button>

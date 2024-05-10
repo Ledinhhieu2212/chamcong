@@ -11,15 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('calendar_user', function (Blueprint $table) {
+        Schema::create('calendar_users', function (Blueprint $table) {
             $table->id();
-            $table->foreignUuid('calendar_id')->references('id')->on('calendars')->onDelete('cascade');
-            $table->foreignUuid('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('calendar_id')->nullable();
+            $table->uuid('user_id')->nullable();
+            $table->foreign('calendar_id')->references('id')->on('calendars')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
     public function down(): void
     {
-        Schema::dropIfExists('calendar_user');
+        Schema::dropIfExists('calendar_users');
     }
 };

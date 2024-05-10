@@ -11,8 +11,8 @@ class GroupController extends Controller
 {
     public function index(){
         $title = "Nhóm";
-        $user = User::find(Auth::guard("web")->id());
-        $qrcodes = $user->qrcodes()->paginate(10);
+        $user = Auth::user();
+        $qrcodes = $user->qrcodes;
         return view("user.group.index", compact("title",'qrcodes'));
     }
 }

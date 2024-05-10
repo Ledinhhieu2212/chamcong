@@ -12,12 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('salaries', function (Blueprint $table) {
-            $table->uuid('id')->primary();;
+            $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->unsignedInteger('month')->nullable();
-            $table->unsignedInteger('overtime_pay')->nullable();
-            $table->unsignedInteger('bonus_pay')->nullable();
-            $table->unsignedInteger('total_pay')->nullable();
+            $table->unsignedInteger('reward')->default(0);
+            $table->unsignedInteger('overtime_pay')->default(0);
+            $table->unsignedInteger('bonus_pay')->default(0);
+            $table->unsignedInteger('total_pay')->default(0);
             $table->timestamps();
         });
     }

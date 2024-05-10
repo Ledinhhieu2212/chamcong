@@ -24,15 +24,25 @@ class LoginController extends Controller
     }
     public function login(AuthRequest $request)
     {
-        $credentials = [
-            'username' => $request->input('username'),
+        $login = $request->input('username');
+        $user = User::where('email', $login)->orWhere('username', $login)->first();
+        if (!$user) {
+            return redirect()->back()->withErrors(['username' => 'Thông tin đăng nhập không hợp lệ']);
+        }
+        $credentialsEmail = [
+            'email' => $user->email,
             'password' => $request->input('password'),
         ];
-        if (Auth::guard('web')->attempt($credentials)) {
-            return redirect()->route('user.home');
+        $credentialsUsername = [
+            'username' => $user->username,
+            'password' => $request->input('password '),
+        ];
+        if (Auth::guard('web')->attempt($credentialsEmail ) || Auth::guard('web')->attempt($credentialsUsername )) {
+            return redirect()->route('user.home')->with('success', 'Đăng nhập thành công tài khoản');;
         }
         return redirect()->route('user.index')->with('error', 'Email/Username hoặc mật khẩu không chính xác');
     }
+
 
     public function logout()
     {

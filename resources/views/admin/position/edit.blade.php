@@ -51,6 +51,13 @@
                                 <span class="error-message">* {{ $errors->first('job') }}</span>
                             @endif
                         </div>
+                        <div class="form-group">
+                            <label for="job">Lương:</label>
+                            <input type="text" name="price" class="form-control" value="{{$position->price }}">
+                            @if ($errors->has('price'))
+                                <span class="error-message">* {{ $errors->first('price') }}</span>
+                            @endif
+                        </div>
                     </div>
                     <div class="col-md-5">
                         <a href="{{ route('admin.position.index') }}" class="btn btn-dark">Quay lại</a>

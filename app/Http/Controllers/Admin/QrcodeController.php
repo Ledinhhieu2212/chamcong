@@ -15,9 +15,6 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode as FacadesQrCode;
 
 class QrcodeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     protected $model;
 
     public function __construct(Qrcode $model)
@@ -33,7 +30,7 @@ class QrcodeController extends Controller
     public function create()
     {
         $title  = "Tạo mã QR chấm công mới";
-        $users = User::doesntHave('qrcodes')->orderBy('created_at')->get();
+        $users = User::orderBy('created_at')->get();
         return view('admin.qrcode.add', compact('title', 'users'));
     }
 
@@ -50,30 +47,24 @@ class QrcodeController extends Controller
         $this->model->name = $request->name;
         $this->model->mode = $request->mode;
         $this->model->address = $request->address;
+        $this->model->address_latitude = $request->address_latitude;
+        $this->model->address_longitude = $request->address_longitude;
         $this->model->save();
         $id = $this->model->id;
-        $this->model->qr_code = Hash::make($id);
-        $path = 'assets/img/qrcode/';
-        $file_path = time() . '.png';
-        $this->model->image = $file_path;
         foreach ($request->input('users') as $userid) {
             $user = User::find($userid);
             $user->qrcodes()->attach($id);
         };
-        $image = FacadesQrCode::format('png')
-            ->size(200)->errorCorrection('H')
-            ->generate($this->model->qr_code, $path . $file_path);
+        $this->model->qr_code = $id . "-" . time();
         $this->model->update();
         return  redirect()->route('admin.qrcode.index')->with('success', 'Tạo mới thành công');
     }
-    
+
     public function show($id)
     {
         $title = "Sửa nhóm";
         $qrcode = $this->model->find($id);
-        $users =  User::whereHas('qrcodes', function ($q) use ($id) {
-            $q->where('qrcode_id', '=', $id);
-        })->get();
+        $users =  User::all();
         return view('admin.qrcode.edit', compact('qrcode', 'title', 'users'));
     }
 
@@ -84,6 +75,9 @@ class QrcodeController extends Controller
             'name' => $request->input('name'),
             'mode' => $request->input('mode'),
             'address' => $request->input('address'),
+            'address_latitude' => $request->input('address_latitude'),
+            'address_longitude' => $request->input('address_longitude'),
+            'updated_at' => now(),
         ]);
         $qrcode->users()->detach();
         $qrcode->users()->attach($request->input('users'));
@@ -93,12 +87,7 @@ class QrcodeController extends Controller
     public function destroy(string $id)
     {
         $qrcode = $this->model::findOrFail($id);
-        $path = 'assets/img/qrcode/';
         $qrcode->users()->detach($id);
-        $image = $qrcode->image;
-        if (File::exists($path . $image)) {
-            File::delete($path . $image);
-        }
         $qrcode->delete();
         return  redirect()->route('admin.qrcode.index')->with('success', 'Xóa thành công');
     }

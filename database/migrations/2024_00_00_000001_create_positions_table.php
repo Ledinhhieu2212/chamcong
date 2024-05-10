@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('positions', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('job')->nullable();
+            $table->unsignedInteger('price')->default(0);
             $table->timestamps();
         });
     }

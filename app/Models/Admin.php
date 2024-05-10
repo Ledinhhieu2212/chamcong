@@ -14,9 +14,16 @@ class Admin extends Authenticatable
     protected $table = 'admins';
     protected $guard = 'admins';
     protected $fillable = [
-        'username', 'email', 'password',
+        'username', 'email', 'password', 'phone', 'image',
     ];
+
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
+    ];
+
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
     ];
 }

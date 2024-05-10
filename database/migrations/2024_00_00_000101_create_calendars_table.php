@@ -13,9 +13,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('calendars', function (Blueprint $table) {
-            $table->uuid('id')->primary();;
+            $table->id();
             $table->dateTime('start_date')->nullable();
             $table->dateTime('end_date')->nullable();
+            $table->string('open_port')->default('0');
             $table->timestamps();
         });
     }

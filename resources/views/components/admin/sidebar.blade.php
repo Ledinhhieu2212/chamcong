@@ -17,7 +17,7 @@
                     <a href="{{ route('admin.home') }}" class="nav-link">
                         <i class="nav-icon fas fa-home"></i>
                         <p>
-                            Home
+                            Trang chủ
                         </p>
                     </a>
                 </li>
@@ -63,8 +63,8 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="{{ route('admin.qrcode.index') }}" class="nav-link">
+                {{-- <li class="nav-item">
+                    <a href="{{ route('admin.report.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-chart-pie"></i>
                         <p>
                             Quản lý báo cáo
@@ -72,13 +72,13 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('admin.qrcode.index') }}" class="nav-link">
+                    <a href="{{ route('admin.salary.index') }}" class="nav-link">
                         <i class="nav-icon fa-solid fa-money-bill"></i>
                         <p>
                             Quản lý lương
                         </p>
                     </a>
-                </li>
+                </li> --}}
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

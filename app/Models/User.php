@@ -13,7 +13,6 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable, UUID;
     protected $table = 'users';
-    protected $guard = 'users';
     protected $fillable = [
         'username',
         'fullname',
@@ -40,9 +39,12 @@ class User extends Authenticatable
 
     public function calendars()
     {
-        return $this->belongsToMany(Calendar::class, 'calendar_user')->withTimestamps();
+        return $this->belongsToMany(Calendar::class, 'calendar_users')->withTimestamps();
     }
-
+    public function calendar_users()
+    {
+        return $this->hasMany(calendar_users::class);
+    }
     public function isImageFile($filePath)
     {
         return is_file(public_path($filePath)) && getimagesize(public_path($filePath));
@@ -52,20 +54,21 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Position::class);
     }
-
-
-    public function timekeeps()
+    public function salaries()
     {
-        return $this->hasMany(Timekeep::class, 'user_id');
+        return $this->hasMany(Salary::class);
     }
-
     public function qrcodes()
     {
         return $this->belongsToMany(Qrcode::class, 'qrcode_user')->withTimestamps();
     }
 
-    public function images()
+    public function timekeeps()
     {
-        return $this->belongsToMany(Calendar::class)->withPivot('image');
+        return $this->hasMany(Timekeep::class);
+    }
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class);
     }
 }

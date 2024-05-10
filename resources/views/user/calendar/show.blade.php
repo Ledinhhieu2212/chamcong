@@ -46,19 +46,21 @@
             <div class="container-fluid">
                 <div class="row justify-between">
                     <div class="col-md-9">
-                        <form action="{{ route('admin.user.search') }}" method="post">
+                        <form action="{{ route('user.calendar.search') }}" method="post">
                             @csrf
                             <div class="row">
                                 <!-- left column -->
                                 <div class="col-md">
                                     <div class="form-group">
-                                        <input type="text" name="search" class="form-control" placeholder="Tìm kiếm">
-                                    </div>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-group">
-                                        <input type="text" name="username" class="form-control"
-                                            placeholder="Tìm kiếm tên tài khoản">
+                                        <select name="datetime" class="form-control">
+                                            @foreach ($calendars as $calendar)
+                                                <option value="{{ $calendar->id }}"
+                                                    {{ (old('datetime') ??  $select_calendar_id ) == $calendar->id ? 'selected' : '' }}>
+                                                    {{ \Carbon\Carbon::parse($calendar->start_date)->format('d/m/Y') }} -
+                                                    {{ \Carbon\Carbon::parse($calendar->end_date)->format('d/m/Y') }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md">
@@ -67,7 +69,6 @@
                             </div>
                         </form>
                     </div>
-
                 </div>
 
                 <div class="row">
@@ -77,42 +78,50 @@
                                 <table id="example2" class=" table table-bordered table-hover text-center">
                                     <thead>
                                         <tr>
-                                            <th>STT</th>
-                                            <th>Ngày bắt đầu</th>
-                                            <th>Ngày kết thúc</th>
-                                            <th>Thành viên</th>
-                                            <th>Hành động</th>
+                                            <th></th>
+                                            <th>Thứ 2</th>
+                                            <th>Thứ 3</th>
+                                            <th>Thứ 4</th>
+                                            <th>THứ 5</th>
+                                            <th>Thứ 6</th>
+                                            <th>Thứ 7</th>
+                                            <th>Chủ nhật</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($calendars as $calendar)
-                                            <tr>
-                                                <td></td>
-                                                <td>{{ $calendar->start_date }}</td>
-                                                <td>{{ $calendar->end_date }}</td>
+                                        <tr>
+                                            <td>Sáng</td>
+                                            @foreach ($schedules as $schedule)
                                                 <td>
-                                                    @if ($calendar->users() == null)
-                                                        Không có nhân viên
-                                                    @else
-                                                        @foreach ($calendar->users as $user)
-                                                            <p> {{ $user->fullname }}</p>
-                                                        @endforeach
-                                                    @endif
+                                                    <input type="checkbox" disabled
+                                                        @if ($schedule->shift_1 == 1) checked @endif>
                                                 </td>
-                                                <td></td>
-                                            </tr>
-                                        @endforeach
+                                            @endforeach
+                                        </tr>
+                                        <tr>
+                                            <td>Chiều</td>
+                                            @foreach ($schedules as $schedule)
+                                                <td>
+                                                    <input type="checkbox" disabled
+                                                        @if ($schedule->shift_2 == 1) checked @endif>
+                                                </td>
+                                            @endforeach
+                                        </tr>
+                                        <tr>
+                                            <td>Tối</td>
+                                            @foreach ($schedules as $schedule)
+                                                <td>
+                                                    <input type="checkbox" disabled
+                                                        @if ($schedule->shift_3 == 1) checked @endif>
+                                                </td>
+                                            @endforeach
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
                             <!-- /.card-body -->
 
                         </div>
-                        <!-- /.card -->
-                        <div class="pagination">
-                            {{-- {{ $qrcodes->onEachSide(5)->links() }} --}}
-                        </div>
-                        <!-- /.card -->
                     </div>
                     <!-- /.col -->
                 </div>

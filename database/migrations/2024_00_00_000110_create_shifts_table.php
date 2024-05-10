@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('shifts', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
             $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();
             $table->text('description')->nullable();

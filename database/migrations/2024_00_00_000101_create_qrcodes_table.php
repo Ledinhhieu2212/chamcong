@@ -17,6 +17,8 @@ return new class extends Migration
             $table->unsignedInteger('mode')->default(1);
             $table->text('qr_code')->nullable();
             $table->string('address')->nullable();
+            $table->string('address_latitude')->nullable();
+            $table->string('address_longitude')->nullable();
             $table->string('ip')->nullable();
             $table->string('image')->nullable();
             $table->timestamps();

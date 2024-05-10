@@ -14,6 +14,7 @@ class Position extends Model
 
     protected $fillable = [
         'job',
+        'price'
     ];
     public function users()
     {

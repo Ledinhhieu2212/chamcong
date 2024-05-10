@@ -15,8 +15,6 @@
 @section('script')
     @include('components.admin.script')
     <script>
-
-
         let value = $('.checkbox:checked').length;
         $('#ketQua').val(value);
         $('#select-all').click(function(event) {
@@ -39,7 +37,21 @@
             let countt = $('.checkbox:checked').length;
             $('#ketQua').val(countt);
         });
+
+        function toado() {
+            if (navigator.geolocation == false) return;
+            navigator.geolocation.getCurrentPosition(hienToaDo);
+        }
+
+        function hienToaDo(vitri) {
+            // console.log(vitri);
+            vido = vitri.coords.latitude;
+            kinhdo = vitri.coords.longitude;
+            document.getElementById("address_latitude").value = vido.toFixed(4);
+            document.getElementById("address_longitude").value = kinhdo.toFixed(4);
+        }
     </script>
+
 @endsection
 
 @section('navbar')
@@ -88,6 +100,28 @@
                                 @if ($errors->has('address'))
                                     <span class="error-message">* {{ $errors->first('address') }}</span>
                                 @endif
+                            </div>
+                            <div class="form-group">
+                                <label for="address">Tọa độ:</label>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <input type="text" name="address_latitude" id="address_latitude" readonly class="form-control"
+                                            placeholder="Vĩ độ">
+                                        @if ($errors->has('address_latitude'))
+                                            <span class="error-message">* {{ $errors->first('address_latitude') }}</span>
+                                        @endif
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text" name="address_longitude" id="address_longitude" readonly class="form-control"
+                                            placeholder="Kinh độ">
+                                        @if ($errors->has('address_longitude'))
+                                            <span class="error-message">* {{ $errors->first('address_longitude') }}</span>
+                                        @endif
+                                    </div>
+                                    <div class="col">
+                                        <a class="btn btn-primary" onclick="toado()">Lấy tọa độ</a>
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="mode">Cài đặt chế độ xác nhận:</label>

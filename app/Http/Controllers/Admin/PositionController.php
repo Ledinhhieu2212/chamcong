@@ -33,6 +33,7 @@ class PositionController extends Controller
         if (!Position::where('job', $name)->exists()) {
             Position::create([
                 'job' => $name,
+                'price' => $request->input('price'),
             ]);
             return redirect()->route('admin.position.store')->with('success', 'Tạo mới thành công');
         } else {
@@ -49,6 +50,7 @@ class PositionController extends Controller
     {
         $this->model::find($id)->update([
             'job' =>  $request->input('job'),
+            'price' => $request->input('price'),
         ]);
         return redirect()->route('admin.position.index')->with('success', 'Cập nhật thành công');
     }

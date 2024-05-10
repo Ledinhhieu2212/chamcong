@@ -40,32 +40,6 @@
         <!-- /.content-header -->
         <section class="content">
             <div class="container-fluid">
-                <div class="row justify-between">
-                    <div class="col-md-9">
-                        <form action="{{ route('admin.user.search') }}" method="post">
-                            @csrf
-                            <div class="row">
-                                <!-- left column -->
-                                <div class="col-md">
-                                    <div class="form-group">
-                                        <input type="text" name="search" class="form-control" placeholder="Tìm kiếm">
-                                    </div>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-group">
-                                        <input type="text" name="username" class="form-control"
-                                            placeholder="Tìm kiếm tên tài khoản">
-                                    </div>
-                                </div>
-                                <div class="col-md">
-                                    <button type="submit" class="btn btn-success">Tìm kiếm</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-
-                </div>
-
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
@@ -84,37 +58,30 @@
                                     <tbody>
                                         @foreach ($qrcodes as $qrcode)
                                             <tr>
-                                                {{-- <td>{{ ($qrcode->currentPage() - 1) * $qrcode->perPage() + $loop->iteration }} --}}
-                                                {{-- </td> --}}
-                                                {{-- <td><img src="{{ asset("assets/img/avatar/$qrcodes->qr_code") }}"
-                                                            width="50" height="50" alt="" class="img-user-crud">
-                                                    </td> --}}
-                                                <td>{{ ($qrcodes->currentPage() - 1) * $qrcodes->perPage() + $loop->iteration }}
+                                                <td>{{ $loop->iteration }}
                                                 <td>{{ $qrcode->name }}</td>
                                                 <td>{{ $qrcode->modeName($qrcode->mode) }}</td>
                                                 <td>{{ $qrcode->address }}</td>
                                                 <td>
-                                                    <img src="{{ asset('assets/img/qrcode/' . $qrcode->image) }}"
-                                                        alt="">
+                                                    <img src="data:image/png;base64, {!! base64_encode(
+                                                        QrCode::format('png')->size(200)->errorCorrection('H')->generate($qrcode->qr_code),
+                                                    ) !!} ">
+
                                                 </td>
                                                 <td>
-                                                    <a href="{{ asset('assets/img/qrcode/' . $qrcode->image) }}"
+                                                    <a href="data:image/png;base64, {!! base64_encode(
+                                                        QrCode::format('png')->size(200)->errorCorrection('H')->generate($qrcode->qr_code),
+                                                    ) !!}"
                                                         class="btn btn-danger" download><i
                                                             class="fa-solid fa-download"></i></a>
+
                                                 </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
                             </div>
-                            <!-- /.card-body -->
-
                         </div>
-                        <!-- /.card -->
-                        <div class="pagination">
-                            {{ $qrcodes->onEachSide(5)->links() }}
-                        </div>
-                        <!-- /.card -->
                     </div>
                     <!-- /.col -->
                 </div>

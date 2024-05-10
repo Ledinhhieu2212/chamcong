@@ -56,18 +56,6 @@
                                             placeholder="Tìm kiếm tên tài khoản">
                                     </div>
                                 </div>
-                                {{-- <div class="col-md">
-                                    <div class="form-group">
-                                        <select name="job" id="" class="form-control">
-                                            <option value="">--- Lựa chọn --- </option>
-                                            @foreach ($positions as $position)
-                                                <option value="{{ $position->id }}" class="form-control">
-                                                    {{ $position->job }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div> --}}
                                 <div class="col-md">
                                     <button type="submit" class="btn btn-success">Tìm kiếm</button>
                                 </div>
@@ -90,9 +78,9 @@
                                             <th>STT</th>
                                             <th>Avatar</th>
                                             <th>Họ và tên</th>
-                                            <th>Tên tài khoản</th>
-                                            <th>Công việc</th>
-                                            <th>Trạng thái</th>
+                                            <th>Lương</th>
+                                            <th>Thưởng</th>
+                                            <th>Tổng</th>
                                             <th>Hành động</th>
                                         </tr>
                                     </thead>

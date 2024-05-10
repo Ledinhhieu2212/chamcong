@@ -75,7 +75,7 @@
                             <div class="form-group">
                                 <label for="username">Nhập lại mật khẩu</label>
                                 <input type="password" name="re_password" class="form-control"
-                                    value="{{ old('re_password') }}">
+                                    value="{{ old('password') }}" >
                                 @if ($errors->has('re_password'))
                                     <span class="error-message">* {{ $errors->first('re_password') }}</span>
                                 @endif
@@ -103,16 +103,6 @@
                                 </select>
                                 @if ($errors->has('job'))
                                     <span class="error-message">* {{ $errors->first('job') }}</span>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="number">Sô lượng nhân viên:</label>
-                                <input type="text" name="number" id="number" readonly value="0"
-                                    class="form-control">
-                                @if ($errors->has('number'))
-                                    <span class="error-message">* {{ $errors->first('number') }}</span>
                                 @endif
                             </div>
                         </div>

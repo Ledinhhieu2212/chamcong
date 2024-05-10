@@ -8,16 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Calendar extends Model
 {
-    use HasFactory, UUID;
+    use HasFactory;
     protected $table = 'calendars';
-
-
     protected $fillable = [
         'start_date',
         'end_date',
+        'open_port',
     ];
     public function users()
     {
-        return $this->belongsToMany(User::class,  'calendar_user')->withTimestamps();
+        return $this->belongsToMany(User::class,  'calendar_users')->withTimestamps();
     }
+
+    public function calendar_users()
+    {
+        return $this->hasMany(calendar_users::class);
+    }
+
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Calendar;
+use App\Models\calendar_users;
 use App\Models\Qrcode;
 use App\Models\User;
 use Carbon\Carbon;
@@ -22,7 +23,7 @@ class CalendarController extends Controller
     public function index()
     {
         $title = "Quản lý ngày làm";
-        $calendars = Calendar::orderBy("created_at", "desc")->get();
+        $calendars = Calendar::orderBy("start_date", 'desc')->get();
         $start = Carbon::now()->startOfWeek()->format('Y-m-d H:i');
         $end = Carbon::now()->endOfWeek()->format('Y-m-d H:i');
         return view('admin.calendar.index', compact('title', 'calendars'));
@@ -32,43 +33,53 @@ class CalendarController extends Controller
     {
         $title = "Tạo mới";
         $users = User::all();
-        $qrcodes = Qrcode::all();
-        return view('admin.calendar.add', compact('title', 'users', 'qrcodes'));
+        return view('admin.calendar.add', compact('title', 'users'));
     }
 
     public function store(Request $request)
     {
-        $datas = $request->all();
-        $this->model->create($datas);
-        $id = $this->model->id;
-        foreach ($request->input('users') as $userid) {
-            $user = User::find($userid);
-            $user->calendars()->attach($id);
-        };
-        return redirect()->route("admin.calendar.index")->with("success", "Đăng ký thành công");;
+        if ($request->input('users') !== null) {
+            $this->model->start_date = $request->input('start_date');
+            $this->model->end_date = $request->input('end_date');
+            $this->model->open_port = $request->input('open_port') ? 1 : 0;
+            $this->model->save();
+            $users = $request->input('users');
+            $id = $this->model->id;
+            $calendar = Calendar::find($id);
+            $calendar->users()->attach($request->input('users'));
+            return redirect()->route("admin.calendar.index")->with("success", "Đăng ký thành công");;
+        } else {
+            return redirect()->route("admin.calendar.create")->with("error", "Bạn chưa chọn nhân viên");
+        }
     }
 
     public function show($id)
     {
-        $title = "Sửa nhóm";
-
-        $calendars = Qrcode::all();
-        return view('admin.calendar.edit', compact('title'));
+        $title = "Sửa lịch";
+        $users = User::all();
+        $calendar = $this->model::find($id);
+        return view('admin.calendar.edit', compact('title', 'users', 'calendar'));
     }
 
     public function update(Request $request, $id)
     {
-        $qrcode = $this->model::find($id);
-        $qrcode->update([
-            'job' => $request->input('name'),
+        $calendar = $this->model::find($id);
+        $calendar->update([
+            'start_date' => $request->input('start_date'),
+            'end_date' => $request->input('end_date'),
+            'open_port' => $request->input('open_port') ? 1 : 0,
+            'updated_at' => now(),
         ]);
+        $calendar->users()->detach();
+        $calendar->users()->attach($request->input('users'));
         return  redirect()->route('admin.calendar.index')->with('success', 'Sửa thành công');
     }
 
     public function destroy(string $id)
     {
-        $calendar = $this->model::find( $id );
+        $calendar = $this->model::find($id);
         $calendar->users()->detach($id);
+        $calendar->calendar_users()->detach();
         $calendar->delete();
         return  redirect()->route('admin.calendar.index')->with('success', 'Xóa thành công');
     }

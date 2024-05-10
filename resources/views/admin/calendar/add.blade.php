@@ -104,6 +104,16 @@
                                     @endif
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="open_port">Mở cổng thời khóa biểu:</label>
+                                    <input type="checkbox" name="open_port" value="1"
+                                        class="form-control">
+                                    @if ($errors->has('open_port'))
+                                        <span class="error-message">* {{ $errors->first('open_port') }}</span>
+                                    @endif
+                                </div>
+                            </div>
                         </div>
                         <div class="col-md-6">
                             <div class="card" style="height: 300px;">

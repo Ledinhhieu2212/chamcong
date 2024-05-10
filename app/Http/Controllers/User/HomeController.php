@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Calendar;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -15,7 +16,17 @@ class HomeController extends Controller
     {
         $user = Auth::guard('web')->user();
         $title = "Trang chủ";
-        
-        return view('user.home.index' ,compact('title'));
+        $title = "Trang chủ";
+        $position =$user->position_id;
+        $usercount = $user->username;
+        $qrcode = $user->qrcodes->count();
+        $calendar = $user->calendars->count();
+        $datas = [
+            'position' => $position,
+            'usercount' => $usercount,
+            'qrcode' => $qrcode,
+            'calendar' => $calendar,
+        ];
+        return view('user.home.index' ,compact('title', 'datas'));
     }
 }

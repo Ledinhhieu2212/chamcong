@@ -17,7 +17,7 @@
                     <a href="{{ route('user.home') }}" class="nav-link">
                         <i class="nav-icon fas fa-home"></i>
                         <p>
-                            Home
+                            Trang chủ
                         </p>
                     </a>
                 </li>
@@ -62,21 +62,21 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="pages/tables/simple.html" class="nav-link">
+                            <a href="{{ route('user.timekeep.scanner') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Chấm công mã QR</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="pages/tables/data.html" class="nav-link">
+                            <a href="{{ route('user.timekeep.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Thông tin chấm công</p>
                             </a>
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item">
-                    <a href=" " class="nav-link">
+                {{-- <li class="nav-item">
+                    <a href="{{ route('user.salary.index') }}" class="nav-link">
                         <i class="nav-icon fa-solid fa-money-bill"></i>
                         <p>
                             Lương
@@ -91,7 +91,7 @@
                             Trợ giúp
                         </p>
                     </a>
-                </li>
+                </li> --}}
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

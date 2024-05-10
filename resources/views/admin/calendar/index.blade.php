@@ -97,43 +97,8 @@
         <section class="content">
             <div class="container-fluid">
                 <div class="row justify-between">
-                    <div class="col-md-9">
-                        <form action="{{ route('admin.user.search') }}" method="post">
-                            @csrf
-                            <div class="row">
-                                <!-- left column -->
-                                <div class="col-md">
-                                    <div class="form-group">
-                                        <input type="text" name="fullname" class="form-control"
-                                            placeholder="Tìm kiếm tên nhân viên">
-                                    </div>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-group">
-                                        <input type="text" name="username" class="form-control"
-                                            placeholder="Tìm kiếm tên tài khoản">
-                                    </div>
-                                </div>
-                                {{-- <div class="col-md">
-                                    <div class="form-group">
-                                        <select name="job" id="" class="form-control">
-                                            <option value="">--- Lựa chọn --- </option>
-                                            @foreach ($positions as $position)
-                                                <option value="{{ $position->id }}" class="form-control">
-                                                    {{ $position->job }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div> --}}
-                                <div class="col-md">
-                                    <button type="submit" class="btn btn-success">Tìm kiếm</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="col-md-3 text-right">
-                        <a href="{{ route('admin.calendar.create') }}" class="btn btn-secondary">Thêm mới <i
+                    <div class="col-md-12 text-right">
+                        <a href="{{ route('admin.calendar.create') }}" class="btn m-2 btn-secondary">Thêm mới <i
                                 class="fa-solid fa-plus"></i></a>
                     </div>
                 </div>
@@ -142,7 +107,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <table id="example2" class="table table-bordered table-hover">
+                                <table id="example2" class="table  text-center table-bordered table-hover">
                                     <thead>
                                         <tr>
                                             <th>STT</th>
@@ -155,14 +120,14 @@
                                     <tbody>
                                         @foreach ($calendars as $calendar)
                                             <tr>
-                                                <td>{{$loop->iteration }}</td>
-                                                <td>{{$calendar->start_date}}</td>
-                                                <td>{{$calendar->end_date}}</td>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($calendar->start_date)->format('d/m/Y') }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($calendar->end_date)->format('d/m/Y') }}</td>
                                                 <td>
-                                                    {{$calendar->users()->count()}}
+                                                    {{ $calendar->users()->count() }}
                                                 </td>
                                                 <td>
-                                                    <a href="{{ route('admin.calendar.index', $calendar->id) }}"
+                                                    <a href="{{ route('admin.calendar.show', $calendar->id) }}"
                                                         class="btn btn-primary"><i
                                                             class="fa-solid fa-pen-to-square"></i></a>
                                                     <a onclick="openModal('{{ $calendar->id }}')" class="btn btn-danger"><i

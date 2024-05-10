@@ -2,10 +2,16 @@
 
 namespace Database\Seeders;
 
+use App\Models\Qrcode;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Ramsey\Uuid\Uuid;
+use SimpleSoftwareIO\QrCode\Facades\QrCode as FacadesQrCode;
 
 class QrCodeSeeder extends Seeder
 {
@@ -14,51 +20,66 @@ class QrCodeSeeder extends Seeder
      */
     public function run(): void
     {
-        // DB::table("qrcodes")->insert([
-        //     $id = 'id' => 1,
-        //     $name = 'name' => 'nhóm 1',
-        //     $mode = 'mode' => 1,
-        //     $address = 'address_address' => 'Hà Nội',
-        //     'qr_code' => Hash::make("?id=$id?name=$name?mode=$mode?address=$address?"),
-        // ]);
 
-        // DB::table("qrcodes")->insert([
-        //     $id = 'id' => 2,
-        //     $name = 'name' => 'Nhóm 2',
-        //     $mode = 'mode' => 1,
-        //     $address = 'address_address' => 'Hải Phòng',
-        //     'qr_code' => Hash::make("?id=$id?name=$name?mode=$mode?address=$address?"),
-        // ]);
+        Qrcode::query()->delete();
+        $qrcode1 = Qrcode::create([
+            'id' => Uuid::uuid4()->toString(),
+            'name' => 'Nhóm 1',
+            'mode' => 1,
+            'address' => '9 P. Duy Tân, Dịch Vọng Hậu, Cầu Giấy, Hà Nội 123186, Việt Nam',
+            'address_latitude' => '21.030524606379085',
+            'address_longitude' => '105.78483564417787',
+            'created_at' => now(),
+            'updated_at' => now(),  
+        ]);
+        $qrcode1->qr_code = $qrcode1->id . "-" . time();
+        $qrcode1->update();
 
-        // DB::table("detail_qrcodes")->insert([
-        //     'user_id' => 1,
-        //     'qrcode_id' => 1,
-        // ]);
+        $qrcode2 = Qrcode::create([
+            'id' => Uuid::uuid4()->toString(),
+            'name' => 'Nhóm 2',
+            'mode' => 2,
+            'address' => '9 P. Duy Tân, Dịch Vọng Hậu, Cầu Giấy, Hà Nội 123186, Việt Nam',
+            'address_latitude' => '21.030524606379085',
+            'address_longitude' => '105.78483564417787',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $qrcode2->qr_code = $qrcode2->id . "-" . time();
+        $qrcode2->update();
 
-        // DB::table("detail_qrcodes")->insert([
-        //     'user_id' => 2,
-        //     'qrcode_id' => 1,
-        // ]);
+        $qrcode3 = Qrcode::create([
+            'id' => Uuid::uuid4()->toString(),
+            'name' => 'Home Lê Đình Hiếu',
+            'mode' => 1,
+            'address' => 'Xuân Canh, Đông Anh, Hà Nội, Việt Nam',
+            'address_latitude' => '21.081767575713158',
+            'address_longitude' => '105.8480810338313',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $qrcode3->qr_code = $qrcode3->id . "-" . time();
+        $qrcode3->update();
 
+        $qrcode4 = Qrcode::create([
+            'id' => Uuid::uuid4()->toString(),
+            'name' => 'HNMU',
+            'mode' => 2,
+            'address' => '98 phố Dương Quảng Hàm, Quan Hoa, Cầu Giấy, Hà Nội, Việt Nam',
+            'address_latitude' => '21.035897149733465',
+            'address_longitude'=> '105.80132789558647',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $qrcode4->qr_code = $qrcode4->id . "-" . time();
+        $qrcode4->update();
 
-        // DB::table("detail_qrcodes")->insert([
-        //     'user_id' => 3,
-        //     'qrcode_id' => 1,
-        // ]);
-
-        // DB::table("detail_qrcodes")->insert([
-        //     'user_id' => 4,
-        //     'qrcode_id' => 2,
-        // ]);
-
-        // DB::table("detail_qrcodes")->insert([
-        //     'user_id' => 5,
-        //     'qrcode_id' => 2,
-        // ]);
-
-        // DB::table("detail_qrcodes")->insert([
-        //     'user_id' => 6,
-        //     'qrcode_id' => 2,
-        // ]);
+        $users = User::all();
+        foreach ($users as $user) {
+            $qrcode1->users()->attach($user->id);
+            $qrcode2->users()->attach($user->id);
+            $qrcode3->users()->attach($user->id);
+            $qrcode4->users()->attach($user->id);
+        }
     }
 }

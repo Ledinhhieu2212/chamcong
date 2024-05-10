@@ -23,7 +23,7 @@
         <div class="card">
             <div class="card-body login-card-body">
 
-                <form class="m-t" method="POST" role="form"action="{{ route('admin.login') }}">
+                <form class="m-t" method="POST" role="form" action="{{ route('admin.login') }}">
                     @csrf
                     <div class="my-2">
                         <div class="input-group">

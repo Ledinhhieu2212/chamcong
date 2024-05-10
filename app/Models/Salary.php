@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Salary extends Model
 {
     use HasFactory;
+
+    protected $table = 'salaries';
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }

@@ -96,24 +96,8 @@
         <section class="content">
             <div class="container-fluid">
                 <div class="row justify-between">
-                    <div class="col-md-9">
-                        <form action="{{ route('admin.user.search') }}" method="post">
-                            @csrf
-                            <div class="row">
-                                <!-- left column -->
-                                <div class="col-md-5">
-                                    <div class="form-group">
-                                        <input type="text" name="search" class="form-control" placeholder="Tìm kiếm">
-                                    </div>
-                                </div>
-                                <div class="col-md-5">
-                                    <button type="submit" class="btn btn-success">Tìm kiếm</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="col-md-3 text-right">
-                        <a href="{{ route('admin.position.create') }}" class="btn btn-secondary">Thêm mới <i
+                    <div class="col-md-12 text-right">
+                        <a href="{{ route('admin.position.create') }}" class="btn m-2 btn-secondary">Thêm mới <i
                                 class="fa-solid fa-plus"></i></a>
                     </div>
                 </div>
@@ -127,6 +111,7 @@
                                         <tr>
                                             <th>STT</th>
                                             <th>Công việc</th>
+                                            <th>Lương cơ bản</th>
                                             <th>Số lượng nhân viên</th>
                                             <th>Thao tác</th>
                                         </tr>
@@ -137,6 +122,7 @@
                                                 <td>{{ ($positions->currentPage() - 1) * $positions->perPage() + $loop->iteration }}
                                                 </td>
                                                 <td>{{ $position->job }}</td>
+                                                <td>{{$position->price}}đ</td>
                                                 <td>{{ $position->users_count }}</td>
                                                 <td>
                                                     <a href="{{ route('admin.position.show', $position->id) }}"

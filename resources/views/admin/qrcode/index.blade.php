@@ -99,30 +99,9 @@
         <section class="content">
             <div class="container-fluid">
                 <div class="row justify-between">
-                    <div class="col-md-9">
-                        <form action="{{ route('admin.user.search') }}" method="post">
-                            @csrf
-                            <div class="row">
-                                <!-- left column -->
-                                <div class="col-md">
-                                    <div class="form-group">
-                                        <input type="text" name="search" class="form-control" placeholder="Tìm kiếm">
-                                    </div>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-group">
-                                        <input type="text" name="username" class="form-control"
-                                            placeholder="Tìm kiếm tên tài khoản">
-                                    </div>
-                                </div>
-                                <div class="col-md">
-                                    <button type="submit" class="btn btn-success">Tìm kiếm</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="col-md-3 text-right">
-                        <a href="{{ route('admin.qrcode.create') }}" class="btn btn-secondary">Thêm mới <i
+
+                    <div class="col-md-12 text-right">
+                        <a href="{{ route('admin.qrcode.create') }}" class="btn m-2 btn-secondary">Thêm mới <i
                                 class="fa-solid fa-plus"></i></a>
                     </div>
                 </div>
@@ -154,10 +133,12 @@
                                                 <td>{{ ($qrcodes->currentPage() - 1) * $qrcodes->perPage() + $loop->iteration }}
                                                 <td>{{ $qrcode->name }}</td>
                                                 <td>{{ $qrcode->modeName($qrcode->mode) }}</td>
-                                                <td>{{ $qrcode->address}}</td>
+                                                <td>{{ $qrcode->address }}</td>
                                                 <td>{{ $qrcode->CountUser() }}</td>
                                                 <td>
-                                                    <img src="{{ asset("assets/img/qrcode/".$qrcode->image)}}" alt="">
+                                                    <img src="data:image/png;base64, {!! base64_encode(
+                                                        QrCode::format('png')->size(200)->errorCorrection('H')->generate($qrcode->qr_code),
+                                                    ) !!} ">
                                                 </td>
                                                 <td>
                                                     <a href="{{ route('admin.qrcode.show', $qrcode->id) }}"

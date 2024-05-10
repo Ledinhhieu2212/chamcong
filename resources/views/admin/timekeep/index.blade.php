@@ -24,48 +24,34 @@
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1 class="m-0">{{ $title }}</h1>
-                    </div><!-- /.col -->
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Home</a></li>
-                            <li class="breadcrumb-item">{{ $title }}</li>
-                        </ol>
-                    </div><!-- /.col -->
+
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
         </div>
         <section class="content">
             <div class="container-fluid">
                 <div class="row justify-between">
-                    <div class="col-md-9">
-                        <form action="{{ route('admin.user.search') }}" method="post">
-                            @csrf
-                            <div class="row">
-                                <!-- left column -->
-                                <div class="col-md">
-                                    <div class="form-group">
-                                        <input type="text" name="fullname" class="form-control"
-                                            placeholder="Tìm kiếm tên nhân viên">
+                    <div class="col-md-3">
+                        <div class="sticky-top mb-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Các thông báo về trạng thái chấm công</h4>
+                                </div>
+                                <div class="card-body">
+                                    <!-- the events -->
+                                    <div id="external-events">
+                                        <div class="external-event bg-success">Đúng giờ</div>
+                                        <div class="external-event bg-warning">Đến muộn</div>
+                                        <div class="external-event bg-purple">Về sớm</div>
+                                        <div class="external-event bg-secondary">Nghỉ</div>
+                                        <div class="external-event bg-primary">Nghỉ phép</div>
+                                        <div class="external-event bg-danger">Nghỉ không phép</div>
                                     </div>
                                 </div>
-                                <div class="col-md">
-                                    <div class="form-group">
-                                        <input type="text" name="username" class="form-control"
-                                            placeholder="Tìm kiếm tên tài khoản">
-                                    </div>
-                                </div>
-                                <div class="col-md">
-                                    <button type="submit" class="btn btn-success">Tìm kiếm</button>
-                                </div>
+                                <!-- /.card-body -->
                             </div>
-                        </form>
-                    </div>
-                    <div class="col-md-3 text-right">
-                        <a class="btn btn-primary" id="detail_timekeep">
-                            Thông tin đánh trạnh thái chấm công
-                        </a>
+                            <!-- /.card -->
+                        </div>
                     </div>
                 </div>
 
@@ -73,7 +59,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <table id="example2" class="table table-bordered table-hover">
+                                <table id="example2" class="table  text-center table-bordered table-hover">
                                     <thead>
                                         <tr>
                                             <th>STT</th>

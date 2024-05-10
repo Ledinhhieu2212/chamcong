@@ -1,14 +1,14 @@
 <?php
 
 use App\Http\Controllers\Admin\AccountController;
-use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\CalendarController;
-use App\Http\Controllers\Admin\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\LoginController as AdminAuth;
 use App\Http\Controllers\Admin\HomeController as AdminHome;
 use App\Http\Controllers\Admin\PositionController;
 use App\Http\Controllers\Admin\QrcodeController;
+use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\SalaryController;
 use App\Http\Controllers\Admin\TimekeepController;
 use App\Http\Controllers\Admin\UserController;
 
@@ -49,8 +49,13 @@ Route::middleware('login.admin')->group(function () {
     Route::get('calendar/create', [CalendarController::class, 'create'])->name('admin.calendar.create');
     Route::post('calendar', [CalendarController::class, 'store'])->name('admin.calendar.store');
     Route::delete('calendar/{id}', [CalendarController::class, 'destroy'])->name('admin.calendar.destroy');
+    Route::get('calendar/{id}', [CalendarController::class, 'show'])->name('admin.calendar.show');
+    Route::put('calendar/{id}', [CalendarController::class, 'update'])->name('admin.calendar.update');
 
     Route::get('timekeep', [TimekeepController::class, 'index'])->name('admin.timekeep.index');
+
+    Route::get('report', [ReportController::class, 'index'])->name('admin.report.index');
+    Route::get('salary', [SalaryController::class, 'index'])->name('admin.salary.index');
 });
 
 Route::redirect('/admin', '/admin/login');

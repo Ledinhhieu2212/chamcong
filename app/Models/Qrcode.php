@@ -17,6 +17,8 @@ class Qrcode extends Model
         'mode',
         'address',
         'qr_code',
+        'address_latitude',
+        'address_longitude',
     ];
 
     public function modeName($mode)
@@ -33,7 +35,9 @@ class Qrcode extends Model
     {
         return $this->belongsToMany(User::class,  'qrcode_user')->withTimestamps();
     }
-
+    public function findName($qrcode){
+        return Qrcode::where('qr_code', $qrcode)->value("name")->first();
+    }
     public function CountUser()
     {
         return $this->users()->count();

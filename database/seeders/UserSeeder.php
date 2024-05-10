@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-
+        User::query()->delete();
         DB::table('users')->insert([
             'id' => Uuid::uuid4()->toString(),
             'username' => 'nhanviena',
