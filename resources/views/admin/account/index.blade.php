@@ -69,12 +69,16 @@
                                     <span class="error-message">* {{ $errors->first('phone') }}</span>
                                 @endif
                             </div>
+                            <div class="form-group">
+                                <a href="" class="btn btn-primary" > Đổi mật khẩu </a>
+                            </div>
                         </div>
                         <div class="col-md-5">
                             <div class="form-group">
                                 <label for="image">Gửi ảnh:</label>
-                                <input type="file" name="image" class="form-control" accept="image/*"
-                                    onchange="loadFile(event)">
+                                <input type="file" name="image"  id="selectedFile" accept="image/*" onchange="loadFile(event)" style="display: none;" />
+                                <input type="button" class="d-block my-2" value="Gửi ảnh"
+                                    onclick="document.getElementById('selectedFile').click();">
                                 @if ($errors->has('image'))
                                     <span class="error-message">* {{ $errors->first('image') }}</span>
                                 @endif
@@ -82,6 +86,7 @@
                                     width="150" height="150">
                             </div>
                         </div>
+
                     </div>
 
                     <div class="row">

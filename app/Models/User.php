@@ -25,6 +25,7 @@ class User extends Authenticatable
         'birthday',
         'image',
         'position_id',
+        'status',
     ];
 
     protected $hidden = [
@@ -41,34 +42,42 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Calendar::class, 'calendar_users')->withTimestamps();
     }
+
     public function calendar_users()
     {
         return $this->hasMany(calendar_users::class);
     }
+
     public function isImageFile($filePath)
     {
         return is_file(public_path($filePath)) && getimagesize(public_path($filePath));
     }
-
+    public function salaries()
+    {
+        return $this->hasMany(Salary::class );
+    }
     public function position()
     {
         return $this->belongsTo(Position::class);
     }
-    public function salaries()
-    {
-        return $this->hasMany(Salary::class);
-    }
+
     public function qrcodes()
     {
         return $this->belongsToMany(Qrcode::class, 'qrcode_user')->withTimestamps();
     }
 
-    public function timekeeps()
-    {
-        return $this->hasMany(Timekeep::class);
-    }
+
     public function schedules()
     {
         return $this->hasMany(Schedule::class);
+    }
+
+    public function timekeeps()
+    {
+        return $this->hasMany(timekeep::class);
+    }
+    public function detail_timekeeps()
+    {
+        return $this->hasMany(detail_timekeep::class);
     }
 }

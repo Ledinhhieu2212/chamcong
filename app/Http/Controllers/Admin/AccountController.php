@@ -23,12 +23,6 @@ class AccountController extends Controller
         $title = "Thông tin tài khoản";
         return view('admin.account.index', compact('title'));
     }
-
-
-    public function edit()
-    {
-    }
-
     public function update(Request $request)
     {
         $data = $request->all();

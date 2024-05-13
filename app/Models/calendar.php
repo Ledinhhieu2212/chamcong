@@ -25,4 +25,17 @@ class Calendar extends Model
         return $this->hasMany(calendar_users::class);
     }
 
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class);
+    }
+
+    public function timekeeps()
+    {
+        return $this->hasMany(timekeep::class);
+    }
+    public function detail_timekeeps()
+    {
+        return $this->hasMany(detail_timekeep::class);
+    }
 }

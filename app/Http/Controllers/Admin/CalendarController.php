@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Calendar;
 use App\Models\calendar_users;
 use App\Models\Qrcode;
+use App\Models\timekeep;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -32,7 +33,7 @@ class CalendarController extends Controller
     public function create()
     {
         $title = "Tạo mới";
-        $users = User::all();
+        $users = User::orderBy('fullname')->get();
         return view('admin.calendar.add', compact('title', 'users'));
     }
 
@@ -56,7 +57,7 @@ class CalendarController extends Controller
     public function show($id)
     {
         $title = "Sửa lịch";
-        $users = User::all();
+        $users = User::orderBy('fullname')->get();
         $calendar = $this->model::find($id);
         return view('admin.calendar.edit', compact('title', 'users', 'calendar'));
     }
@@ -78,8 +79,11 @@ class CalendarController extends Controller
     public function destroy(string $id)
     {
         $calendar = $this->model::find($id);
-        $calendar->users()->detach($id);
-        $calendar->calendar_users()->detach();
+        $timekeeps = timekeep::where('calendar_id', $calendar->id)->get();
+        foreach( $timekeeps as $timekeep ) {
+            $timekeep->delete();
+        }
+        $calendar->users()->detach();
         $calendar->delete();
         return  redirect()->route('admin.calendar.index')->with('success', 'Xóa thành công');
     }

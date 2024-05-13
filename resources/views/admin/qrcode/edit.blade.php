@@ -47,11 +47,10 @@
             console.log(vitri);
             vido = vitri.coords.latitude;
             kinhdo = vitri.coords.longitude;
-            document.getElementById("address_latitude").value = vido.toFixed(3);
-            document.getElementById("address_longitude").value = kinhdo.toFixed(3);
+            document.getElementById("address_latitude").value = vido;
+            document.getElementById("address_longitude").value = kinhdo;
         }
     </script>
-
 @endsection
 
 @section('navbar')

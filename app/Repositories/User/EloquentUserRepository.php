@@ -38,7 +38,7 @@ class EloquentUserRepository implements UserRepository
             $query = $query->where('position_id', 'like', '%' . $request->job . '%');
         }
 
-        return $query->orderBy('created_at', 'desc')->paginate(5);
+        return $query->orderBy('fullname')->paginate(5);
     }
 
     public function store(CreateRequest $request)
@@ -61,7 +61,7 @@ class EloquentUserRepository implements UserRepository
     public function show($id)
     {
 
-        
+
     }
     public function update(Request $request, $id)
     {

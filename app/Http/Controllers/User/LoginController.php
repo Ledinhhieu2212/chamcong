@@ -37,7 +37,9 @@ class LoginController extends Controller
             'username' => $user->username,
             'password' => $request->input('password '),
         ];
-        if (Auth::guard('web')->attempt($credentialsEmail ) || Auth::guard('web')->attempt($credentialsUsername )) {
+        if (Auth::guard('web')->attempt($credentialsEmail) || Auth::guard('web')->attempt($credentialsUsername)) {
+            $user = User::find(Auth::guard('web')->id());
+            $user->update(["status" => 1]);
             return redirect()->route('user.home')->with('success', 'Đăng nhập thành công tài khoản');;
         }
         return redirect()->route('user.index')->with('error', 'Email/Username hoặc mật khẩu không chính xác');
@@ -46,6 +48,8 @@ class LoginController extends Controller
 
     public function logout()
     {
+        $user = User::find(Auth::guard('web')->id());
+        $user->update(["status" => 0]);
         Auth::guard('web')->logout();
         return redirect()->route('user.index');
     }

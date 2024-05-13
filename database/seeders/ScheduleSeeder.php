@@ -21,19 +21,23 @@ class ScheduleSeeder extends Seeder
     public function run(): void
     {
         Schedule::query()->delete();
+        $users = User::all();
         $calendar_users = calendar_users::all();
-        foreach ($calendar_users as $calendar_user) {
-            for ($i = 0; $i <= 6; $i++) {
-                $schedule1 = Schedule::create([
-                    'calendar_user_id' => $calendar_user->id,
-                    'day' => $i,
-                    'shift_1' => random_int(0, 1),
-                    'shift_2' =>  random_int(0, 1),
-                    'shift_3' =>  random_int(0, 1),
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
-                $schedule1->update(['shift' => (($schedule1->shift_1) + ($schedule1->shift_2) + ($schedule1->shift_3))]);
+        foreach ($users as $user) {
+            foreach ($user->calendars()->get()as $calendar) {
+                for ($i = 0; $i <= 6; $i++) {
+                    $schedule1 = Schedule::create([
+                        'calendar_id' => $calendar->id,
+                        'user_id' => $user->id,
+                        'day' => $i,
+                        'shift_1' => random_int(0, 1),
+                        'shift_2' =>  random_int(0, 1),
+                        'shift_3' =>  random_int(0, 1),
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                    $schedule1->update(['shift' => (($schedule1->shift_1) + ($schedule1->shift_2) + ($schedule1->shift_3))]);
+                }
             }
         }
     }

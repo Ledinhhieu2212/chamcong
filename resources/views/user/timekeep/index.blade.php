@@ -7,6 +7,7 @@
 
 @section('script')
     @include('components.user.script')
+
 @endsection
 
 
@@ -24,7 +25,7 @@
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="sticky-top mb-3">
                             <div class="card">
                                 <div class="card-header">
@@ -46,6 +47,27 @@
                             <!-- /.card -->
                         </div>
                     </div>
+                    <div class="col-md-7">
+                        <form action="{{ route('user.timekeep.search') }}" method="post">
+                            @csrf
+                            <div class="row">
+                                <!-- left column -->
+                                <div class="col-md">
+                                    <div class="form-group">
+                                        <input type="date" name="start_time" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md">
+                                    <div class="form-group">
+                                        <input type="date" name="end_time" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md">
+                                    <button type="submit" class="btn btn-success">Tìm kiếm</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
                 <!-- /.row -->
             </div><!-- /.container-fluid -->
@@ -57,22 +79,6 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Thông báo chấm công của nhân viên</h3>
-
-                                <div class="card-tools">
-                                    <div class="input-group input-group-sm" style="width: 150px;">
-                                        <input type="text" name="table_search" class="form-control float-right"
-                                            placeholder="Search">
-
-                                        <div class="input-group-append">
-                                            <button type="submit" class="btn btn-default">
-                                                <i class="fas fa-search"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             <!-- /.card-header -->
                             <div class="card-body table-responsive p-0" style="height: 300px;">
                                 <table class="table text-center table-head-fixed text-nowrap">
@@ -87,7 +93,7 @@
                                     </thead>
 
                                     <tbody>
-                                        @foreach ($timekeeps as $timekeep)
+                                        @foreach ($timkeeps as $timekeep)
                                             <tr>
                                                 <td>{{ $loop->iteration }}
                                                 </td>

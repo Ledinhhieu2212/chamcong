@@ -20,7 +20,10 @@ class Position extends Model
     {
         return $this->hasMany(User::class);
     }
-
+    public function salaries()
+    {
+        return $this->hasMany(Salary::class);
+    }
     public function NamePosition($id)
     {
         return $this->where('id', $id)->value('job');

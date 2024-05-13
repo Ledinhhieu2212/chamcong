@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('timekeeps', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('calendar_user_id')->nullable();
-            $table->unsignedBigInteger('schedule_id')->nullable();
+            $table->unsignedBigInteger('calendar_id')->nullable();
+            $table->uuid('user_id')->nullable();
             $table->dateTime('date')->nullable();
             $table->time('time_in')->nullable();
             $table->time('time_out')->nullable();
             $table->string('shift')->nullable();
-            $table->foreign('calendar_user_id')->references('id')->on('calendar_users')->onDelete('cascade');
-            $table->foreign('schedule_id')->references('id')->on('schedules')->onDelete('cascade');
+            $table->foreign('calendar_id')->references('id')->on('calendars')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

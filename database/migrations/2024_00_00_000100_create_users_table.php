@@ -26,6 +26,7 @@ return new class extends Migration
             $table->text('image')->nullable();
             $table->text('qr_code')->nullable();
             $table->uuid('position_id')->nullable();
+            $table->unsignedInteger('status')->default(0);
             $table->rememberToken();
             $table->timestamps();
             $table->foreign('position_id')->references('id')->on('positions');

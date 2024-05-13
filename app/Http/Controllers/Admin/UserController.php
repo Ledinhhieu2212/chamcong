@@ -7,10 +7,11 @@ use App\Models\Position;
 use App\Repositories\User\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use App\Http\Requests\User\CreateRequest;
-use App\Http\Requests\User\EditRequest;
 use App\Models\User;
+use App\Exports\UsersExport;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -24,6 +25,9 @@ class UserController extends Controller
         $title = "Quản lý nhân viên";
         $users = $this->userRepository->search($request);
         $positions = Position::all();
+
+        $loggedInUserIds = Session::get('user_ids', []);
+        // dd($loggedInUserIds);
         if (Auth::guard('web')->check()) {
             $loginUser = Auth::guard('web')->id();
         } else {
@@ -53,7 +57,10 @@ class UserController extends Controller
     {
         return $this->userRepository->update($request, $id);
     }
-
+    public function export()
+    {
+        return Excel::download(new UsersExport, 'users.xlsx');
+    }
     public function destroy($id)
     {
         return $this->userRepository->destroy($id);

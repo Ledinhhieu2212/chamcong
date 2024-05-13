@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
             CalendarSeeder::class,
             ScheduleSeeder::class,
             TimekeepSeeder::class,
-            ShiftsSeeder::class, //
+            SalarySeeder::class,
         ]);
     }
 }

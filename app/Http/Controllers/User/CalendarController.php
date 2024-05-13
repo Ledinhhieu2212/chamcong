@@ -25,16 +25,15 @@ class CalendarController extends Controller
         $user = Auth::user();
         // Sắp xếp giảm dần
         $calendars = $user->calendars->sortByDesc('start_date');
+
         $calendar_first = $calendars->first();
         if ($calendar_first !== null) {
             // Nếu không tìm kiếm thì sẽ lấy giá trị thời khóa biểu đầu tiên
             if ($datas == null) {
-                $calendar_users = calendar_users::where('calendar_id',  $calendar_first->id)->where('user_id', $user->id)->first();
-                $schedules = Schedule::where('calendar_user_id', $calendar_users->id)->orderBy('day')->get();
+                $schedules = Schedule::where('calendar_id', $calendar_first->id)->where('user_id', $user->id)->orderBy('day')->get();
             } else {
                 // Nếu không sẽ lấy dữ liệu datetime
-                $calendar_users = calendar_users::where('calendar_id',  $datas['datetime'])->where('user_id', $user->id)->first();
-                $schedules = Schedule::where('calendar_user_id', $calendar_users->id)->orderBy('day')->get();
+                $schedules = Schedule::where('calendar_id', $datas['datetime'])->where('user_id', $user->id)->orderBy('day')->get();
             }
             return view('user.calendar.show', compact('title', 'calendars', 'schedules', 'select_calendar_id'));
         } else {
@@ -52,18 +51,21 @@ class CalendarController extends Controller
         // Nếu không có danh sách thời khóa biểu => chưa có lịch;
         if ($calendars) {
             // TÌm kiểm thời khóa biểu cho phép đăng ký lịch
-            $calendar_first = $calendars->sortByDesc('start_date')->first();
-            // Khi được đăng kí sẽ mở bảng khi không được sẽ hiện thông báo
-            if ($calendar_first->open_port) {
-                $calendar_user = calendar_users::where('user_id', $user->id)->where('calendar_id', $calendar_first->id)->first();
-                $schedules = Schedule::where('calendar_user_id', $calendar_user->id)->exists();
-                if( $schedules ){
-                    return view('user.calendar.registered', compact('title','calendar_first'));
-                }else{
-                    return view('user.calendar.table', compact('title', 'calendar_first'));
+            $calendar_first = $calendars->where('start_date', '<=', Carbon::today())->where('end_date', '>=',  Carbon::today())->sortByDesc('start_date')->first();
+
+            // dd($calendar_first);
+            if ($calendar_first) {
+                // Khi được đăng kí sẽ mở bảng khi không được sẽ hiện thông báo
+                if ($calendar_first->open_port) {
+                    $schedules = Schedule::where('calendar_id', $calendar_first->id)->where("user_id", $user->id)->exists();
+                    if ($schedules) {
+                        return view('user.calendar.registered', compact('title', 'calendar_first'));
+                    } else {
+                        return view('user.calendar.table', compact('title', 'calendar_first'));
+                    }
                 }
             } else {
-                return view('user.calendar.derigister', compact('title', 'calendar_first'));
+                return view('user.calendar.derigister', compact('title'));
             }
         } else {
             return view('user.calendar.un_rigister', compact('title'));
@@ -76,9 +78,8 @@ class CalendarController extends Controller
         $user = Auth::user();
         $datas = $request->all();
         $calendars = $user->calendars;
-        $calendar_first = $calendars->sortByDesc('start_date')->first();
-        $calendar_user = calendar_users::where('calendar_id', $calendar_first->id)->where('user_id', $user->id)->first();
-        $schedules = Schedule::where('calendar_user_id', $calendar_user->id);
+        $calendar_first = $calendars->where('start_date', '<=', Carbon::today())->where('end_date', '>=',  Carbon::today())->sortByDesc('start_date')->first();
+        $schedules = Schedule::where('calendar_id', $calendar_first->id)->where("user_id", $user->id);
         if ($schedules->exists()) {
             foreach ($schedules as $i => $schedule) {
                 $schedule->where('day', $i)->update([
@@ -91,7 +92,8 @@ class CalendarController extends Controller
         } else {
             for ($i = 0; $i < 7; $i++) {
                 $sche = Schedule::create([
-                    'calendar_user_id' => $calendar_user->id,
+                    'calendar_id' => $calendar_first->id,
+                    'user_id' =>  $user->id,
                     'day' => $i,
                     'shift_1' => $datas["day1s"][$i] ? 1 : 0,
                     'shift_2' => $datas["day2s"][$i] ? 1 : 0,

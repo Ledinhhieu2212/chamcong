@@ -19,6 +19,8 @@ Route::middleware('login.admin')->group(function () {
     Route::get('home', [AdminHome::class, 'index'])->name('admin.home');
     Route::get('account', [AccountController::class, 'index'])->name('admin.account');
     Route::put('account', [AccountController::class, 'update'])->name('admin.account.update');
+    Route::get('account/password', [AccountController::class, 'create'])->name('admin.account.create');
+    Route::put('account/password', [AccountController::class, 'store'])->name('admin.account.store');
 
     Route::get('position', [PositionController::class, 'index'])->name('admin.position.index');
     Route::post('position/search', [PositionController::class, 'index'])->name('admin.position.search');
@@ -43,19 +45,25 @@ Route::middleware('login.admin')->group(function () {
     Route::get('qrcode/{id}', [QrcodeController::class, 'show'])->name('admin.qrcode.show');
     Route::put('qrcode/{id}', [QrcodeController::class, 'update'])->name('admin.qrcode.update');
 
-
-
     Route::get('calendar', [CalendarController::class, 'index'])->name('admin.calendar.index');
     Route::get('calendar/create', [CalendarController::class, 'create'])->name('admin.calendar.create');
     Route::post('calendar', [CalendarController::class, 'store'])->name('admin.calendar.store');
-    Route::delete('calendar/{id}', [CalendarController::class, 'destroy'])->name('admin.calendar.destroy');
     Route::get('calendar/{id}', [CalendarController::class, 'show'])->name('admin.calendar.show');
+    Route::get('calendar/{id}/detail', [CalendarController::class, 'show'])->name('admin.calendar.show.detail.user');
     Route::put('calendar/{id}', [CalendarController::class, 'update'])->name('admin.calendar.update');
+    Route::delete('calendar/{id}', [CalendarController::class, 'destroy'])->name('admin.calendar.destroy');
 
     Route::get('timekeep', [TimekeepController::class, 'index'])->name('admin.timekeep.index');
+    Route::post('timekeep', [TimekeepController::class, 'index'])->name('admin.timekeep.search');
+    Route::get('timekeep/edit/{id}', [TimekeepController::class, 'show'])->name('admin.timekeep.show');
 
-    Route::get('report', [ReportController::class, 'index'])->name('admin.report.index');
+    Route::get('statistical', [ReportController::class, 'index'])->name('admin.report.index');
+
     Route::get('salary', [SalaryController::class, 'index'])->name('admin.salary.index');
+    Route::post('salary', [SalaryController::class, 'index'])->name('admin.salary.search');
+    Route::get('salary/create', [SalaryController::class, 'create'])->name('admin.salary.create');
+    Route::post('salary/store', [SalaryController::class, 'store'])->name('admin.salary.store');
+    Route::get('salary/edit/{id}', [SalaryController::class, 'show'])->name('admin.salary.show');
+    Route::put('salary/edit/{id}', [SalaryController::class, 'update'])->name('admin.salary.update');
+    Route::post('salary/edit/{id}/search', [SalaryController::class, 'show'])->name('admin.salary.edit.search');
 });
-
-Route::redirect('/admin', '/admin/login');

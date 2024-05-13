@@ -50,4 +50,8 @@ class Qrcode extends Model
             ->size(200)->errorCorrection('H')
             ->generate($query);
     }
+    public function timekeeps()
+    {
+        return $this->hasMany(timekeep::class);
+    }
 }

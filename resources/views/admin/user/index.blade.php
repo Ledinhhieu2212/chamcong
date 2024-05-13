@@ -109,11 +109,7 @@
                                                 <td>{{ $user->username }}</td>
                                                 <td>{{ $user->position->NamePosition($user->position_id) }}</td>
                                                 <td>
-                                                    @if ($loginUser == $user->id)
-                                                        Hoạt động
-                                                    @else
-                                                        Đăng xuất
-                                                    @endif
+                                                   {{$user->status ? "Hoạt động" : "Đăng xuất"}}
                                                 </td>
                                                 <td>
                                                     <a href="{{ route('admin.user.show', $user->id) }}"

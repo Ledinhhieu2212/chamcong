@@ -18,19 +18,9 @@ class calendar_users extends Model
     {
         return $this->belongsTo(User::class);
     }
-
     public function calendar()
+
     {
         return $this->belongsTo(Calendar::class);
-    }
-
-    public function schedules()
-    {
-        return $this->hasMany(Schedule::class, 'calendar_user_id');
-    }
-
-    public function timekeeps()
-    {
-        return $this->hasMany(timekeep::class, 'calendar_user_id');
     }
 }

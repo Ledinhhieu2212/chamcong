@@ -9,6 +9,50 @@
             object-fit: cover;
         }
     </style>
+    <style>
+        .body-delete {
+            width: 100%;
+            height: 100%;
+            display: none;
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background-color: rgb(51, 47, 47, 0.9);
+            z-index: 1000000;
+        }
+
+        .form-destroy {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 500px;
+            transform: translate(-50%, -50%);
+            background-color: #f2f2f2;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 2;
+            overflow: hidden;
+        }
+
+        .form-header {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        .form-body {
+            padding: 20px;
+            height: 100px;
+        }
+
+        .form-footer {
+            padding: 20px;
+            text-align: right;
+            width: 100%;
+        }
+    </style>
 @endsection
 
 @section('script')
@@ -35,6 +79,20 @@
             let count = $('.checkbox:checked').length;
             $('#ketQua').val(count);
         });
+    </script>
+    <script>
+        function openModal(employeeId) {
+            var modal = document.getElementById("deleteModal-" + employeeId);
+            modal.style.display = "block";
+            document.body.style.overflow = "hidden"; // Disable scrolling on the body
+        }
+
+        // Function to close the modal and change CSS
+        function closeModal(employeeId) {
+            var modal = document.getElementById("deleteModal-" + employeeId);
+            modal.style.display = "none";
+            document.body.style.overflow = "auto"; // Enable scrolling on the body
+        }
     </script>
 @endsection
 
@@ -121,7 +179,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="card" style="height: 300px;">
                                 <div class="card-body table-responsive">
                                     <table id="example2" class="table table-bordered table-hover">
@@ -131,6 +189,7 @@
                                                 <th>Ảnh</th>
                                                 <th>Họ và tên</th>
                                                 <th>Tài khoản</th>
+                                                {{-- <th>Thời khóa biểu</th> --}}
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -147,6 +206,9 @@
                                                     </td>
                                                     <td>{{ $user->fullname }}</td>
                                                     <td>{{ $user->username }}</td>
+                                                    {{-- <td><a href="{{ route('admin.calendar.show.detail.user', $user->id) }}" class="btn bg-primary"><i
+                                                                class="fa-solid fa-eye"></i></a>
+                                                    </td> --}}
                                                 </tr>
                                             @endforeach
                                         </tbody>

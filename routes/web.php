@@ -24,10 +24,14 @@ Route::middleware('login')->group(function () {
     Route::post('/calendar/caledar', [CalendarController::class, 'store'])->name('user.calendar.store');
 
     Route::get('timekeep', [TimekeepController::class, 'index'])->name('user.timekeep.index');
+    Route::post('timekeep', [TimekeepController::class, 'index'])->name('user.timekeep.search');
     Route::get('timekeep/scanner', [TimekeepController::class, 'scanner'])->name('user.timekeep.scanner');
     Route::post('timekeep/scanner', [TimekeepController::class, 'confirm'])->name('user.timekeep.confirm');
+
     Route::get('salary', [SalaryController::class, 'index'])->name('user.salary.index');
+    Route::post('salary', [SalaryController::class, 'index'])->name('user.salary.search');
 });
+
 
 Route::redirect('/', '/login');
 Route::redirect('/admin', '/admin/login');

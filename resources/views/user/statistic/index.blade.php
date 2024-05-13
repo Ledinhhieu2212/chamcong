@@ -40,29 +40,47 @@
         <!-- /.content-header -->
         <section class="content">
             <div class="container-fluid">
-
-
+                <form action="{{ route('user.salary.search') }}" method="post">
+                    @csrf
+                    <div class="row">
+                        <!-- left column -->
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <input type="month" name="date_month" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md">
+                            <button type="submit" class="btn btn-success">Tìm kiếm</button>
+                            <a href="{{ route('user.salary.index') }}" class="btn btn-primary">Reset</a>
+                        </div>
+                    </div>
+                </form>
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-body">
+                            <div class="card-body ">
                                 <table id="example2" class=" table table-bordered table-hover text-center">
                                     <thead>
                                         <tr>
+                                            <th>Tháng</th>
                                             <th>Lương </th>
                                             <th>Thưởng</th>
-                                            <th>Lỗi chấm công</th>
-                                            <th>Năng xuất</th>
+                                            <th>Phạt</th>
+                                            <th>Tổng tháng</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            
-                                        </tr>
+                                        @foreach ($salaries as $salary)
+                                            <tr>
+                                                <td>{{ sprintf('%02d', $salary->month) }}/{{ $salary->year }}</td>
+                                                <td>{{ $salary->position->price }}đ</td>
+                                                <td>{{ $salary->total + $salary->total * (float) ($salary->reward / 100) }}
+                                                </td>
+                                                <td>{{ $salary->punish }}đ</td>
+                                                <td class="total">{{ $salary->total_all }}đ</td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
-                                    <tfoot>
-                                          <th>Tổng: <span class="">1200</span></th>
-                                      </tfoot>
                                 </table>
                             </div>
                             <!-- /.card-body -->

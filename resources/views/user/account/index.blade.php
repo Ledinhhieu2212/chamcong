@@ -124,8 +124,9 @@
                         <div class="col-md-5">
                             <div class="form-group">
                                 <label for="image">Gửi ảnh:</label>
-                                <input type="file" name="image" value="{{ $auth->image }}" class="form-control"
-                                    accept="image/*" onchange="loadFile(event)">
+                                <input type="file" name="image"  id="selectedFile" accept="image/*" onchange="loadFile(event)" style="display: none;" />
+                                <input type="button" class="d-block my-2" value="Gửi ảnh"
+                                    onclick="document.getElementById('selectedFile').click();">
                                 @if ($errors->has('image'))
                                     <span class="error-message">* {{ $errors->first('image') }}</span>
                                 @endif

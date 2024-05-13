@@ -42,7 +42,22 @@
             <div class="container-fluid">
                 <form action="{{ route('admin.user.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
-                    <div class="row">
+                    <div class="row justify-content-around">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="image">Gửi ảnh:</label>
+                                <input type="file" name="image"  id="selectedFile" accept="image/*" onchange="loadFile(event)" style="display: none;" />
+                                <input type="button" class="d-block my-2" value="Gửi ảnh"
+                                    onclick="document.getElementById('selectedFile').click();" />
+                                {{-- <input type="file" value="{{ old('image') }}" class="form-control"
+                                     style="width: 100px;"> --}}
+                                @if ($errors->has('image'))
+                                    <span class="error-message">* {{ $errors->first('image') }}</span>
+                                @endif
+                                <img alt="" src="#" id="myimage" width="150" height="150">
+                            </div>
+
+                        </div>
                         <!-- left column -->
                         <div class="col-md-5">
                             <div class="form-group">
@@ -52,8 +67,6 @@
                                     <span class="error-message">* {{ $errors->first('fullname') }}</span>
                                 @endif
                             </div>
-                        </div>
-                        <div class="col-md-5">
                             <div class="form-group">
                                 <label for="username">Tên tài khoản</label>
                                 <input type="text" name="username" class="form-control" value="{{ old('username') }}">
@@ -61,36 +74,27 @@
                                     <span class="error-message">* {{ $errors->first('username') }}</span>
                                 @endif
                             </div>
-                        </div>
-                        <div class="col-md-5">
                             <div class="form-group">
                                 <label for="username">Mật khẩu</label>
-                                <input type="password" name="password" class="form-control" value="{{ old('password') }}">
+                                <input type="password" name="password" class="form-control">
                                 @if ($errors->has('password'))
                                     <span class="error-message">* {{ $errors->first('password') }}</span>
                                 @endif
                             </div>
-                        </div>
-                        <div class="col-md-5">
                             <div class="form-group">
                                 <label for="username">Nhập lại mật khẩu</label>
-                                <input type="password" name="re_password" class="form-control"
-                                    value="{{ old('password') }}" >
+                                <input type="password" name="re_password" class="form-control">
                                 @if ($errors->has('re_password'))
                                     <span class="error-message">* {{ $errors->first('re_password') }}</span>
                                 @endif
                             </div>
-                        </div>
-                        <div class="col-md-5">
                             <div class="form-group">
                                 <label for="email">Email:</label>
-                                <input type="text" name="email" class="form-control" value="{{ old('email') }}">
+                                <input type="text" name="email" class="form-control">
                                 @if ($errors->has('email'))
                                     <span class="error-message">* {{ $errors->first('email') }}</span>
                                 @endif
                             </div>
-                        </div>
-                        <div class="col-md-5">
                             <div class="form-group">
                                 <label for="job">Công việc:</label>
                                 <select name="job" id="" class="form-control">
@@ -106,25 +110,9 @@
                                 @endif
                             </div>
                         </div>
-
-                        <div class="row">
-                            <div class="col-md-5">
-
-                                <a href="{{ route('admin.user.index') }}" class="btn btn-dark">Quay lại</a>
-                                <button type="submit" class="btn btn-success">Xác nhận</button>
-                            </div>
-                            <div class="col-md-5">
-                                <div class="form-group">
-                                    <label for="image">Gửi ảnh:</label>
-                                    <input type="file" name="image" value="{{ old('image') }}" class="form-control"
-                                        accept="image/*" onchange="loadFile(event)">
-                                    @if ($errors->has('image'))
-                                        <span class="error-message">* {{ $errors->first('image') }}</span>
-                                    @endif
-                                    <img alt="" src="#" id="myimage" width="150" height="150">
-                                </div>
-                            </div>
-                        </div>
+                    </div>
+                    <a href="{{ route('admin.user.index') }}" class="btn btn-dark">Quay lại</a>
+                    <button type="submit" class="btn btn-success">Xác nhận</button>
                 </form>
             </div>
         </section>

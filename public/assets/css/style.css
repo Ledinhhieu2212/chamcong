@@ -54,4 +54,29 @@
     #my-qr-reader {
         width: 100%;
     }
-  }
+}
+
+label {
+    display: block;
+}
+
+img {
+    object-fit: cover;
+    margin: auto;
+}
+
+/*Smart phone nhỏ*/
+@media screen and (max-width: 514px) {
+    .small-box>.inner h3{
+        font-size: 20px;
+        font-weight: 700;
+    }
+    .card-body {
+        overflow-y: auto;
+    }
+}
+
+/*Iphone(480 x 640)*/
+@media screen and (max-width: 320px) {
+
+}

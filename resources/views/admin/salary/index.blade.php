@@ -38,54 +38,65 @@
         </div>
         <section class="content">
             <div class="container-fluid">
-                <div class="row justify-between">
-                    <div class="col-md-9">
-                        <form action="{{ route('admin.user.search') }}" method="post">
-                            @csrf
-                            <div class="row">
-                                <!-- left column -->
-                                <div class="col-md">
-                                    <div class="form-group">
-                                        <input type="text" name="fullname" class="form-control"
-                                            placeholder="Tìm kiếm tên nhân viên">
-                                    </div>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-group">
-                                        <input type="text" name="username" class="form-control"
-                                            placeholder="Tìm kiếm tên tài khoản">
-                                    </div>
-                                </div>
-                                <div class="col-md">
-                                    <button type="submit" class="btn btn-success">Tìm kiếm</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="col-md-3 text-right">
-                        <a href="{{ route('admin.user.create') }}" class="btn btn-secondary">Thêm mới <i
+                {{-- <div class="row justify-between align-items-end">
+                    <div class="col-md-3">
+                        <a href="{{ route('admin.calendar.create') }}" class="btn m-2 btn-secondary">Tính lương tháng mới <i
                                 class="fa-solid fa-plus"></i></a>
                     </div>
-                </div>
-
+                </div> --}}
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <table id="example2" class="table table-bordered table-hover">
+                                {{-- <h5 class="font-weight-bold py-2">Tổng lương các tháng:</h5> --}}
+                                <table id="tblExample" class="table text-center table-bordered table-hover">
                                     <thead>
                                         <tr>
                                             <th>STT</th>
                                             <th>Avatar</th>
                                             <th>Họ và tên</th>
-                                            <th>Lương</th>
+                                            <th>Lương cứng</th>
                                             <th>Thưởng</th>
+                                            <th>Phạt</th>
                                             <th>Tổng</th>
-                                            <th>Hành động</th>
+                                            {{-- <th>Hành động</th> --}}
                                         </tr>
                                     </thead>
                                     <tbody>
-
+                                        @foreach ($users as $user)
+                                            <tr>
+                                                <td>{{ ($users->currentPage() - 1) * $users->perPage() + $loop->iteration }}
+                                                </td>
+                                                <td><img src="{{ asset("assets/img/avatar/$user->image") }}" width="50"
+                                                        height="50" alt="" class="img-user-crud rounded-circle">
+                                                </td>
+                                                <td>{{ $user->fullname }}</td>
+                                                <td>{{ $user->position->price }}đ</td>
+                                                <td>
+                                                    @php
+                                                        $reward = 0;
+                                                    @endphp
+                                                    @foreach ($user->salaries()->get() as $salary)
+                                                        @php
+                                                            $reward +=
+                                                                $salary->total +
+                                                                $salary->total * ($salary->reward / 100); // Tính tổng
+                                                        @endphp
+                                                    @endforeach
+                                                    {{ $reward }}
+                                                </td>
+                                                <td> {{ -ceil($user->salaries()->sum('reward')) }}đ
+                                                </td>
+                                                <td>
+                                                    {{ $user->salaries()->sum('total_all') }}đ
+                                                </td>
+                                                {{-- <td>
+                                                    <a href="{{ route('admin.salary.show', $user->id) }}"
+                                                        class="btn btn-primary"><i
+                                                            class="fa-solid fa-pen-to-square"></i></a>
+                                                </td> --}}
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -93,7 +104,9 @@
 
                         </div>
                         <!-- /.card -->
+
                         <div class="pagination">
+                            {{ $users->onEachSide(5)->links() }}
                         </div>
                         <!-- /.card -->
                     </div>

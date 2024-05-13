@@ -75,7 +75,7 @@
                         </li>
                     </ul>
                 </li>
-                {{-- <li class="nav-item">
+                <li class="nav-item">
                     <a href="{{ route('user.salary.index') }}" class="nav-link">
                         <i class="nav-icon fa-solid fa-money-bill"></i>
                         <p>
@@ -84,7 +84,7 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href=" " class="nav-link">
                         <i class="nav-icon fa-solid fa-circle-info"></i>
                         <p>

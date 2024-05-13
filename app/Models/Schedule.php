@@ -11,7 +11,8 @@ class Schedule extends Model
     use HasFactory;
     protected $table = 'schedules';
     protected $fillable = [
-        'calendar_user_id',
+        'calendar_id',
+        'user_id',
         'day',
         'shift_1',
         'shift_2',
@@ -21,12 +22,6 @@ class Schedule extends Model
     {
         return $this->belongsTo(Calendar::class);
     }
-
-    public function timekeep()
-    {
-        return $this->hasOne(timekeep::class);
-    }
-
 
     public function user()
     {

@@ -85,65 +85,63 @@
                 document.addEventListener("DOMContentLoaded", fn);
             }
         }
-        // document.getElementById("html5-qrcode-button-camera-stop").value = "Mở camera";
-        domReady(function() {
 
-            // If found you qr code
-            function onScanSuccess(decodeText, decodeResult) {
-                document.getElementById('text').value = decodeText;
-                document.getElementById('message').innerHTML = "Trạng thái: Xác nhận thành công! Vui lòng ấn Gửi";
+        // If found you qr code
+        function onScanSuccess(decodeText, decodeResult) {
+            document.getElementById('text').value = decodeText;
+            document.getElementById('message').innerHTML = "Trạng thái: Xác nhận thành công! Vui lòng ấn Gửi";
+        }
+        const formatsToSupport = [
+            Html5QrcodeSupportedFormats.QR_CODE,
+        ];
+        let htmlscanner = new Html5QrcodeScanner(
+            "my-qr-reader", {
+                fps: 10,
+                qrbos: {
+                    width: 100,
+                    height: 100
+                },
+                supportedScanTypes: [
+                    // Html5QrcodeScanType.SCAN_TYPE_FILE,
+                    Html5QrcodeScanType.SCAN_TYPE_CAMERA
+                ],
+                formatsToSupport: formatsToSupport
             }
-            const formatsToSupport = [
-                Html5QrcodeSupportedFormats.QR_CODE,
-            ];
-            let htmlscanner = new Html5QrcodeScanner(
-                "my-qr-reader", {
-                    fps: 10,
-                    qrbos: {
-                        width: 100,
-                        height: 100
-                    },
-                    supportedScanTypes: [
-                        Html5QrcodeScanType.SCAN_TYPE_FILE,
-                        Html5QrcodeScanType.SCAN_TYPE_CAMERA
-                    ],
-                    formatsToSupport: formatsToSupport
-                }
-            );
-            htmlscanner.render(onScanSuccess);
+        );
+        htmlscanner.render(onScanSuccess);
 
 
-            function openModal() {
-                var modal = document.getElementById("modal");
-                modal.style.display = "block";
-                document.body.style.overflow = "hidden"; // Disable scrolling on the body
-            }
-            // Function to close the modal and change CSS
-            function closeModal() {
-                var modal = document.getElementById("modal");
-                modal.style.display = "none";
-                document.body.style.overflow = "auto"; // Enable scrolling on the body
-            }
-        });
+        function openModal() {
+            var modal = document.getElementById("modal");
+            modal.style.display = "block";
+            document.body.style.overflow = "hidden"; // Disable scrolling on the body
+        }
+        // Function to close the modal and change CSS
+        function closeModal() {
+            var modal = document.getElementById("modal");
+            modal.style.display = "none";
+            document.body.style.overflow = "auto"; // Enable scrolling on the body
+        }
 
-        function toado() {
-            if ("geolocation" in navigator) {
-                var options = {
-                    enableHighAccuracy: true, // Yêu cầu độ chính xác cao
-                    timeout: 2000, // Thời gian chờ tối đa là 10 giây
-                    maximumAge: 0 // Sử dụng dữ liệu mới nhất
-                };
-                navigator.geolocation.getCurrentPosition(hienToaDo, hienLoi, options);
-            } else {
-                console.log("Trình duyệt không hỗ trợ Geolocation.");
-            }
-        };
+        if ("geolocation" in navigator) {
+            var options = {
+                enableHighAccuracy: true, // Yêu cầu độ chính xác cao
+                timeout: 2000, // Thời gian chờ tối đa là 10 giây
+                maximumAge: 0 // Sử dụng dữ liệu mới nhất
+            };
+            navigator.geolocation.getCurrentPosition(hienToaDo, hienLoi, options);
+        } else {
+            console.log("Trình duyệt không hỗ trợ Geolocation.");
+        }
+
 
         function hienToaDo(vitri) {
             vido = vitri.coords.latitude;
             kinhdo = vitri.coords.longitude;
-            document.getElementById("address_latitude").value = vido.toFixed(6);
-            document.getElementById("address_longitude").value = kinhdo.toFixed(6);
+            document.getElementById("address_latitude").value = vido;
+            document.getElementById("address_longitude").value = kinhdo;
+            // console.log("Vĩ độ" + vido);
+            // console.log("Kinh độ" + kinhdo);
         }
 
         function hienLoi(error) {
@@ -220,52 +218,30 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="form-group">
-                                <div class="row">
+                            <div class="form-group">
+                                <div class="row justify-content-around">
                                     <div class="col-md-4">
-                                        <input type="text" name="address_latitude" id="address_latitude" readonly
+                                        <input type="hidden" name="address_latitude" id="address_latitude" readonly
                                             class="form-control" placeholder="Vĩ độ">
                                         @if ($errors->has('address_latitude'))
                                             <span class="error-message">* {{ $errors->first('address_latitude') }}</span>
                                         @endif
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="text" name="address_longitude" id="address_longitude" readonly
+                                        <input type="hidden" name="address_longitude" id="address_longitude" readonly
                                             class="form-control" placeholder="Kinh độ">
                                         @if ($errors->has('address_longitude'))
                                             <span class="error-message">* {{ $errors->first('address_longitude') }}</span>
                                         @endif
                                     </div>
-                                    <div class="col">
-                                        <a class="btn btn-primary" onclick="toado()">Lấy tọa độ</a>
-                                    </div>
                                 </div>
-                            </div> --}}
+                            </div>
                             <input type="hidden" name="qrcode" readonly id="text" class="form-control">
                             <button type="submit" class="btn btn-success">Gửi </button>
-                            {{-- <div class="body-delete " id="modal">
-                                <div class="form-destroy">
-                                    <div class="form-header">
-                                        <h3>Chấm công</h3>
-                                    </div>
-                                    <div class="form-body">
-                                        <p>Bạn muốn chấm công bằng qrcode {{$qrcodes->findName()}}
-                                            phải không?
-                                        </p>
-                                    </div>
-                                    <div class="form-footer">
-                                        <a onclick="closeModal()" class="btn btn-dark">Quay
-                                            lại</a>
-                                        <button type="submit" class="btn btn-primary">Xác
-                                            nhận</button>
-                                    </div>
-                                </div>
-                            </div> --}}
                         </form>
                     </div>
                 </div>
             </div>
-
         </section>
     </div>
 @endsection
