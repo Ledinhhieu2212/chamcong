@@ -17,10 +17,10 @@ class Calendar extends Model
     ];
     public function users()
     {
-        return $this->belongsToMany(User::class,  'calendar_user')->withTimestamps();
+        return $this->belongsToMany(User::class,  'calendar_users')->withTimestamps();
     }
 
-    public function calendar_user()
+    public function calendar_users()
     {
         return $this->hasMany(Calendar_user::class);
     }

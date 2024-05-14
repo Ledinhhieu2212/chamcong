@@ -16,7 +16,6 @@ class HomeController extends Controller
     {
         $user = Auth::guard('web')->user();
         $title = "Trang chủ";
-        $title = "Trang chủ";
         $position =$user->position_id;
         $usercount = $user->username;
         $qrcode = $user->qrcodes->count();

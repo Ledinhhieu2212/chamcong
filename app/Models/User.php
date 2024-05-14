@@ -40,10 +40,10 @@ class User extends Authenticatable
 
     public function calendars()
     {
-        return $this->belongsToMany(Calendar::class, 'calendar_user')->withTimestamps();
+        return $this->belongsToMany(Calendar::class, 'calendar_users')->withTimestamps();
     }
 
-    public function calendar_user()
+    public function calendar_users()
     {
         return $this->hasMany(Calendar_user::class);
     }

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('calendar_user', function (Blueprint $table) {
+        Schema::create('calendar_users', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('calendar_id')->nullable();
             $table->uuid('user_id')->nullable();
@@ -22,6 +22,6 @@ return new class extends Migration
     }
     public function down(): void
     {
-        Schema::dropIfExists('calendar_user');
+        Schema::dropIfExists('calendar_users');
     }
 };
