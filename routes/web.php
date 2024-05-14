@@ -35,3 +35,7 @@ Route::middleware('login')->group(function () {
 
 Route::redirect('/', '/login');
 Route::redirect('/admin', '/admin/login');
+
+Route::get('error/', function () {
+    abort(404);
+});
