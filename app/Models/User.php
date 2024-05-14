@@ -38,15 +38,16 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function calendar_users()
+    {
+        return $this->hasMany(calendar_users::class);
+    }
+    
     public function calendars()
     {
         return $this->belongsToMany(Calendar::class, 'calendar_users')->withTimestamps();
     }
 
-    public function calendar_users()
-    {
-        return $this->hasMany(calendar_users::class);
-    }
 
     public function isImageFile($filePath)
     {
