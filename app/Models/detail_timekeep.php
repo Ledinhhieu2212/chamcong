@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class detail_timekeep extends Model
+class Detail_timekeep extends Model
 {
     use HasFactory;
     protected $fillable = [
