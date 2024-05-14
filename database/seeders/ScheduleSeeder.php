@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Calendar;
+use App\Models\Calendar_user;
 use App\Models\calendar_users;
 use App\Models\Schedule;
 use App\Models\User;
@@ -22,7 +23,6 @@ class ScheduleSeeder extends Seeder
     {
         Schedule::query()->delete();
         $users = User::all();
-        $calendar_users = calendar_users::all();
         foreach ($users as $user) {
             foreach ($user->calendars()->get()as $calendar) {
                 for ($i = 0; $i <= 6; $i++) {
