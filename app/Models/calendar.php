@@ -22,7 +22,7 @@ class Calendar extends Model
 
     public function calendar_users()
     {
-        return $this->hasMany(calendar_users::class);
+        return $this->hasMany(Calendar_users::class);
     }
 
     public function schedules()
@@ -32,10 +32,10 @@ class Calendar extends Model
 
     public function timekeeps()
     {
-        return $this->hasMany(timekeep::class);
+        return $this->hasMany(Timekeep::class);
     }
     public function detail_timekeeps()
     {
-        return $this->hasMany(detail_timekeep::class);
+        return $this->hasMany(Detail_timekeep::class);
     }
 }

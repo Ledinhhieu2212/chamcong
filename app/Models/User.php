@@ -38,16 +38,15 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function calendar_users()
-    {
-        return $this->hasMany(calendar_users::class);
-    }
-    
     public function calendars()
     {
         return $this->belongsToMany(Calendar::class, 'calendar_users')->withTimestamps();
     }
 
+    public function calendar_users()
+    {
+        return $this->hasMany(Calendar_users::class);
+    }
 
     public function isImageFile($filePath)
     {
@@ -75,10 +74,10 @@ class User extends Authenticatable
 
     public function timekeeps()
     {
-        return $this->hasMany(timekeep::class);
+        return $this->hasMany(Timekeep::class);
     }
     public function detail_timekeeps()
     {
-        return $this->hasMany(detail_timekeep::class);
+        return $this->hasMany(Detail_timekeep::class);
     }
 }
