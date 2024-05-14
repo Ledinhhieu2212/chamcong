@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class calendar_users extends Model
+class Calendar_user extends Model
 {
     use HasFactory;
 
-    protected $table = 'calendar_users';
+    protected $table = 'calendar_user';
     protected $fillable = [
         "user_id", "calendar_id"
     ];

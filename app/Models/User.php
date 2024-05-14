@@ -40,12 +40,12 @@ class User extends Authenticatable
 
     public function calendars()
     {
-        return $this->belongsToMany(Calendar::class, 'calendar_users')->withTimestamps();
+        return $this->belongsToMany(Calendar::class, 'calendar_user')->withTimestamps();
     }
 
-    public function calendar_users()
+    public function calendar_user()
     {
-        return $this->hasMany(Calendar_users::class);
+        return $this->hasMany(Calendar_user::class);
     }
 
     public function isImageFile($filePath)
