@@ -2,9 +2,17 @@
 
 namespace Database\Seeders;
 
+use App\Models\Calendar;
+use App\Models\Calendar_user;
+use App\Models\calendar_users;
+use App\Models\Schedule;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Nette\Utils\Random;
+use Ramsey\Uuid\Uuid;
 
 class ScheduleSeeder extends Seeder
 {
@@ -13,79 +21,24 @@ class ScheduleSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table("schedules")->insert([
-            'detail_calendar_id' => 1,
-            'day' => 1,
-            'shift_1' => 1,
-            'shift_2' => 1,
-            'shift_3' => 0,
-        ]);
-        DB::table("schedules")->insert([
-            'detail_calendar_id' => 1,
-            'day' => 2,
-            'shift_1' => 0,
-            'shift_2' => 1,
-            'shift_3' => 1,
-        ]);
-        DB::table("schedules")->insert([
-            'detail_calendar_id' => 1,
-            'day' => 3,
-            'shift_1' => 1,
-            'shift_2' => 0,
-            'shift_3' => 1,
-        ]);
-        DB::table("schedules")->insert([
-            'detail_calendar_id' => 1,
-            'day' => 4,
-            'shift_1' => 1,
-            'shift_2' => 1,
-            'shift_3' => 0,
-        ]);
-
-        DB::table("schedules")->insert([
-            'detail_calendar_id' => 1,
-            'day' => 5,
-            'shift_1' => 1,
-            'shift_2' => 1,
-            'shift_3' => 0,
-        ]);
-
-        DB::table("schedules")->insert([
-            'detail_calendar_id' => 1,
-            'day' => 6,
-            'shift_1' => 1,
-            'shift_2' => 1,
-            'shift_3' => 0,
-        ]);
-
-        DB::table("schedules")->insert([
-            'detail_calendar_id' => 2,
-            'day' => 1,
-            'shift_1' => 1,
-            'shift_2' => 1,
-            'shift_3' => 0,
-        ]);
-        DB::table("schedules")->insert([
-            'detail_calendar_id' => 2,
-            'day' => 2,
-            'shift_1' => 0,
-            'shift_2' => 1,
-            'shift_3' => 1,
-        ]);
-        DB::table("schedules")->insert([
-            'detail_calendar_id' => 3,
-            'day' => 3,
-            'shift_1' => 1,
-            'shift_2' => 0,
-            'shift_3' => 1,
-        ]);
-        DB::table("schedules")->insert([
-            'detail_calendar_id' => 3,
-            'day' => 4,
-            'shift_1' => 1,
-            'shift_2' => 1,
-            'shift_3' => 0,
-        ]);
-
+        Schedule::query()->delete();
+        $users = User::all();
+        foreach ($users as $user) {
+            foreach ($user->calendars()->get()as $calendar) {
+                for ($i = 0; $i <= 6; $i++) {
+                    $schedule1 = Schedule::create([
+                        'calendar_id' => $calendar->id,
+                        'user_id' => $user->id,
+                        'day' => $i,
+                        'shift_1' => random_int(0, 1),
+                        'shift_2' =>  random_int(0, 1),
+                        'shift_3' =>  random_int(0, 1),
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                    $schedule1->update(['shift' => (($schedule1->shift_1) + ($schedule1->shift_2) + ($schedule1->shift_3))]);
+                }
+            }
+        }
     }
 }

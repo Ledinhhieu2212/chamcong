@@ -4,13 +4,14 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Traits\UUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, UUID;
     protected $table = 'users';
     protected $fillable = [
         'username',
@@ -24,6 +25,7 @@ class User extends Authenticatable
         'birthday',
         'image',
         'position_id',
+        'status',
     ];
 
     protected $hidden = [
@@ -38,25 +40,44 @@ class User extends Authenticatable
 
     public function calendars()
     {
-        return $this->hasMany(calendar::class);
+        return $this->belongsToMany(Calendar::class, 'calendar_users')->withTimestamps();
     }
 
-    public function detail_qrcodes()
+    public function calendar_users()
     {
-        return $this->hasMany(Detail_QrCode::class);
-    }
-    public function detail_calendars()
-    {
-        return $this->hasMany(Detail_Calendar::class);
+        return $this->hasMany(Calendar_user::class);
     }
 
+    public function isImageFile($filePath)
+    {
+        return is_file(public_path($filePath)) && getimagesize(public_path($filePath));
+    }
+    public function salaries()
+    {
+        return $this->hasMany(Salary::class );
+    }
     public function position()
     {
         return $this->belongsTo(Position::class);
     }
 
+    public function qrcodes()
+    {
+        return $this->belongsToMany(Qrcode::class, 'qrcode_user')->withTimestamps();
+    }
+
+
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class);
+    }
+
     public function timekeeps()
     {
-        return $this->hasMany(Timekeep::class, 'user_id');
+        return $this->hasMany(Timekeep::class);
+    }
+    public function detail_timekeeps()
+    {
+        return $this->hasMany(Detail_timekeep::class);
     }
 }

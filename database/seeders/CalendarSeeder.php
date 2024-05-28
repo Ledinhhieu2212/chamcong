@@ -2,12 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Models\calendar;
+use App\Models\Calendar;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Ramsey\Uuid\Uuid;
 
 class CalendarSeeder extends Seeder
 {
@@ -16,36 +16,85 @@ class CalendarSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('calendars')->insert([
-            'id' => 1,
-            'date_now' => Carbon::parse("2023-12-30 00:00:00"),
-            'start_date' => Carbon::parse("2024-1-10 00:00:00"),
-            'end_date' => Carbon::parse("2024-2-10 00:00:00"),
-            'is_calendar_enabled' => 1,
+
+        Calendar::query()->delete();
+        $calendar1 = Calendar::create([
+            'start_date' => Carbon::parse("2024-5-6 00:00:00"),
+            'end_date' => Carbon::parse("2024-5-12 00:00:00"),
+            "open_port" => 1,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $calendar2 = Calendar::create([
+            'start_date' => Carbon::parse("2024-4-29 00:00:00"),
+            'end_date' => Carbon::parse("2024-5-5 00:00:00"),
+            "open_port" => 1,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $calendar3 = Calendar::create([
+            'start_date' => Carbon::parse("2024-4-22"),
+            'end_date' => Carbon::parse("2024-4-28"),
+            "open_port" => 1,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $calendar4 = Calendar::create([
+            'start_date' => Carbon::parse("2024-4-15"),
+            'end_date' => Carbon::parse("2024-4-21"),
+            "open_port" => 1,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $calendar5 = Calendar::create([
+            'start_date' => Carbon::parse("2024-4-8"),
+            'end_date' => Carbon::parse("2024-4-14"),
+            "open_port" => 1,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $calendar6 = Calendar::create([
+            'start_date' => Carbon::parse("2024-4-8"),
+            'end_date' => Carbon::parse("2024-4-14"),
+            "open_port" => 1,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $calendar7 = Calendar::create([
+            'start_date' => Carbon::parse("2024-4-1"),
+            'end_date' => Carbon::parse("2024-4-7"),
+            "open_port" => 1,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $calendar8 = Calendar::create([
+            'start_date' => Carbon::parse("2024-3-25"),
+            'end_date' => Carbon::parse("2024-3-31"),
+            "open_port" => 1,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $calendar9 = Calendar::create([
+            'start_date' => Carbon::parse("2024-4-8"),
+            'end_date' => Carbon::parse("2024-4-14"),
+            "open_port" => 1,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $calendar10 = Calendar::create([
+            'start_date' => Carbon::parse("2024-3-18"),
+            'end_date' => Carbon::parse("2024-3-24"),
+            "open_port" => 1,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
-        DB::table('calendars')->insert([
-            'id' => 2,
-            'date_now' => Carbon::parse("2024-1-30 00:00:00"),
-            'start_date' => Carbon::parse("2024-2-10 00:00:00"),
-            'end_date' => Carbon::parse("2024-3-10 00:00:00"),
-            'is_calendar_enabled' => 1,
-        ]);
-
-        DB::table('calendars')->insert([
-            'id' => 3,
-            'date_now' => Carbon::parse("2024-2-30 00:00:00"),
-            'start_date' => Carbon::parse("2024-3-10 00:00:00"),
-            'end_date' => Carbon::parse("2024-4-10 00:00:00"),
-            'is_calendar_enabled' => 1,
-        ]);
-
-        DB::table('calendars')->insert([
-            'id' => 4,
-            'date_now' => Carbon::parse("2024-3-30 00:00:00"),
-            'start_date' => Carbon::parse("2024-4-10 00:00:00"),
-            'end_date' => Carbon::parse("2024-5-10 00:00:00"),
-            'is_calendar_enabled' => 1,
-        ]);
+        $users = User::all();
+        $calendars = Calendar::all();
+        foreach ($users as $user) {
+            foreach ($calendars as $calendar) {
+                $calendar->users()->attach($user->id);
+            }
+        }
     }
 }

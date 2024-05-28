@@ -3,8 +3,14 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Calendar;
+use App\Models\calendar_users;
+use App\Models\Qrcode;
+use App\Models\Schedule;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Repositories\User\UserRepositoryInterfaces;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -12,75 +18,90 @@ class CalendarController extends Controller
 {
     public function index(Request $request)
     {
-        $calendarId = $request->input('select_option');
-        $day = [
-            'Thứ 2', "Thứ 3", "Thứ 4",
-            'Thứ 5', "Thứ 6", "Thứ 7", "Chủ nhật"
-        ];
-        $status = false;
-        $calendars = DB::table('calendars')
-            ->join('detail_calendars', 'calendars.id', '=', 'detail_calendars.calendar_id')
-            ->select('calendars.*', 'detail_calendars.id as detail_calendar_id')
-            ->where('detail_calendars.user_id', Auth::user()->id)
-            ->orderByDesc('calendars.id')
-            ->get();
-        $calendar_end = DB::table('calendars')
-            ->join('detail_calendars', 'calendars.id', '=', 'detail_calendars.calendar_id')
-            ->select('calendars.*', 'detail_calendars.id as detail_calendar_id')
-            ->where('detail_calendars.user_id', '=', Auth::user()->id)
-            ->first();
-        if ($request->input('select_option') == null) {
-            $calendarId = $calendar_end->detail_calendar_id;
-        }
-        $calendar_search = DB::table('calendars')
-            ->join('detail_calendars', 'calendars.id', '=', 'detail_calendars.calendar_id')
-            ->select('calendars.is_calendar_enabled as calendar_enabled', 'detail_calendars.id as detail_id')
-            ->where('detail_calendars.user_id', Auth::user()->id)
-            ->where('detail_calendars.id', $calendarId)->first();
-        // dd( $calendar_search);
-        $schedules = DB::table('detail_calendars')
-            ->join('schedules', 'detail_calendars.id', '=', 'schedules.detail_calendar_id')
-            ->select('detail_calendars.*', 'schedules.*')
-            ->where('detail_calendars.user_id', '=', Auth::user()->id)
-            ->where('detail_calendars.id', '=', $calendarId)
-            ->get()->toArray();
+        $datas = $request->all();
+        $title = "Hiển thị lịch làm";
+        //Request tìm kiếm
+        $select_calendar_id = $request->input('datetime');
+        $user = Auth::user();
+        // Sắp xếp giảm dần
+        $calendars = $user->calendars->sortByDesc('start_date');
 
-        if ($calendar_search->calendar_enabled == 1 && $calendar_search->detail_id == $calendarId) {
-            $status = true;
+        $calendar_first = $calendars->first();
+        if ($calendar_first !== null) {
+            // Nếu không tìm kiếm thì sẽ lấy giá trị thời khóa biểu đầu tiên
+            if ($datas == null) {
+                $schedules = Schedule::where('calendar_id', $calendar_first->id)->where('user_id', $user->id)->orderBy('day')->get();
+            } else {
+                // Nếu không sẽ lấy dữ liệu datetime
+                $schedules = Schedule::where('calendar_id', $datas['datetime'])->where('user_id', $user->id)->orderBy('day')->get();
+            }
+            return view('user.calendar.show', compact('title', 'calendars', 'schedules', 'select_calendar_id'));
+        } else {
+            return view('user.calendar.unshow', compact('title'));
         }
-
-        $user_account = Auth::user();
-        return view('user.calendar.show.table', compact('calendars', 'status', 'calendar_end', 'day', 'schedules', 'calendarId', 'calendar_search', 'user_account'));
     }
 
-    protected $userRepository;
-    public function __construct(UserRepositoryInterfaces $userRepository)
-    {
-        $this->userRepository = $userRepository;
-    }
     public function create()
     {
-        $day = [
-            'Thứ 2', "Thứ 3", "Thứ 4",
-            'Thứ 5', "Thứ 6", "Thứ 7", "Chủ nhật"
-        ];
-        $status = false;
-        $calendar = DB::table('calendars')
-            ->join('detail_calendars', 'calendars.id', '=', 'detail_calendars.calendar_id')
-            ->select('calendars.*', 'detail_calendars.is_registered as is_registered')
-            ->where('detail_calendars.user_id', '=', Auth::user()->id)
-            ->orderBy('id', 'desc')
-            ->first();
-        if ($calendar->is_calendar_enabled == 1 && $calendar->is_registered == 0) {
-            $status = true;
+        $title = "Đăng ký lịch làm"; // Tiêu đề
+        // Tài khoản
+        $user = Auth::user();
+        // Danh sách thời khóa biểu trong tuần
+        $calendars = $user->calendars;
+        // Nếu không có danh sách thời khóa biểu => chưa có lịch;
+        if ($calendars) {
+            // TÌm kiểm thời khóa biểu cho phép đăng ký lịch
+            $calendar_first = $calendars->where('start_date', '<=', Carbon::today())->where('end_date', '>=',  Carbon::today())->sortByDesc('start_date')->first();
+
+            // dd($calendar_first);
+            if ($calendar_first) {
+                // Khi được đăng kí sẽ mở bảng khi không được sẽ hiện thông báo
+                if ($calendar_first->open_port) {
+                    $schedules = Schedule::where('calendar_id', $calendar_first->id)->where("user_id", $user->id)->exists();
+                    if ($schedules) {
+                        return view('user.calendar.registered', compact('title', 'calendar_first'));
+                    } else {
+                        return view('user.calendar.table', compact('title', 'calendar_first'));
+                    }
+                }
+            } else {
+                return view('user.calendar.derigister', compact('title'));
+            }
+        } else {
+            return view('user.calendar.un_rigister', compact('title'));
         }
-        $user_account = Auth::user();
-        return view('user.calendar.register.index', compact('calendar', 'status', 'day', 'user_account'));
     }
 
     public function store(Request $request)
     {
-        $this->userRepository->registerCalendar($request);
-        return redirect()->route("register.calendar")->with("success", "");
+
+        $user = Auth::user();
+        $datas = $request->all();
+        $calendars = $user->calendars;
+        $calendar_first = $calendars->where('start_date', '<=', Carbon::today())->where('end_date', '>=',  Carbon::today())->sortByDesc('start_date')->first();
+        $schedules = Schedule::where('calendar_id', $calendar_first->id)->where("user_id", $user->id);
+        if ($schedules->exists()) {
+            foreach ($schedules as $i => $schedule) {
+                $schedule->where('day', $i)->update([
+                    'shift_1' => $datas["day1s"][$i] ? 1 : 0,
+                    'shift_2' => $datas["day2s"][$i] ? 1 : 0,
+                    'shift_3' => $datas["day3s"][$i] ? 1 : 0,
+                    'updated_at' => Carbon::now(),
+                ]);
+            }
+        } else {
+            for ($i = 0; $i < 7; $i++) {
+                $sche = Schedule::create([
+                    'calendar_id' => $calendar_first->id,
+                    'user_id' =>  $user->id,
+                    'day' => $i,
+                    'shift_1' => $datas["day1s"][$i] ? 1 : 0,
+                    'shift_2' => $datas["day2s"][$i] ? 1 : 0,
+                    'shift_3' => $datas["day3s"][$i] ? 1 : 0,
+                ]);
+            }
+        }
+
+        return redirect()->route('user.calendar.register')->with('success', 'Đăng ký thành công');
     }
 }

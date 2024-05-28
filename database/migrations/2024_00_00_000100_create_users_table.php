@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('username', 200);
             $table->string('fullname', 200)->nullable();
             $table->string('email', 200)->unique();
@@ -25,12 +25,11 @@ return new class extends Migration
             $table->date('birthday')->nullable();
             $table->text('image')->nullable();
             $table->text('qr_code')->nullable();
-            $table->unsignedBigInteger('position_id')->nullable();
-            $table->uuid('permission_id')->nullable();
+            $table->uuid('position_id')->nullable();
+            $table->unsignedInteger('status')->default(0);
             $table->rememberToken();
             $table->timestamps();
             $table->foreign('position_id')->references('id')->on('positions');
-            $table->foreign('permission_id')->references('id')->on('permissions');
         });
     }
 

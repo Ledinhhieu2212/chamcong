@@ -2,10 +2,16 @@
 
 namespace Database\Seeders;
 
+use App\Models\Qrcode;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Ramsey\Uuid\Uuid;
+use SimpleSoftwareIO\QrCode\Facades\QrCode as FacadesQrCode;
 
 class QrCodeSeeder extends Seeder
 {
@@ -14,51 +20,25 @@ class QrCodeSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table("qrcodes")->insert([
-            $id = 'id' => 1,
-            $name = 'name' => 'nhóm 1',
-            $mode = 'mode' => 1,
-            $address = 'address_address' => 'Hà Nội',
-            'qr_code' => Hash::make("?id=$id?name=$name?mode=$mode?address=$address?"),
+
+        Qrcode::query()->delete();
+        $qrcode1 = Qrcode::create([
+            'id' => Uuid::uuid4()->toString(),
+            'name' => 'Lê Đình Hiếu',
+            'mode' => 1,
+            'address' => 'Xuân Canh, Đông Anh, Hà Nội',
+            'address_latitude' => '21.214394',
+            'address_longitude' => '105.746865',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
-        DB::table("qrcodes")->insert([
-            $id = 'id' => 2,
-            $name = 'name' => 'Nhóm 2',
-            $mode = 'mode' => 1,
-            $address = 'address_address' => 'Hải Phòng',
-            'qr_code' => Hash::make("?id=$id?name=$name?mode=$mode?address=$address?"),
-        ]);
+        $qrcode1->qr_code = $qrcode1->id . "-" . time();
+        $qrcode1->update();
 
-        DB::table("detail_qrcodes")->insert([
-            'user_id' => 1,
-            'qrcode_id' => 1,
-        ]);
-
-        DB::table("detail_qrcodes")->insert([
-            'user_id' => 2,
-            'qrcode_id' => 1,
-        ]);
-
-
-        DB::table("detail_qrcodes")->insert([
-            'user_id' => 3,
-            'qrcode_id' => 1,
-        ]);
-
-        DB::table("detail_qrcodes")->insert([
-            'user_id' => 4,
-            'qrcode_id' => 2,
-        ]);
-
-        DB::table("detail_qrcodes")->insert([
-            'user_id' => 5,
-            'qrcode_id' => 2,
-        ]);
-
-        DB::table("detail_qrcodes")->insert([
-            'user_id' => 6,
-            'qrcode_id' => 2,
-        ]);
+        $users = User::all();
+        foreach ($users as $user) {
+            $qrcode1->users()->attach($user->id);
+        }
     }
 }

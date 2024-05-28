@@ -1,96 +1,82 @@
-.cole-admin-user {
-    width: 100%;
-    height: 47px;
-    border-radius: 4px;
-    border: 1px solid #ced4da;
+.img-dropbtn {
+    background-color: #fff;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin-right: 20px;
+    border: none;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 1px 1px #ccc;
+}
+
+/* Style the dropdown content (hidden by default) */
+.dropdown-content-link {
+    display: none;
+    position: absolute;
+    top: 48px;
+    right: 20%;
+    padding: 0;
+    object-fit: cover;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+/* Style links inside the dropdown */
+.dropdown-content-link a {
+    color: black;
+    padding: 5px 0px;
     padding-left: 10px;
-    font-weight: bold;
-    color: #6f7173;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content-link a:hover {
+    background-color: #f1f1f1;
+}
+
+/* Show the dropdown menu when the button is clicked */
+.show {
+    display: block;
 }
 
 .error-message {
     font-size: 14px;
     color: red;
-    font-weight: inherit;
+    display: block;
+    margin-left: 10px;
 }
 
-.cole-admin-user:focus {
-    border: 1px solid #80bdff;
-    outline: none;
+@media only screen and (max-width: 600px) {
+    #my-qr-reader {
+        width: 100%;
+    }
 }
 
-.avatar {
+label {
+    display: block;
+}
+
+img {
     object-fit: cover;
-}
-.image-avatar  {
-    object-fit: contain;
+    margin: auto;
 }
 
-.calendar-table {
-    width: 100%;
-    padding: 20px;
-    overflow: hidden;
+/*Smart phone nhỏ*/
+@media screen and (max-width: 514px) {
+    .small-box>.inner h3{
+        font-size: 20px;
+        font-weight: 700;
+    }
+    .card-body {
+        overflow-y: auto;
+    }
 }
 
-.calendar-column {
-    padding: 0;
-    overflow: hidden;
-}
+/*Iphone(480 x 640)*/
+@media screen and (max-width: 320px) {
 
-.calendar-column li {
-    padding: 5px 0;
-    border: 1px solid #6f7173;
-    height: 42px;
-}
-
-.calendar-column li:nth-child(1) {
-    font-weight: bold;
-
-}
-
-.calendar-column li input {
-    height: 20px;
-    cursor: pointer;
-}
-
-.checkbox-calendar:disabled {
-    background-color: #007afe;
-}
-
-.nav-item.active {
-    background-color: rgba(255, 255, 255, .1);
-}
-
-.image-profile-qrcode {
-    width: 500px;
-    height: 500px;
-}
-
-.webcam{
-    max-width: 800px;
-    overflow: hidden;
-}
-
-.status-scanner{
-    position: relative;
-    left: 0;
-    right: 0;
-    bottom: 0;
-}
-.status-scanner h3{
-    background-color: green;
-    position: absolute;
-    top: -80px;
-    left: 0px;
-    display: none;
-    padding: 20px;
-    width: 100%;
-}
-
-input[name="color"]{
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-    border: 2px solid #6f7173;
-    border-radius: 5px;
 }

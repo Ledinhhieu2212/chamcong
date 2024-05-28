@@ -1,83 +1,123 @@
 @extends('layout')
 
+@section('css')
+    @include('components.admin.head')
+    <link rel="stylesheet" href="{{ asset('assets/admin/user/style.css') }}">
+    <title>{{ $title }}</title>
+@endsection
+
+@section('script')
+    @include('components.admin.script')
+    <script src="{{ asset('assets/admin/user/script.js') }}"></script>
+@endsection
+
+
+@section('navbar')
+    @include('components.admin.navbar')
+@endsection
+
+@section('sidebar')
+    @include('components.admin.sidebar')
+@endsection
 
 @section('content')
-    <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-        <section class="content-header">
+        <div class="content-header">
             <div class="container-fluid">
-                <div class="row mb-2 mx-3">
+                <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Quản lý nhân viên</h1>
-                    </div>
+                        <h1 class="m-0">{{ $title }}</h1>
+                    </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Trang chủ</a></li>
-                            <li class="breadcrumb-item active">Nhân viên</li>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Home</a></li>
+                            <li class="breadcrumb-item">{{ $title }}</li>
                         </ol>
-                    </div>
-                </div>
-            </div>
-        </section>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
         <section class="content">
-            @yield('crud')
-            <form method="get" action="{{ route('admin.user.delete.all') }}">
-                @csrf
-                <div class="row py-2">
-                    <div class="col-md-6">
-                        @if (Route::currentRouteName() !== 'admin.user.edit')
-                            <button class="btn btn-danger" type="submit">Xóa tất cả nhân viên đã chọn</button>
-                        @endif
+            <div class="container-fluid">
+                <div class="row justify-between">
+                    <div class="col-md-9">
+                        <form action="{{ route('admin.user.search') }}" method="post">
+                            @csrf
+                            <div class="row">
+                                <!-- left column -->
+                                <div class="col-md">
+                                    <div class="form-group">
+                                        <input type="text" name="fullname" class="form-control"
+                                            placeholder="Tìm kiếm tên nhân viên">
+                                    </div>
+                                </div>
+                                <div class="col-md">
+                                    <div class="form-group">
+                                        <input type="text" name="username" class="form-control"
+                                            placeholder="Tìm kiếm tên tài khoản">
+                                    </div>
+                                </div>
+                                <div class="col-md">
+                                    <div class="form-group">
+                                        <select name="job" id="" class="form-control">
+                                            <option value="">--- Lựa chọn --- </option>
+                                            @foreach ($positions as $position)
+                                                <option value="{{ $position->id }}" class="form-control">
+                                                    {{ $position->job }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md">
+                                    <button type="submit" class="btn btn-success">Tìm kiếm</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    <div class="col-md-6">
-
+                    <div class="col-md-3 text-right">
+                        <a href="{{ route('admin.user.create') }}" class="btn btn-secondary">Thêm mới <i
+                                class="fa-solid fa-plus"></i></a>
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-body  table-responsive p-0" style="height: 500px;">
-                                <table class="table table-head-fixed text-nowrap">
+                            <div class="card-body text-center">
+                                <table id="example2" class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th><input type="checkbox" name="" id="select_all_ids"></th>
-                                            <th>Ảnh</th>
+                                            <th>STT</th>
+                                            <th>Avatar</th>
                                             <th>Họ và tên</th>
-                                            <th>Email</th>
+                                            <th>Tên tài khoản</th>
                                             <th>Công việc</th>
-                                            <th>Thao tác</th>
+                                            <th>Trạng thái</th>
+                                            <th>Hành động</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($users_array as $user)
+                                        @foreach ($users as $user)
                                             <tr>
-                                                <td><input type="checkbox" name="ids[{{ $user->id }}]"
-                                                        class="checkbox_ids" value="{{ $user->id }}"></td>
-                                                <td>
-                                                    <img @if (file_exists(public_path("assets/img/$user->image"))) src="{{ asset("assets/img/$user->image") }}"
-                                                @else
-                                                    src="{{ $user->image }}" @endif
-                                                        class="image-avatar" width="150" height="200"
-                                                        alt="Ảnh avatar tài khoản" />
+                                                <td>{{ ($users->currentPage() - 1) * $users->perPage() + $loop->iteration }}
                                                 </td>
-                                                <td> {{ $user->fullname }}</td>
-                                                <td>{{ $user->email }}</td>
+                                                <td><img src="{{ asset("assets/img/avatar/$user->image") }}" width="50"
+                                                        height="50" alt="" class="img-user-crud"></td>
+                                                <td>{{ $user->fullname }}</td>
+                                                <td>{{ $user->username }}</td>
+                                                <td>{{ $user->position->NamePosition($user->position_id) }}</td>
                                                 <td>
-                                                    @if ($user->position)
-                                                        {{ $user->position->job }}
-                                                    @else
-                                                        N/A or any default value
-                                                    @endif
+                                                   {{$user->status ? "Hoạt động" : "Đăng xuất"}}
                                                 </td>
-                                                <td class="text-center">
-                                                    <a href="{{ route('admin.user.edit', $user->id) }}"
-                                                        class="btn btn-success"><i class="fa fa-edit"></i></a>
-
-                                                    @if (Route::currentRouteName() !== 'admin.user.edit')
-                                                        <a href="{{ route('admin.user.destroy', $user->id) }}"
-                                                            class="btn btn-danger "><i class="fa fa-trash"></i></a>
-                                                    @endif
+                                                <td>
+                                                    <a href="{{ route('admin.user.show', $user->id) }}"
+                                                        class="btn btn-primary"><i
+                                                            class="fa-solid fa-pen-to-square"></i></a>
+                                                    <a onclick="openModal('{{ $user->remember_token }}')"
+                                                        class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
+                                                    @include('admin.user.destroy')
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -85,26 +125,17 @@
                                 </table>
                             </div>
                             <!-- /.card-body -->
+
                         </div>
                         <!-- /.card -->
-
+                        <div class="pagination">
+                            {{ $users->onEachSide(5)->links() }}
+                        </div>
+                        <!-- /.card -->
                     </div>
                     <!-- /.col -->
                 </div>
-            </form>
+            </div>
         </section>
     </div>
-@endsection
-
-
-@section('script')
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-        crossorigin="anonymous"></script>
-    <script>
-        $(function(e) {
-            $("#select_all_ids").click(function() {
-                $('.checkbox_ids').prop('checked', $(this).prop('checked'));
-            });
-        });
-    </script>
 @endsection

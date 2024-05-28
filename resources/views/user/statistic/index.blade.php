@@ -1,84 +1,102 @@
 @extends('layout')
 
 @section('css')
+    @include('components.user.head')
+    <title>{{ $title }}</title>
 @endsection
-
 
 @section('script')
-<link rel="stylesheet" href="http://cdn.oesmith.co.uk/morris-0.4.3.min.css">
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/modules/export-data.js"></script>
+    @include('components.user.script')
 @endsection
 
-
-@section('nav')
-    @include('components.nav')
-@endsection
 
 @section('navbar')
-    @include('components.navbar')
+    @include('components.user.navbar')
 @endsection
 
+@section('sidebar')
+    @include('components.user.sidebar')
+@endsection
 
 @section('content')
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-        <section class="content-header">
+        <div class="content-header">
             <div class="container-fluid">
-                <div class="row mb-2 mx-3">
+                <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Thống kê</h1>
-                    </div>
+                        <h1 class="m-0">{{ $title }}</h1>
+                    </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Trang chủ</a></li>
-                            <li class="breadcrumb-item active">Thống kê</li>
+                            <li class="breadcrumb-item"><a href="{{ route('user.home') }}">Home</a></li>
+                            <li class="breadcrumb-item">{{ $title }}</li>
                         </ol>
-                    </div>
-                </div>
-            </div>
-        </section>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
         <section class="content">
-            <div class="row m-3 justify-content-around">
-                <div class="col-md-5">
-                    <!-- DONUT CHART -->
-                    <div class="card card-danger">
-                        <div class="card-header">
-                            <h3 class="card-title">Biểu đồ năng suất tròn</h3>
-
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                    <i class="fas fa-minus"></i>
-                                </button>
+            <div class="container-fluid">
+                <form action="{{ route('user.salary.search') }}" method="post">
+                    @csrf
+                    <div class="row">
+                        <!-- left column -->
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <input type="month" name="date_month" class="form-control">
                             </div>
                         </div>
-                        <div class="card-body">
+                        <div class="col-md">
+                            <button type="submit" class="btn btn-success">Tìm kiếm</button>
+                            <a href="{{ route('user.salary.index') }}" class="btn btn-primary">Reset</a>
                         </div>
-                        <!-- /.card-body -->
                     </div>
-                    <!-- /.card -->
-                </div>
-                <div class="col-md-5">
-                    <!-- DONUT CHART -->
-                    <div class="card card-primary">
-                        <div class="card-header">
-                            <h3 class="card-title">Biểu đồ năng suất đồ thị</h3>
-
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                    <i class="fas fa-minus"></i>
-                                </button>
+                </form>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body ">
+                                <table id="example2" class=" table table-bordered table-hover text-center">
+                                    <thead>
+                                        <tr>
+                                            <th>Tháng</th>
+                                            <th>Lương </th>
+                                            <th>Thưởng</th>
+                                            <th>Phạt</th>
+                                            <th>Tổng tháng</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($salaries as $salary)
+                                            <tr>
+                                                <td>{{ sprintf('%02d', $salary->month) }}/{{ $salary->year }}</td>
+                                                <td>{{ $salary->position->price }}đ</td>
+                                                <td>{{ $salary->total + $salary->total * (float) ($salary->reward / 100) }}
+                                                </td>
+                                                <td>{{ $salary->punish }}đ</td>
+                                                <td class="total">{{ $salary->total_all }}đ</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
+                            <!-- /.card-body -->
+
                         </div>
-                        <div class="card-body">
-                        </div>
-                        <!-- /.card-body -->
+
                     </div>
-                    <!-- /.card -->
+                    <!-- /.col -->
                 </div>
             </div>
         </section>
-    @endsection
+    </div>
+    <!-- /.content-wrapper -->
+
+
+
+    <!-- /.control-sidebar -->
+    </div>
+@endsection
